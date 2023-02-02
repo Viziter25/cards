@@ -1,5 +1,5 @@
 export const PATH = {
-  LOGIN: '/cards',
+  LOGIN: '/',
   REGISTRATION: '/registration',
   PROFILE: '/profile',
   PASSWORD_RECOVERY: '/password_recovery',
