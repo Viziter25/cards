@@ -1,9 +1,10 @@
 export const PATH = {
-  LOGIN: '/',
+  LOGIN: '/login',
   REGISTRATION: '/registration',
-  PROFILE: '/profile',
+  PROFILE: '/',
   PASSWORD_RECOVERY: '/password_recovery',
   NEW_PASSWORD: '/new_password',
   TEST: '/test',
-  ERROR404: '/*',
+  ERROR404: '/404',
+
 }

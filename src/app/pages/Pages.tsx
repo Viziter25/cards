@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {PATH} from './../../common/constants/path';
 import {Login} from '../../features/Login/Login';
 import {Registration} from '../../features/Registration/Registration';
@@ -19,6 +19,7 @@ export const Pages = () => {
         <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
         <Route path={PATH.ERROR404} element={<Error404/>}/>
+        <Route path='*' element={<Navigate to={'/404'}/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
       </Routes>
     </div>
