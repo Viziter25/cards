@@ -8,25 +8,30 @@ import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
 import s from './Registration.module.css'
 import {PATH} from '../../common/constants/path';
-import {NavLink} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
+import {registerTC} from './registration-reducer';
+import {useAppDispatch, useAppSelector} from '../../app/store';
+import {PasswordInput} from '../../common/components/password-input/PasswordInput';
 
 
 type FormikErrorType = {
   email?: string
   password?: string
-  rememberMe?: boolean
+  confirmPassword?: string
 }
 
 
 export const Registration = () => {
-  // const dispatch = useAppDispatch()
-  // const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
+  const isRegistrationIn = useAppSelector<boolean>(state => state.register.isRegistrationIn)
+  const error = useAppSelector<string>(state => state.register.error)
+
 
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false
+      confirmPassword: ''
     },
     validate: (values) => {
       const errors: FormikErrorType = {}
@@ -37,30 +42,34 @@ export const Registration = () => {
       }
       if (!values.password) {
         errors.password = 'Required'
-      } else if (values.password.length <= 3) {
-        errors.password = 'Password must be more than 3 characters'
+      } else if (values.password.length <= 7) {
+        errors.password = 'Password must be more than 7 characters'
+      }
+      if (!values.password) {
+        errors.confirmPassword = 'Required'
+      } else if (values.password !== values.confirmPassword) {
+        errors.confirmPassword = 'Password and confirm password do not match'
       }
       return errors
     },
     onSubmit: values => {
-      alert(JSON.stringify(values));
-      // dispatch(loginTC(values))
-      // formik.resetForm();
+      // alert(JSON.stringify(values));
+      dispatch(registerTC(values))
+      formik.resetForm();
     },
   })
 
-  // if (isLoggedIn) {
-  //   return <Navigate to={'/'}/>
-  // }
+  if (isRegistrationIn) {
+    return <Navigate to={'/login'}/>
+  }
 
   return <Grid container justifyContent={'center'}>
     <div className={s.registrationBlock}>
       <Grid item justifyContent={'center'}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl className={s.muiFormControl}>
-            <FormLabel>
               <h2>Sing Up</h2>
-            </FormLabel>
+            {error ? <h2>{error}</h2>: ''}
             <FormGroup className={s.textFieldBlock}>
               <TextField variant="standard"
                          label="Email"
@@ -68,26 +77,18 @@ export const Registration = () => {
                          {...formik.getFieldProps('email')}
               />
               {formik.touched.email && formik.errors.email ?
-                <div style={{color: 'red'}}>{formik.errors.email}</div> : null}
-              <TextField variant="standard"
-                         type="password"
-                         label="Password"
-                         margin="normal"
-                         {...formik.getFieldProps('password')}
-              />
-              {formik.touched.password && formik.errors.password ?
-                <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.email}</div> : null}
 
-              <TextField variant="standard"
-                         type="confirmPassword"
-                         label="Confirm password"
-                         margin="normal"
-                         {...formik.getFieldProps('confirmPassword')}
-              />
+              <PasswordInput name={'Password'} dataFormik={{...formik.getFieldProps('password')}}/>
               {formik.touched.password && formik.errors.password ?
-                <div style={{color: 'red'}}>{formik.errors.password}</div> : null}
+                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.password}</div> : null}
 
-              <Button className={s.button} type={'submit'} variant={'contained'} color={'primary'}>
+
+              <PasswordInput name={'Confirm password'} dataFormik={{...formik.getFieldProps('confirmPassword')}}/>
+              {formik.touched.confirmPassword && formik.errors.confirmPassword ?
+                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.confirmPassword}</div> : null}
+
+              <Button sx={{ marginTop: '60px', borderRadius: '30px'}} type={'submit'} variant={'contained'} color={'primary'}>
                 Sing Up
               </Button>
 
