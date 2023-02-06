@@ -1,13 +1,31 @@
+import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
+import {authApi, LoginType} from "./authApi";
 
 const initialState = {
-
-}
-type InitialStateType = typeof initialState
-
-
-export const authReducer = (state:any = initialState, action:ActionType) => {
-  return state
+  isLoggedIn: false
 }
 
+const slice = createSlice({
+  name: 'auth',
+  initialState: initialState,
+  reducers: {
+    setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
+      state.isLoggedIn = action.payload.isLoggedIn
+    }
+  }
+})
 
-type ActionType = any
+
+export const authReducer = slice.reducer
+export const {setIsLoggedInAC} = slice.actions
+
+//thunks
+export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
+    try {
+      await authApi.login(data)
+      dispatch(setIsLoggedInAC({isLoggedIn: true}))
+    } catch (e) {
+      //доделать после маржа
+      console.log('some error')
+    }
+}
