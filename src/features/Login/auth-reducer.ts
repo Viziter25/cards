@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {authApi, LoginType} from "./authApi";
+import {authAPI, LoginType} from "../../api/authAPI";
 
 const initialState = {
   isLoggedIn: false
@@ -22,7 +22,7 @@ export const {setIsLoggedInAC} = slice.actions
 //thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
     try {
-      await authApi.login(data)
+      await authAPI.login(data)
       dispatch(setIsLoggedInAC({isLoggedIn: true}))
     } catch (e) {
       //доделать после маржа

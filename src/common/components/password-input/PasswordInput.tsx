@@ -28,7 +28,6 @@ export const PasswordInput: FC<PasswordInputProps> = ({name,dataFormik}) => {
     <FormControl sx={{ marginY: '16px'}}  variant="standard">
       <InputLabel htmlFor="standard-adornment-password">{name}</InputLabel>
       <Input
-        id="standard-adornment-password"
         type={showPassword ? 'text' : 'password'}
 
         endAdornment={

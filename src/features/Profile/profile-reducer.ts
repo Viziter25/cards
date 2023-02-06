@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { profileAPI, ProfileType } from "./profileAPI"
-import { AppDispatchType } from "./store"
+import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
+import { profileAPI, ProfileType } from "../../api/profileAPI"
+
 
 //удалить после мержа
 export const initState:ProfileType = {
@@ -47,12 +47,12 @@ export const profileReducer = slice.reducer
 export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
-export const getProfileTC = () => (dispatch: AppDispatchType) => {
+export const getProfileTC = () => (dispatch: Dispatch) => {
     //profileAPI.getProfile()
     //    .then()
     //   .catch()
 }
-export const updateProfileTC = (name: string, avatar: string) => (dispatch: AppDispatchType) => {
+export const updateProfileTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
     
     //удалить после мержа
     dispatch(updateProfileAC({name, avatar}))
@@ -62,7 +62,7 @@ export const updateProfileTC = (name: string, avatar: string) => (dispatch: AppD
     //    .then()
     //    .catch()
 }
-export const logOutTC = () => (dispatch: AppDispatchType) => {
+export const logOutTC = () => (dispatch: Dispatch) => {
     //profileAPI.logOut()
     //    .then()
     //    .catch()

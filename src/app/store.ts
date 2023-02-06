@@ -4,13 +4,15 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authReducer} from '../features/Login/auth-reducer';
 import {configureStore} from "@reduxjs/toolkit";
 import {registerReducer} from '../features/Registration/registration-reducer';
+import {profileReducer} from "../features/Profile/profile-reducer";
 
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
   auth: authReducer,
-  register: registerReducer
+  register: registerReducer,
+  profile: profileReducer,
 })
 
 export const store = configureStore({

@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
-import {registrAPI} from './registr-api';
+import {registrAPI} from '../../api/registrAPI';
 
 const initialState = {
   isRegistrationIn: false,

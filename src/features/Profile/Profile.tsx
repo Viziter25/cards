@@ -2,22 +2,20 @@ import avatar from './avatar.jpg'
 import camera from './camera.svg'
 import logout from './logout.svg'
 import s from './Profile.module.css'
-import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Button, Paper } from '@mui/material'
-import { SuperEditableSpan } from '../../common/components/SuperEditableSpan/SuperEditableSpan'
+import React, {ChangeEvent, useEffect, useState} from 'react'
+import {Button, Paper} from '@mui/material'
+import {SuperEditableSpan} from '../../common/components/SuperEditableSpan/SuperEditableSpan'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
-import { AppDispatchType, AppStateType } from './store'
-import { getProfileTC, updateProfileTC } from './profile-reducer'
-import { ProfileType } from './profileAPI'
-import { Navigate } from 'react-router-dom'
-import { SuperInput } from '../../common/components/SuperInput/SuperInput'
+import {getProfileTC, updateProfileTC} from './profile-reducer'
+import {Navigate} from 'react-router-dom'
+import {SuperInput} from '../../common/components/SuperInput/SuperInput'
+import {useAppDispatch, useAppSelector} from "../../app/store";
 
 
 export const Profile = () => {
 
-  const profile = useSelector<AppStateType, ProfileType>(st => st.profile)
-  const dispatch = useDispatch<AppDispatchType>()
+  const profile = useAppSelector(st => st.profile)
+  const dispatch = useAppDispatch()
   const [avatarAddress, setAvatarAddress] = useState<string | undefined>(profile.avatar)
   const [editModeAvatarAddress, setEditModeAvatarAddress] = useState<boolean>(false)
   const [name, setName] = useState<string>(profile.name)
@@ -30,7 +28,9 @@ export const Profile = () => {
   // удалить хард после мержа
 
   useEffect(() => {
-    if (isLogin) { dispatch(getProfileTC()) }
+    if (isLogin) {
+      dispatch(getProfileTC())
+    }
     return
   }, [dispatch, isLogin])
 
@@ -77,42 +77,45 @@ export const Profile = () => {
   }
 
   if (!isLogin) {
-    return <Navigate to='/login' />
+    return <Navigate to='/login'/>
   }
 
   return (
-    <Paper className={s.container} elevation={3}>
-      <h3 className={s.title}>personal information</h3>
-      <div className={s.avatarContainer}>
-        <img className={s.avatarImg} src={profile.avatar ? profile.avatar : hardAvatar} alt='avatar' />
-        {editModeAvatarAddress
-          ? <div className={s.inputBlock}>
-            <SuperInput
-              autoFocus
-              className={s.input}
-              label={'avatar address'}
-              labelClassName={s.label}
-              onBlur={updateAvatarHandler}
-              onChange={changeAvatarHandler}
-              onEnter={updateAvatarHandler}
-              value={avatarAddress}
-            />
-            <SuperButton className={s.inputButton} onClick={updateAvatarHandler}>save</SuperButton>
-          </div>
-          : <img onClick={openAvatarHandler} className={s.camera} src={camera} alt='camera' />
-        }
-      </div>
-      <SuperEditableSpan
-        onChangeText={setName}
-        onBlur={updateNameHandler}
-        onChange={updateNameHandler}
-        onEnter={updateNameHandler}
-        spanProps={{ className: s.span }}
-        value={name ? name : hardName}
-      />
-      <span className={s.email}>{profile.email ? profile.email : hardEmail}</span>
-      {/* <SuperButton className={s.logaut}><img src={logout} alt='logout'></img>Log out</SuperButton> */}
-      <Button sx={logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
-    </Paper>
+    <div className={s.profileContainer}>
+      <Paper className={s.container} elevation={3}>
+        <h3 className={s.title}>personal information</h3>
+        <div className={s.avatarContainer}>
+          <img className={s.avatarImg} src={profile.avatar ? profile.avatar : hardAvatar} alt='avatar'/>
+          {editModeAvatarAddress
+            ? <div className={s.inputBlock}>
+              <SuperInput
+                autoFocus
+                className={s.input}
+                label={'avatar address'}
+                labelClassName={s.label}
+                onBlur={updateAvatarHandler}
+                onChange={changeAvatarHandler}
+                onEnter={updateAvatarHandler}
+                value={avatarAddress}
+              />
+              <SuperButton className={s.inputButton} onClick={updateAvatarHandler}>save</SuperButton>
+            </div>
+            : <img onClick={openAvatarHandler} className={s.camera} src={camera} alt='camera'/>
+          }
+        </div>
+        <SuperEditableSpan
+          onChangeText={setName}
+          onBlur={updateNameHandler}
+          onChange={updateNameHandler}
+          onEnter={updateNameHandler}
+          spanProps={{className: s.span}}
+          value={name ? name : hardName}
+        />
+        <span className={s.email}>{profile.email ? profile.email : hardEmail}</span>
+        {/* <SuperButton className={s.logaut}><img src={logout} alt='logout'></img>Log out</SuperButton> */}
+        <Button sx={logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log
+          out</Button>
+      </Paper>
+    </div>
   )
 }
