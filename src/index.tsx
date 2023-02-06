@@ -10,9 +10,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HashRouter>
+    <HashRouter >
       <Provider store={store}>
-        <App/>
+        <App />
       </Provider>
     </HashRouter>
   </React.StrictMode>

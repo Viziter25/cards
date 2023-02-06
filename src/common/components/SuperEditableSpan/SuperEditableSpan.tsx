@@ -6,7 +6,8 @@ import React, {
 } from 'react'
 import s from './SuperEditableSpan.module.css'
 import editIcon from './editIcon.svg'
-import {SuperInput} from '../SuperInput/SuperInput';
+import { SuperInput } from '../SuperInput/SuperInput';
+import SuperButton from '../SuperButton/SuperButton';
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,
@@ -37,8 +38,8 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
   }
 ) => {
   const [editMode, setEditMode] = useState<boolean>(false)
-  const {children, onDoubleClick, className, defaultText, ...restSpanProps} =
-  spanProps || {}
+  const { children, onDoubleClick, className, defaultText, ...restSpanProps } =
+    spanProps || {}
 
   const onEnterCallback = () => {
     // выключить editMode при нажатии Enter // делают студенты
@@ -62,29 +63,33 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
   return (
     <>
       {editMode ? (
-        <SuperInput
-          autoFocus={autoFocus || true}
-          onBlur={onBlurCallback}
-          onEnter={onEnterCallback}
-          className={s.input}
-          {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-        />
+        <div className={s.inputBlock}>
+          <SuperInput
+            autoFocus={autoFocus || true}
+            onBlur={onBlurCallback}
+            onEnter={onEnterCallback}
+            className={s.input}
+            label={'nickname'}
+            labelClassName={s.label}
+            {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+          />
+          <SuperButton className={s.inputButton}>save</SuperButton>
+        </div>
       ) : (
         <div className={s.spanBlock}>
-          <img
-            src={editIcon}
-            className={s.pen}
-            alt={'edit'}
-          />
           <span
             onDoubleClick={onDoubleClickCallBack}
             className={spanClassName}
             {...restSpanProps}
           >
-                        {/*если нет захардкодженного текста для спана, то значение инпута*/}
-
+            {/*если нет захардкодженного текста для спана, то значение инпута*/}
             {children || restProps.value || defaultText}
-                    </span>
+          </span>
+          <img
+            src={editIcon}
+            className={s.pen}
+            alt={'edit'}
+          />
         </div>
       )}
     </>

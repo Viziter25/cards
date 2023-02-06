@@ -19,6 +19,9 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
   onEnter?: () => void
   error?: ReactNode
   spanClassName?: string
+  className?: string
+  label?: string
+  labelClassName?: string
 }
 
 export const SuperInput: React.FC<SuperInputTextPropsType> = (
@@ -31,6 +34,8 @@ export const SuperInput: React.FC<SuperInputTextPropsType> = (
     className,
     spanClassName,
     id,
+    label,
+    labelClassName,
 
     ...restProps // все остальные пропсы попадут в объект restProps
   }
@@ -45,32 +50,34 @@ export const SuperInput: React.FC<SuperInputTextPropsType> = (
     onKeyPress?.(e)
 
     onEnter && // если есть пропс onEnter
-    e.key === 'Enter' && // и если нажата кнопка Enter
-    onEnter() // то вызвать его
+      e.key === 'Enter' && // и если нажата кнопка Enter
+      onEnter() // то вызвать его
   }
 
   const finalSpanClassName = s.error
     + (spanClassName ? ' ' + spanClassName : '')
   const finalInputClassName = s.input
     + (error ? ' ' + s.errorInput : ' ' + s.superInput)
-    + (className ? ' ' + s.className : '') // задача на смешивание классов
+    + (className ? ' ' + className : '') // задача на смешивание классов
 
   return (
     <div className={s.inputWrapper}>
+      {label ? <label className={labelClassName}>{label}</label> : null}
       <input
         id={id}
         type={'text'}
         onChange={onChangeCallback}
         onKeyPress={onKeyPressCallback}
         className={finalInputClassName}
+
         {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
       />
       <span
         id={id ? id + '-span' : undefined}
         className={finalSpanClassName}
       >
-                {error}
-            </span>
+        {error}
+      </span>
     </div>
   )
 }

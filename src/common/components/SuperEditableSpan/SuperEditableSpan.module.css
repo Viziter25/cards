@@ -1,13 +1,56 @@
 .spanBlock {
+    margin-top: 15px;
+    width: 350px;
 }
 
 .span {
-    color: #0080FF;
+}
+
+.inputBlock {
+    position: relative;
+    width: 350px;
+}
+
+.label {
+    color: #000000;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    opacity: 0.5;
+    text-transform: capitalize;
 }
 
 .input {
+    min-height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    color: #000000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0 10px 0 0;
+    padding: 0;
+}
+
+.inputButton {
+    bottom: 10px;
+    right: 0;
+    max-height: 25px;
+    position: absolute;
+    width: 50px;
+  
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    text-transform: uppercase;
 }
 
 .pen {
-    margin-right: 10px;
+    margin-left: 10px;
 }
