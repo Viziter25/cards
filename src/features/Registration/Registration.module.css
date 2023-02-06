@@ -46,3 +46,14 @@
 
     color: #366EFF;
 }
+
+
+@media (max-width: 420px) {
+    .registrationBlock {
+        width: 320px;
+        text-align: center;
+    }
+    .muiFormControl {
+        width: 254px;
+    }
+}
