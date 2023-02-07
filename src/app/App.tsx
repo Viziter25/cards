@@ -5,6 +5,7 @@ import {Pages} from './pages/Pages';
 import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
 
 function App() {
+
   return (
     <div className="App">
       <Header/>

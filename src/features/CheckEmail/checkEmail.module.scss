@@ -1,0 +1,36 @@
+@import "../../common/styles/mixin";
+
+.checkEmailContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+
+  .checkEmailContent {
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1), -1px -1px 2px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 413px;
+
+    .title {
+      margin: 0 0 35px 0;
+      @include text(600, 26px, 32px);
+    }
+    .image {
+      margin-bottom: 34px;
+    }
+
+    .desc {
+      @include text(400, 14px, 24px);
+      color: #000;
+      opacity: 0.5;
+      text-align: left;
+    }
+
+    .button {
+      font-family: 'Montserrat', sans-serif;
+      width: 100%;
+      border-radius: 20px;
+      margin: 34px 0 10px 0;
+    }
+  }
+}

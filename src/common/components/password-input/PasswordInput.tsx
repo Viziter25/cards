@@ -9,6 +9,7 @@ import Input from '@mui/material/Input';
 import {FieldInputProps} from 'formik/dist/types';
 
 
+
 type PasswordInputProps = {
   name: string
   dataFormik: FieldInputProps<string>
@@ -29,7 +30,6 @@ export const PasswordInput: FC<PasswordInputProps> = ({name,dataFormik}) => {
       <InputLabel htmlFor="standard-adornment-password">{name}</InputLabel>
       <Input
         type={showPassword ? 'text' : 'password'}
-
         endAdornment={
           <InputAdornment position="end">
             <IconButton sx={{color: 'black'}}

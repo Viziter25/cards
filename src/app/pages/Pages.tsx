@@ -8,6 +8,7 @@ import {PasswordRecovery} from '../../features/PasswordRecovery/PasswordRecovery
 import {NewPassword} from '../../features/NewPassword/NewPassword';
 import {Error404} from '../../features/Error404/Error404';
 import {Test} from '../../features/Test/Test';
+import {CheckEmail} from "../../features/CheckEmail/CheckEmail";
 
 export const Pages = () => {
   return (
@@ -18,6 +19,7 @@ export const Pages = () => {
         <Route path={PATH.PROFILE} element={<Profile/>}/>
         <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
         <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
+        <Route path={PATH.CHECK_EMAIL} element={<CheckEmail/>}/>
         <Route path={PATH.ERROR404} element={<Error404/>}/>
         <Route path='*' element={<Navigate to={'/404'}/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>

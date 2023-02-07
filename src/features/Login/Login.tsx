@@ -5,7 +5,9 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {loginTC} from "./auth-reducer";
-import {Navigate} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
+import {PATH} from "../../common/constants/path";
+import {PasswordInput} from "../../common/components/password-input/PasswordInput";
 
 
 export const Login = () => {
@@ -44,23 +46,11 @@ export const Login = () => {
             <TextField
               className={s.input}
               variant={"standard"}
-              InputLabelProps={{
-                shrink: true,
-              }}
               label={'Email'}
               {...formik.getFieldProps('email')}
             />
             {formik.touched.email && formik.errors.email && <div className={s.error}>{formik.errors.email}</div>}
-            <TextField
-              className={s.input}
-              variant={"standard"}
-              type={'password'}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              label={'password'}
-              {...formik.getFieldProps('password')}
-            />
+            <PasswordInput name={'password'} dataFormik={{...formik.getFieldProps('password')}}/>
             {formik.touched.password && formik.errors.password &&
                 <div className={s.error}>{formik.errors.password}</div>}
             <div className={s.checkBoxCont}>
@@ -71,13 +61,13 @@ export const Login = () => {
               />
               <span>Remember me</span>
             </div>
-            <span className={s.fPass}>Forgot Password?</span>
+            <NavLink to={PATH.PASSWORD_RECOVERY} className={s.fPass}>Forgot Password?</NavLink>
             <Button className={s.button} type='submit' variant={"contained"}>Sign in</Button>
           </div>
         </form>
         <div className={s.footer}>
           <span>Already have an account?</span>
-          <a href="">Sign Up</a>
+          <NavLink to={PATH.REGISTRATION}>Sign Up</NavLink>
         </div>
       </div>
     </div>
