@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 //instance
 const instance = axios.create({ 
@@ -10,13 +10,13 @@ const instance = axios.create({
 //api
 export const profileAPI = {
     getProfile() {
-        return instance.post<ProfileType>('auth/me')
+        return instance.post<null, AxiosResponse<ProfileType>>('auth/me')
     },
     updateProfile(name: string, avatar: string) {
-        return instance.put<{updatedUser: ProfileType, error: string}>('auth/me', {name, avatar})
+        return instance.put<UpdateProfileType, AxiosResponse<{updatedUser: ProfileType, error: string}>>('auth/me', {name, avatar})
     },
     logOut() {
-        return instance.delete<{info: string, error: string}>('auth/me')
+        return instance.delete<null, AxiosResponse<{info: string, error: string}>>('auth/me')
     },
 }
 
@@ -33,4 +33,11 @@ export type ProfileType = {
     verified: boolean               // подтвердил ли почту
     rememberMe: boolean
     error?: string
+    token: string
+    tokenDeathTime: number
+    __v: number
+}
+export type UpdateProfileType = {
+    name: string
+    avatar: string
 }

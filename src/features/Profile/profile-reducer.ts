@@ -1,39 +1,20 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "../../api/profileAPI"
+import { setIsLoggedInAC } from "../Login/auth-reducer"
 
-
-//удалить после мержа
-export const initState:ProfileType = {
-    _id: '',
-    email: '',
-    name: '',
-    avatar: '',
-    publicCardPacksCount: 0,
-    created: new Date(),
-    updated: new Date(),
-    isAdmin: false,
-    verified: false,
-    rememberMe: false,
-    error: ''
-}
-//удалить после мержа
-
-//использовать после мержа
-//export const initState = {} as ProfileType
+export const initState = {} as ProfileType
 
 const slice = createSlice({
     name: 'PROFILE',
     initialState: initState,
     reducers: {
         getProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
-            return {...action.payload.profile}
+            return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
         },
-        //переделать после мержа
-        updateProfileAC: (draftState, action: PayloadAction<{name: string, avatar: string}>) => {
-            draftState.name = action.payload.name
-            draftState.avatar = action.payload.avatar
+        updateProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
+            draftState.name = action.payload.profile.name
+            draftState.avatar = action.payload.profile.avatar
         },
-        //переделать после мержа
         logOutAC: (draftState, action: PayloadAction) => {
             return ({} as ProfileType)
         },
@@ -48,22 +29,32 @@ export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
 export const getProfileTC = () => (dispatch: Dispatch) => {
-    //profileAPI.getProfile()
-    //    .then()
-    //   .catch()
+    profileAPI.getProfile()
+        .then(res => {
+            dispatch(getProfileAC({profile: res.data}))
+        })
+        .catch(err => {
+            alert(err)
+        })
 }
 export const updateProfileTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
-    
-    //удалить после мержа
-    dispatch(updateProfileAC({name, avatar}))
-
-    //использовать после мержа
-    //profileAPI.updateProfile(name, avatar)
-    //    .then()
-    //    .catch()
+    profileAPI.updateProfile(name, avatar)
+        .then(res => {
+            dispatch(getProfileAC({profile: res.data.updatedUser}))
+        })
+        .catch(err => {
+            alert(err)
+        })
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
-    //profileAPI.logOut()
-    //    .then()
-    //    .catch()
+    profileAPI.logOut()
+        .then(res => {
+            if(res.status === 200) {
+                dispatch(setIsLoggedInAC({isLoggedIn: false}))
+                dispatch(logOutAC())
+            }
+        })
+        .catch(err => {
+            alert(err)
+        })
 }

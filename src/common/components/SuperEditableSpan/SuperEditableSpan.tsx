@@ -69,16 +69,15 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
             onBlur={onBlurCallback}
             onEnter={onEnterCallback}
             className={s.input}
-            label={'nickname'}
+            label={'name'}
             labelClassName={s.label}
             {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
           />
           <SuperButton className={s.inputButton}>save</SuperButton>
         </div>
       ) : (
-        <div className={s.spanBlock}>
+        <div className={s.spanBlock} onDoubleClick={onDoubleClickCallBack}>
           <span
-            onDoubleClick={onDoubleClickCallBack}
             className={spanClassName}
             {...restSpanProps}
           >
