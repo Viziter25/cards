@@ -28,7 +28,7 @@ export const profileReducer = slice.reducer
 export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
-export const getProfileTC = () => (dispatch: Dispatch) => {
+/*export const getProfileTC = () => (dispatch: Dispatch) => {
     profileAPI.getProfile()
         .then(res => {
             dispatch(getProfileAC({profile: res.data}))
@@ -36,7 +36,7 @@ export const getProfileTC = () => (dispatch: Dispatch) => {
         .catch(err => {
             alert(err)
         })
-}
+}*/
 export const updateProfileTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
     profileAPI.updateProfile(name, avatar)
         .then(res => {

@@ -24,8 +24,7 @@ export const Login = () => {
     validationSchema: Yup.object({
       email: Yup.string().email('Invalid email address').required('Required'),
       password: Yup.string().min(2, 'Min length 2 symbols').required('Required')
-    })
-    ,
+    }),
     onSubmit: (values) => {
       dispatch(loginTC(values))
     }
