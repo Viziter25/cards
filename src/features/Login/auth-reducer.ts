@@ -2,6 +2,7 @@ import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, ForgotPasswordType, LoginType} from "../../api/authAPI";
 import {setError} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
+import axios, {AxiosError} from "axios";
 
 const initialState = {
   isLoggedIn: false
@@ -28,8 +29,13 @@ export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
     dispatch(getProfileAC({profile: res}))
   } catch (e) {
-    //доделать после маржа
-    dispatch(setError({error: 'some error'}))
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+      dispatch(setError({error}))
+    } else {
+      dispatch(setError({error: `native error ${err.message}` }))
+    }
   }
 }
 
@@ -39,13 +45,27 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
     dispatch(getProfileAC({profile: res.data}))
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
   } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+      dispatch(setError({error}))
+    } else {
+      dispatch(setError({error: `native error ${err.message}` }))
+    }
   }
 }
 
-export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch ) => {
+export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch) => {
   try {
     await authAPI.forgotPassword(data)
   } catch (e) {
-
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+      dispatch(setError({error}))
+    } else {
+      dispatch(setError({error: `native error ${err.message}` }))
+    }
+    return err
   }
 }
