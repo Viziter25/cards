@@ -65,7 +65,7 @@ export const Login = () => {
           </div>
         </form>
         <div className={s.footer}>
-          <span>Already have an account?</span>
+          <span>Don't have an account?</span>
           <NavLink to={PATH.REGISTRATION}>Sign Up</NavLink>
         </div>
       </div>

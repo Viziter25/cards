@@ -1,12 +1,12 @@
 import React from 'react';
-import {useAppDispatch, useAppSelector} from '../../app/store';
+import {useAppDispatch} from '../../app/store';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import s from './newPassword.module.scss'
 import Button from '@mui/material/Button';
 import {PasswordInput} from '../../common/components/password-input/PasswordInput';
 import {createPasswordTC} from '../Login/auth-reducer';
-import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {PATH} from '../../common/constants/path';
 
 
@@ -15,7 +15,6 @@ export const NewPassword = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const {token} = useParams()
-  console.log(token)
 
   const formik = useFormik({
     initialValues: {

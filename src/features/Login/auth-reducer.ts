@@ -3,11 +3,10 @@ import {authAPI, ForgotPasswordType, LoginType, NewPasswordType} from '../../api
 import {setError, setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
-import {setErrorAC} from '../Registration/registration-reducer';
 
 const initialState = {
   isLoggedIn: false,
-  isCreatePassword: false
+
 }
 
 const slice = createSlice({
@@ -16,16 +15,13 @@ const slice = createSlice({
   reducers: {
     setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
-    },
-    createPassword(state, action: PayloadAction<{ isCreatePassword: boolean }>) {
-      state.isCreatePassword = action.payload.isCreatePassword
     }
   }
 })
 
 
 export const authReducer = slice.reducer
-export const {setIsLoggedInAC, createPassword} = slice.actions
+export const {setIsLoggedInAC} = slice.actions
 
 //thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {

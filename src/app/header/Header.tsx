@@ -10,7 +10,7 @@ export const Header = () => {
       <div className={style.container}>
         <div className={s.headerContainer}>
           <NavLink to={PATH.LOGIN}>login</NavLink>
-          <NavLink to={PATH.PASSWORD_RECOVERY}>New password</NavLink>
+          <NavLink to={PATH.PASSWORD_RECOVERY}>forgot password</NavLink>
           <NavLink to={PATH.REGISTRATION}>registration</NavLink>
           <NavLink to={PATH.PROFILE}>profile</NavLink>
           <NavLink to={PATH.NEW_PASSWORD}>new password</NavLink>

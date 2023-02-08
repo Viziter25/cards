@@ -22,7 +22,7 @@ export const CheckEmail = () => {
           Check Email
         </h3>
         <div className={s.image}>
-          <img src={emailImage}/>
+          <img alt={''} src={emailImage}/>
         </div>
         <span className={s.desc}>Enter your email address and we will send you further instructions</span>
         <Button className={s.button} variant={"contained"} onClick={onClickHandler}>Back to login</Button>
