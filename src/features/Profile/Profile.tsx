@@ -10,6 +10,7 @@ import {logOutTC, updateProfileTC} from './profile-reducer'
 import {Navigate} from 'react-router-dom'
 import {SuperInput} from '../../common/components/SuperInput/SuperInput'
 import {useAppDispatch, useAppSelector} from "../../app/store";
+import {PATH} from "../../common/constants/path";
 
 
 export const Profile = React.memo(() => {
@@ -72,9 +73,9 @@ export const Profile = React.memo(() => {
   const logOutHandler = () => {
     dispatch(logOutTC())
   }
-
+  debugger
   if (!isLogin) {
-    return <Navigate to='/login' />
+    return <Navigate to={PATH.LOGIN}/>
   }
 
   return (

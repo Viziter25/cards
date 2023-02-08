@@ -5,8 +5,7 @@ import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
 
 const initialState = {
-  isLoggedIn: false,
-
+  isLoggedIn: false
 }
 
 const slice = createSlice({

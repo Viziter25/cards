@@ -29,9 +29,8 @@ export const Login = () => {
       dispatch(loginTC(values))
     }
   })
-
   if (isLoggedIn) {
-    return <Navigate to={'/'}/>
+    return <Navigate to={PATH.PROFILE}/>
   }
 
   return (
