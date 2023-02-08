@@ -1,11 +1,13 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI, ForgotPasswordType, LoginType} from "../../api/authAPI";
+import {authAPI, ForgotPasswordType, LoginType} from '../../api/authAPI';
 import {setError, setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
+import {setErrorAC} from '../Registration/registration-reducer';
 
 const initialState = {
-  isLoggedIn: false
+  isLoggedIn: false,
+  isCreatePassword: false
 }
 
 const slice = createSlice({
@@ -14,13 +16,16 @@ const slice = createSlice({
   reducers: {
     setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
+    },
+    createPassword(state, action: PayloadAction<{ isCreatePassword: boolean }>) {
+      state.isCreatePassword = action.payload.isCreatePassword
     }
   }
 })
 
 
 export const authReducer = slice.reducer
-export const {setIsLoggedInAC} = slice.actions
+export const {setIsLoggedInAC, createPassword} = slice.actions
 
 //thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
@@ -70,4 +75,16 @@ export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Disp
     }
     return err
   }
+}
+
+export  const createPasswordTC = (data:any) => (dispatch: Dispatch) => {
+  authAPI.createPassword(data)
+    .then(res => {
+      console.log(res)
+      dispatch(createPassword({isCreatePassword: true}))
+    })
+    .catch(error => {
+      alert(error.response.data.error)
+      dispatch(setErrorAC({error: error.response.data.error}))
+    })
 }
