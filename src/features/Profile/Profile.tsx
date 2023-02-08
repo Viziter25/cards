@@ -2,11 +2,11 @@ import defaultAvatar from './assets/avatar.jpg'
 import camera from './assets/camera.svg'
 import logout from './assets/logout.svg'
 import s from './Profile.module.css'
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Button, Paper } from '@mui/material'
 import { SuperEditableSpan } from '../../common/components/SuperEditableSpan/SuperEditableSpan'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
-import { getProfileTC, logOutTC, updateProfileTC } from './profile-reducer'
+import { logOutTC, updateProfileTC } from './profile-reducer'
 import { Navigate } from 'react-router-dom'
 import { SuperInput } from '../../common/components/SuperInput/SuperInput'
 import { useAppDispatch, useAppSelector } from "../../app/store";
@@ -22,12 +22,12 @@ export const Profile = React.memo(() => {
   const [avatarAddress, setAvatarAddress] = useState<string | undefined>('')
   const [name, setName] = useState<string>(profile.name)
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (isLogin) {
       dispatch(getProfileTC())
     }
     return
-  }, [dispatch, isLogin])
+  }, [dispatch, isLogin]) */
 
   const logautButton = {
     display: 'flex',

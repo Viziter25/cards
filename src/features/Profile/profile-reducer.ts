@@ -1,4 +1,4 @@
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
+import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "../../api/profileAPI"
 import { setIsLoggedInAC } from "../Login/auth-reducer"
 
@@ -28,19 +28,10 @@ export const profileReducer = slice.reducer
 export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
-export const getProfileTC = () => (dispatch: Dispatch) => {
-    profileAPI.getProfile()
-        .then(res => {
-            dispatch(getProfileAC({profile: res.data}))
-        })
-        .catch(err => {
-            alert(err)
-        })
-}
 export const updateProfileTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
     profileAPI.updateProfile(name, avatar)
         .then(res => {
-            dispatch(getProfileAC({profile: res.data.updatedUser}))
+            dispatch(updateProfileAC({profile: res.data.updatedUser}))
         })
         .catch(err => {
             alert(err)
@@ -58,3 +49,12 @@ export const logOutTC = () => (dispatch: Dispatch) => {
             alert(err)
         })
 }
+/* export const getProfileTC = () => (dispatch: Dispatch) => {
+    profileAPI.getProfile()
+        .then(res => {
+            dispatch(getProfileAC({profile: res.data}))
+        })
+        .catch(err => {
+            alert(err)
+        })
+} */
