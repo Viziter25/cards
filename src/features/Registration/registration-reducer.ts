@@ -1,5 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {registrAPI} from '../../api/registrAPI';
+import {setError} from '../../app/appReducer';
 
 const initialState = {
   isRegistrationIn: false,
@@ -12,16 +13,12 @@ const slice = createSlice({
   reducers: {
     registerAC(state, action: PayloadAction<{ value: boolean }>) {
       state.isRegistrationIn = action.payload.value
-    },
-    setErrorAC(state, action: PayloadAction<{ error: string }>) {
-      state.error = action.payload.error
-
     }
   }
 })
 
 export const registerReducer = slice.reducer
-export const {registerAC, setErrorAC} = slice.actions
+export const {registerAC} = slice.actions
 
 
 export  const registerTC = (data:any) => (dispatch: Dispatch) => {
@@ -32,7 +29,8 @@ export  const registerTC = (data:any) => (dispatch: Dispatch) => {
     })
     .catch(error => {
       // alert(error.response.data.error)
-      dispatch(setErrorAC({error: error.response.data.error}))
+      console.log(error)
+      dispatch(setError({error: error.response.data.error}))
     })
 }
 
