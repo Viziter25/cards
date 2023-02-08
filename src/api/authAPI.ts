@@ -38,5 +38,5 @@ export type ForgotPasswordType = {
 
 export type NewPasswordType = {
   password: string
-  resetPasswordToken: string
+  resetPasswordToken?: string
 }

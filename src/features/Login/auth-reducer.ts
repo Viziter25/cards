@@ -1,5 +1,5 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI, ForgotPasswordType, LoginType} from '../../api/authAPI';
+import {authAPI, ForgotPasswordType, LoginType, NewPasswordType} from '../../api/authAPI';
 import {setError, setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
@@ -77,14 +77,17 @@ export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Disp
   }
 }
 
-export  const createPasswordTC = (data:any) => (dispatch: Dispatch) => {
-  authAPI.createPassword(data)
-    .then(res => {
-      console.log(res)
-      dispatch(createPassword({isCreatePassword: true}))
-    })
-    .catch(error => {
-      alert(error.response.data.error)
-      dispatch(setErrorAC({error: error.response.data.error}))
-    })
+export const createPasswordTC = (data:NewPasswordType) => async (dispatch: Dispatch) => {
+  try {
+    const res = await authAPI.createPassword(data)
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+      dispatch(setError({error}))
+    } else {
+      dispatch(setError({error: `native error ${err.message}` }))
+    }
+    return err
+  }
 }

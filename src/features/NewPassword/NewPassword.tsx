@@ -2,17 +2,18 @@ import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/store';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
-import {createPasswordTC} from '../Login/auth-reducer';
-import {Navigate, useParams} from 'react-router-dom';
 import s from './newPassword.module.scss'
 import Button from '@mui/material/Button';
 import {PasswordInput} from '../../common/components/password-input/PasswordInput';
+import {createPasswordTC} from '../Login/auth-reducer';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {PATH} from '../../common/constants/path';
 
 
 export const NewPassword = () => {
 
   const dispatch = useAppDispatch()
-  const isCreatePassword = useAppSelector(state => state.auth.isCreatePassword)
+  const navigate = useNavigate()
   const {token} = useParams()
   console.log(token)
 
@@ -25,12 +26,14 @@ export const NewPassword = () => {
     }),
     onSubmit: (values) => {
       dispatch(createPasswordTC({password: values.password, resetPasswordToken: token}))
+        .then(res => {
+          if (!res) {
+            navigate(PATH.LOGIN)
+          }
+        })
     }
   })
 
-  if (isCreatePassword) {
-    return <Navigate to={'/login'}/>
-  }
 
   return (
     <div className={s.loginContainer}>
