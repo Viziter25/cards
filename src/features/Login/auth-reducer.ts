@@ -1,11 +1,13 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {authAPI, ForgotPasswordType, LoginType} from "../../api/authAPI";
+import {authAPI, ForgotPasswordType, LoginType, NewPasswordType} from '../../api/authAPI';
 import {setError, setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
+import {setErrorAC} from '../Registration/registration-reducer';
 
 const initialState = {
-  isLoggedIn: false
+  isLoggedIn: false,
+  isCreatePassword: false
 }
 
 const slice = createSlice({
@@ -14,13 +16,16 @@ const slice = createSlice({
   reducers: {
     setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
+    },
+    createPassword(state, action: PayloadAction<{ isCreatePassword: boolean }>) {
+      state.isCreatePassword = action.payload.isCreatePassword
     }
   }
 })
 
 
 export const authReducer = slice.reducer
-export const {setIsLoggedInAC} = slice.actions
+export const {setIsLoggedInAC, createPassword} = slice.actions
 
 //thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
@@ -60,6 +65,21 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
 export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch) => {
   try {
     await authAPI.forgotPassword(data)
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+      dispatch(setError({error}))
+    } else {
+      dispatch(setError({error: `native error ${err.message}` }))
+    }
+    return err
+  }
+}
+
+export const createPasswordTC = (data:NewPasswordType) => async (dispatch: Dispatch) => {
+  try {
+    const res = await authAPI.createPassword(data)
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
     if (axios.isAxiosError(err)) {
