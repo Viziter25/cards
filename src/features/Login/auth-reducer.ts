@@ -1,6 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, ForgotPasswordType, LoginType} from "../../api/authAPI";
-import {setError} from "../../app/appReducer";
+import {setError, setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import axios, {AxiosError} from "axios";
 
@@ -52,6 +52,8 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
     } else {
       dispatch(setError({error: `native error ${err.message}` }))
     }
+  } finally {
+    dispatch(setIsInitialized({isInitialized :true}))
   }
 }
 
