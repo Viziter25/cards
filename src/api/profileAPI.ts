@@ -9,15 +9,15 @@ const instance = axios.create({
 
 //api
 export const profileAPI = {
-    getProfile() {
-        return instance.post<null, AxiosResponse<ProfileType>>('auth/me')
-    },
     updateProfile(name: string, avatar: string) {
         return instance.put<UpdateProfileType, AxiosResponse<{updatedUser: ProfileType, error: string}>>('auth/me', {name, avatar})
     },
     logOut() {
         return instance.delete<null, AxiosResponse<{info: string, error: string}>>('auth/me')
     },
+    /* getProfile() {
+        return instance.post<null, AxiosResponse<ProfileType>>('auth/me')
+    }, */
 }
 
 // types
