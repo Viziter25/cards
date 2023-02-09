@@ -1,8 +1,9 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, ForgotPasswordType, LoginType, NewPasswordType} from '../../api/authAPI';
-import {setError, setIsInitialized} from "../../app/appReducer";
+import {setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
-import axios, {AxiosError} from "axios";
+import {AxiosError} from "axios";
+import {errorUtil} from "../../common/utils/error utils";
 
 const initialState = {
   isLoggedIn: false
@@ -29,13 +30,7 @@ export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
     dispatch(getProfileAC({profile: res}))
   } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
-      dispatch(setError({error}))
-    } else {
-      dispatch(setError({error: `native error ${err.message}` }))
-    }
+    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
   }
 }
 
@@ -45,13 +40,7 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
     dispatch(getProfileAC({profile: res.data}))
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
   } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
-      dispatch(setError({error}))
-    } else {
-      dispatch(setError({error: `native error ${err.message}` }))
-    }
+    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
   } finally {
     dispatch(setIsInitialized({isInitialized :true}))
   }
@@ -61,28 +50,16 @@ export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Disp
   try {
     await authAPI.forgotPassword(data)
   } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
-      dispatch(setError({error}))
-    } else {
-      dispatch(setError({error: `native error ${err.message}` }))
-    }
-    return err
+    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+    return e
   }
 }
 
 export const createPasswordTC = (data:NewPasswordType) => async (dispatch: Dispatch) => {
   try {
-    const res = await authAPI.createPassword(data)
+    await authAPI.createPassword(data)
   } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
-      dispatch(setError({error}))
-    } else {
-      dispatch(setError({error: `native error ${err.message}` }))
-    }
-    return err
+    errorUtil(e as AxiosError<{error: string}>, dispatch)
+    return e
   }
 }
