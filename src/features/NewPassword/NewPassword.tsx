@@ -21,7 +21,7 @@ export const NewPassword = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      password: Yup.string().min(7, 'Password must be more than 7 characters').required('Required')
+      password: Yup.string().min(8, 'Password must be more than 7 characters').required('Required')
     }),
     onSubmit: (values) => {
       dispatch(createPasswordTC({password: values.password, resetPasswordToken: token}))

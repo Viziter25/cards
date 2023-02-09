@@ -84,5 +84,4 @@ export const Registration = () => {
       </Grid>
     </div>
   </Grid>
-
 }
