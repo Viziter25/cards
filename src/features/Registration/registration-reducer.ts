@@ -1,10 +1,10 @@
 import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {registrAPI} from '../../api/registrAPI';
-import {setError} from '../../app/appReducer';
+import {errorUtil} from "../../common/utils/error utils";
+import {AxiosError} from "axios";
 
 const initialState = {
-  isRegistrationIn: false,
-  error: ''
+  isRegistrationIn: false
 }
 
 const slice = createSlice({
@@ -20,17 +20,14 @@ const slice = createSlice({
 export const registerReducer = slice.reducer
 export const {registerAC} = slice.actions
 
-export const registerTC = (data: any) => (dispatch: Dispatch) => {
-  registrAPI.registration(data)
-    .then(res => {
-      console.log(res)
-      dispatch(registerAC({value: true}))
-    })
-    .catch(error => {
-      // alert(error.response.data.error)
-      console.log(error)
-      dispatch(setError({error: error.response.data.error}))
-    })
+export const registerTC = (data: any) => async (dispatch: Dispatch) => {
+
+  try {
+    await registrAPI.registration(data)
+    dispatch(registerAC({value: true}))
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+  }
 }
 
 

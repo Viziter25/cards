@@ -1,6 +1,8 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "../../api/profileAPI"
 import { setIsLoggedInAC } from "../Login/auth-reducer"
+import {errorUtil} from "../../common/utils/error utils";
+import {AxiosError} from "axios";
 
 export const initState = {} as ProfileType
 
@@ -28,26 +30,24 @@ export const profileReducer = slice.reducer
 export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
-export const updateProfileTC = (name: string, avatar: string) => (dispatch: Dispatch) => {
-    profileAPI.updateProfile(name, avatar)
-        .then(res => {
-            dispatch(updateProfileAC({profile: res.data.updatedUser}))
-        })
-        .catch(err => {
-            alert(err)
-        })
+export const updateProfileTC = (name: string, avatar: string) => async (dispatch: Dispatch) => {
+
+    try {
+        const res = await profileAPI.updateProfile(name, avatar)
+        dispatch(updateProfileAC({profile: res.data.updatedUser}))
+    } catch (e) {
+        errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+    }
 }
-export const logOutTC = () => (dispatch: Dispatch) => {
-    profileAPI.logOut()
-        .then(res => {
-            if(res.status === 200) {
-                dispatch(setIsLoggedInAC({isLoggedIn: false}))
-                dispatch(logOutAC())
-            }
-        })
-        .catch(err => {
-            alert(err)
-        })
+export const logOutTC = () => async (dispatch: Dispatch) => {
+
+    try {
+        await profileAPI.logOut()
+        dispatch(setIsLoggedInAC({isLoggedIn: false}))
+        dispatch(logOutAC())
+    } catch (e) {
+        errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+    }
 }
 /* export const getProfileTC = () => (dispatch: Dispatch) => {
     profileAPI.getProfile()

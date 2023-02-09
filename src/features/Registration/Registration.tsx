@@ -18,7 +18,6 @@ import * as Yup from 'yup';
 export const Registration = () => {
   const dispatch = useAppDispatch()
   const isRegistrationIn = useAppSelector<boolean>(state => state.register.isRegistrationIn)
-  const error = useAppSelector<string>(state => state.register.error)
 
 
   const formik = useFormik({
@@ -36,7 +35,6 @@ export const Registration = () => {
     }),
 
     onSubmit: values => {
-      // alert(JSON.stringify(values));
       dispatch(registerTC(values))
       formik.resetForm();
     },
@@ -52,7 +50,6 @@ export const Registration = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormControl className={s.muiFormControl}>
               <h2>Sing Up</h2>
-            {error ? <h2>{error}</h2>: ''}
             <FormGroup className={s.textFieldBlock}>
               <TextField variant="standard"
                          label="Email"
