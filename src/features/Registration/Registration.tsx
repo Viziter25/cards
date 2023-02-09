@@ -5,19 +5,19 @@ import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
-import s from './Registration.module.css'
+import s from './Registration.module.scss'
 import {PATH} from '../../common/constants/path';
-import {Navigate, NavLink} from 'react-router-dom';
-import {registerTC} from './registration-reducer';
-import {useAppDispatch, useAppSelector} from '../../app/store';
+import {NavLink, useNavigate} from 'react-router-dom';
+import {useAppDispatch} from '../../app/store';
 import {PasswordInput} from '../../common/components/password-input/PasswordInput';
 import * as Yup from 'yup';
+import {registerTC} from '../Login/auth-reducer';
 
 
 
 export const Registration = () => {
   const dispatch = useAppDispatch()
-  const isRegistrationIn = useAppSelector<boolean>(state => state.register.isRegistrationIn)
+  const navigate = useNavigate()
 
 
   const formik = useFormik({
@@ -36,20 +36,22 @@ export const Registration = () => {
 
     onSubmit: values => {
       dispatch(registerTC(values))
+        .then(res => {
+          if (!res) {
+            navigate(PATH.LOGIN)
+          }
+        })
       formik.resetForm();
     },
   })
 
-  if (isRegistrationIn) {
-    return <Navigate to={'/login'}/>
-  }
 
   return <Grid container justifyContent={'center'}>
     <div className={s.registrationBlock}>
       <Grid item justifyContent={'center'}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl className={s.muiFormControl}>
-              <h2>Sing Up</h2>
+              <h2 className={s.titleBlock}>Sing Up</h2>
             <FormGroup className={s.textFieldBlock}>
               <TextField variant="standard"
                          label="Email"

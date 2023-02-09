@@ -53,8 +53,7 @@ export const Profile = React.memo(() => {
   const logOutHandler = () => {
     dispatch(logOutTC())
   }
-  debugger
-  if (!isLogin) {
+    if (!isLogin) {
     return <Navigate to={PATH.LOGIN} />
   }
 

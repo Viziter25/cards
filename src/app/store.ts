@@ -3,7 +3,6 @@ import thunkMiddleware, {ThunkDispatch} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {authReducer} from '../features/Login/auth-reducer';
 import {configureStore} from "@reduxjs/toolkit";
-import {registerReducer} from '../features/Registration/registration-reducer';
 import {profileReducer} from "../features/Profile/profile-reducer";
 import {appReducer} from "./appReducer";
 
@@ -12,7 +11,6 @@ import {appReducer} from "./appReducer";
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
   auth: authReducer,
-  register: registerReducer,
   profile: profileReducer,
   app: appReducer
 })

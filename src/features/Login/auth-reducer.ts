@@ -4,6 +4,7 @@ import {setIsInitialized} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import {AxiosError} from "axios";
 import {errorUtil} from "../../common/utils/error utils";
+import {registrAPI} from '../../api/registrAPI';
 
 const initialState = {
   isLoggedIn: false
@@ -49,6 +50,17 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
 export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch) => {
   try {
     await authAPI.forgotPassword(data)
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+    return e
+  }
+}
+
+
+export const registerTC = (data: any) => async (dispatch: Dispatch) => {
+
+  try {
+    await registrAPI.registration(data)
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
     return e
