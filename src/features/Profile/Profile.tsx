@@ -1,16 +1,16 @@
 import defaultAvatar from './assets/avatar.jpg'
 import camera from './assets/camera.svg'
 import logout from './assets/logout.svg'
-import s from './Profile.module.css'
+import s from './Profile.module.scss'
 import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Button, Paper } from '@mui/material'
 import { SuperEditableSpan } from '../../common/components/SuperEditableSpan/SuperEditableSpan'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
-import {logOutTC, updateProfileTC} from './profile-reducer'
-import {Navigate} from 'react-router-dom'
-import {SuperInput} from '../../common/components/SuperInput/SuperInput'
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {PATH} from "../../common/constants/path";
+import { logOutTC, updateProfileTC } from './profile-reducer'
+import { Navigate } from 'react-router-dom'
+import { SuperInput } from '../../common/components/SuperInput/SuperInput'
+import { useAppDispatch, useAppSelector } from "../../app/store";
+import { PATH } from "../../common/constants/path";
 
 
 export const Profile = React.memo(() => {
@@ -29,26 +29,6 @@ export const Profile = React.memo(() => {
     }
     return
   }, [dispatch, isLogin]) */
-
-  const logautButton = {
-    display: 'flex',
-    gap: '5px',
-    backgroundColor: '#FCFCFC',
-    borderRadius: '30px',
-    boxShadow: '0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-    height: '35px',
-    marginTop: '15px',
-    width: '125px',
-    color: '#000000',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    lineHeight: '20px',
-    letterSpacing: '0.01em',
-    opacity: '0.8',
-    textAlign: 'center',
-    textTransform: 'none'
-  }
 
   const openAvatarEditMode = () => {
     setAvatarEditMode(!avatarEditMode)
@@ -75,7 +55,7 @@ export const Profile = React.memo(() => {
   }
   debugger
   if (!isLogin) {
-    return <Navigate to={PATH.LOGIN}/>
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (
@@ -89,7 +69,7 @@ export const Profile = React.memo(() => {
               <SuperInput
                 autoFocus
                 className={s.input}
-                label={'avatar address'}
+                label={'Avatar address'}
                 labelClassName={s.label}
                 onChange={changeAvatarAddress}
                 onBlur={updateAvatar}
@@ -108,11 +88,10 @@ export const Profile = React.memo(() => {
           spanProps={{ className: s.span }}
           value={name}
         />
-        <span className={s.label}>your name</span>
+        <span className={s.info}>your name</span>
         <span className={s.email}>{profile.email}</span>
-        {/* <SuperButton className={s.logaut}><img src={logout} alt='logout'></img>Log out</SuperButton> */}
-        <Button sx={logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log
-          out</Button>
+        <SuperButton className={s.logautButton}><img src={logout} alt='logout'></img>Log out</SuperButton>
+        {/* <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button> */}
       </Paper>
     </div>
   )
