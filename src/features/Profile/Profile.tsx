@@ -90,8 +90,8 @@ export const Profile = React.memo(() => {
         />
         <span className={s.info}>your name</span>
         <span className={s.email}>{profile.email}</span>
-        <SuperButton className={s.logautButton}><img src={logout} alt='logout'></img>Log out</SuperButton>
-        {/* <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button> */}
+        {/*<SuperButton className={s.logautButton}><img src={logout} alt='logout'></img>Log out</SuperButton>*/}
+         <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
       </Paper>
     </div>
   )

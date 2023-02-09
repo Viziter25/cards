@@ -20,8 +20,7 @@ const slice = createSlice({
 export const registerReducer = slice.reducer
 export const {registerAC} = slice.actions
 
-
-export  const registerTC = (data:any) => (dispatch: Dispatch) => {
+export const registerTC = (data: any) => (dispatch: Dispatch) => {
   registrAPI.registration(data)
     .then(res => {
       console.log(res)
