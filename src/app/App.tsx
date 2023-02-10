@@ -13,7 +13,7 @@ function App() {
   const isInitialized = useAppSelector(state => state.app.isInitialized)
 
   useEffect(() => {
-    dispatch(authMeTC())
+      dispatch(authMeTC())
   }, [dispatch])
 
   if (!isInitialized) {
