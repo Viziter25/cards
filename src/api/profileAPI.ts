@@ -1,19 +1,19 @@
 import axios, { AxiosResponse } from 'axios'
 
 //instance
-const instance = axios.create({ 
+const instance = axios.create({
     //baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
-    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/', 
-    withCredentials: true, 
+    baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
+    withCredentials: true,
 })
 
 //api
 export const profileAPI = {
     updateProfile(name: string, avatar: string) {
-        return instance.put<UpdateProfileType, AxiosResponse<{updatedUser: ProfileType, error: string}>>('auth/me', {name, avatar})
+        return instance.put<'', AxiosResponse<{updatedUser: ProfileType, error: string}>,UpdateProfileType>('auth/me', {name, avatar})
     },
     logOut() {
-        return instance.delete<null, AxiosResponse<{info: string, error: string}>>('auth/me')
+        return instance.delete<{info: string, error: string}>('auth/me')
     },
     /* getProfile() {
         return instance.post<null, AxiosResponse<ProfileType>>('auth/me')

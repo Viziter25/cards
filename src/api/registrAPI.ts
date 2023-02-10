@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 export const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
@@ -8,7 +8,7 @@ export const instance = axios.create({
 
 export const registrAPI = {
   registration(data:RegistrationParamsType) {
-    return instance.post('auth/register', data)
+    return instance.post<'', AxiosResponse, RegistrationParamsType>('auth/register', data)
   }
 }
 

@@ -50,9 +50,10 @@ export const authMeTC = () => async (dispatch: Dispatch) => {
 export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch) => {
   try {
     await authAPI.forgotPassword(data)
+    return true
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
-    return e
+    return false
   }
 }
 
@@ -61,17 +62,19 @@ export const registerTC = (data: any) => async (dispatch: Dispatch) => {
 
   try {
     await registrAPI.registration(data)
+    return true
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
-    return e
+    return false
   }
 }
 
 export const createPasswordTC = (data:NewPasswordType) => async (dispatch: Dispatch) => {
   try {
     await authAPI.createPassword(data)
+    return true
   } catch (e) {
     errorUtil(e as AxiosError<{error: string}>, dispatch)
-    return e
+    return false
   }
 }

@@ -26,7 +26,7 @@ export const NewPassword = () => {
     onSubmit: (values) => {
       dispatch(createPasswordTC({password: values.password, resetPasswordToken: token}))
         .then(res => {
-          if (!res) {
+          if (res) {
             navigate(PATH.LOGIN)
           }
         })

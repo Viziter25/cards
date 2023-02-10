@@ -34,7 +34,7 @@ link</a>
       }
       dispatch(recPasswordTC(forgotDate))
         .then(res => {
-          if (!res) {
+          if (res) {
             navigate(PATH.CHECK_EMAIL)
           }
         })

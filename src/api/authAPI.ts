@@ -9,17 +9,17 @@ const instance = axios.create({
 
 export const authAPI = {
   login(data: LoginType) {
-    return instance.post<LoginType, AxiosResponse<ProfileType>>('auth/login', data)
+    return instance.post<'', AxiosResponse<ProfileType>, LoginType>('auth/login', data)
       .then(res => res.data)
   },
   me() {
     return instance.post<ProfileType>('auth/me')
   },
   forgotPassword(data: ForgotPasswordType) {
-    return instance.post<ForgotPasswordType, AxiosResponse<{info: string}>>('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
+    return instance.post<'', AxiosResponse<{info: string}>, ForgotPasswordType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
   },
   createPassword(data: NewPasswordType) {
-    return instance.post<NewPasswordType, AxiosResponse>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
+    return instance.post<'', AxiosResponse, NewPasswordType>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
   }
 }
 

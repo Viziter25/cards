@@ -37,7 +37,7 @@ export const Registration = () => {
     onSubmit: values => {
       dispatch(registerTC(values))
         .then(res => {
-          if (!res) {
+          if (res) {
             navigate(PATH.LOGIN)
           }
         })
