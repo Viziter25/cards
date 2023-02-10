@@ -19,7 +19,7 @@
     font-style: normal;
     font-weight: 400;
     opacity: 0.5;
-    text-transform: capitalize;
+    text-transform: lowercase;
 }
 
 .input {
@@ -29,6 +29,21 @@
     border: none;
     border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     color: #000000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    margin: 0 10px 0 0;
+    padding: 0;
+}
+
+.errorInput {
+    min-height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgba(255, 0, 0, 1);
+    color: #ff0000;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;

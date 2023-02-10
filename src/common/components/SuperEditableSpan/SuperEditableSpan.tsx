@@ -33,6 +33,7 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
     onBlur,
     onEnter,
     spanProps,
+    error,
 
     ...restProps // все остальные пропсы попадут в объект restProps
   }
@@ -43,13 +44,17 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
 
   const onEnterCallback = () => {
     // выключить editMode при нажатии Enter // делают студенты
-    setEditMode(!editMode)
-    onEnter?.()
+    if (!error) {
+      setEditMode(!editMode)
+      onEnter?.()
+    }
   }
   const onBlurCallback = (e: React.FocusEvent<HTMLInputElement>) => {
     // выключить editMode при нажатии за пределами инпута // делают студенты
-    setEditMode(!editMode)
-    onBlur?.(e)
+    if (!error) {
+      setEditMode(!editMode)
+      onBlur?.(e)
+    }
   }
   const onDoubleClickCallBack = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     // включить editMode при двойном клике // делают студенты
@@ -68,12 +73,12 @@ export const SuperEditableSpan: React.FC<SuperEditableSpanType> = (
             autoFocus={autoFocus || true}
             onBlur={onBlurCallback}
             onEnter={onEnterCallback}
-            className={s.input}
-            label={'name'}
+            className={error ? s.errorInput : s.input}
+            label={''}
             labelClassName={s.label}
             {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
           />
-          <SuperButton className={s.inputButton}>save</SuperButton>
+          <SuperButton disabled={!!error} className={s.inputButton}>save</SuperButton>
         </div>
       ) : (
         <div className={s.spanBlock} onDoubleClick={onDoubleClickCallBack}>

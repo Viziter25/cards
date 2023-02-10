@@ -22,6 +22,7 @@ export const Profile = React.memo(() => {
   const [avatarEditMode, setAvatarEditMode] = useState<boolean>(false)
   const [avatarAddress, setAvatarAddress] = useState<string | undefined>('')
   const [name, setName] = useState<string>(profile.name)
+  const [error, setError] = useState<string>('')
 
   /* useEffect(() => {
     if (isLogin) {
@@ -44,16 +45,25 @@ export const Profile = React.memo(() => {
     setAvatarAddress('')
   }, [dispatch, avatarEditMode, avatarAddress, profile.name])
 
+  const changeName = (value: string) => {
+    setName(value)
+    if (value.length === 0) {
+      setError('min length 1 symbol')
+    } else if (value.length > 15) {
+      setError('max length 15 symbols')
+    } else { setError('') }
+
+  }
   const updateName = useCallback(() => {
-    if (name) {
+    if (!error) {
       dispatch(updateProfileTC(name, profile.avatar ? profile.avatar : ''))
     }
-  }, [dispatch, name, profile.avatar])
+  }, [dispatch, error, name, profile.avatar])
 
   const logOutHandler = () => {
     dispatch(logOutTC())
   }
-    if (!isLogin) {
+  if (!isLogin) {
     return <Navigate to={PATH.LOGIN} />
   }
 
@@ -68,7 +78,7 @@ export const Profile = React.memo(() => {
               <SuperInput
                 autoFocus
                 className={s.input}
-                label={'Avatar address'}
+                label={'avatar address'}
                 labelClassName={s.label}
                 onChange={changeAvatarAddress}
                 onBlur={updateAvatar}
@@ -81,16 +91,17 @@ export const Profile = React.memo(() => {
           }
         </div>
         <SuperEditableSpan
-          onChangeText={setName}
+          onChangeText={changeName}
           onBlur={updateName}
           onEnter={updateName}
           spanProps={{ className: s.span }}
           value={name}
+          error={error}
         />
-        <span className={s.info}>your name</span>
+        <span className={error ? s.errorInfo : s.info}>{error ? error : 'your name'}</span>
         <span className={s.email}>{profile.email}</span>
         {/*<SuperButton className={s.logautButton}><img src={logout} alt='logout'></img>Log out</SuperButton>*/}
-         <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
+        <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
       </Paper>
     </div>
   )

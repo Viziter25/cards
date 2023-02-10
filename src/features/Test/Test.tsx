@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import SuperButton from '../../common/components/SuperButton/SuperButton';
-import {SuperInput} from '../../common/components/SuperInput/SuperInput';
+import { SuperInput } from '../../common/components/SuperInput/SuperInput';
 import SuperCheckbox from '../../common/components/SuperCheckbox/SuperCheckbox';
-import {SuperEditableSpan} from '../../common/components/SuperEditableSpan/SuperEditableSpan';
+import { SuperEditableSpan } from '../../common/components/SuperEditableSpan/SuperEditableSpan';
 import SuperSelect from '../../common/components/SuperSelect/SuperSelect';
 import SuperRadio from '../../common/components/SuperRadio/SuperRadio';
 import SuperRange from '../../common/components/SuperRange/SuperRange';
@@ -19,9 +19,9 @@ export const Test = () => {
 
   //Select
   const arr = [
-    {id: 1, value: '1'},
-    {id: 2, value: '2'},
-    {id: 3, value: '3'},
+    { id: 1, value: '1' },
+    { id: 2, value: '2' },
+    { id: 3, value: '3' },
   ] // value может быть изменено
   const [value, onChangeOption] = useState(1)
 
@@ -116,9 +116,9 @@ export const Test = () => {
       </div>
 
       Range
-      <SuperRange/>
+      <SuperRange />
 
-      <SuperDebouncedInput/>
+      <SuperDebouncedInput />
       Pagination
       <SuperPagination
         page={5}
