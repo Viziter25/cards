@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
@@ -7,14 +7,14 @@ const instance = axios.create({
 
 export const cardPacksApiDemo = {
   getCards(data: queryParamsCardsType) {
-    return instance.get<CardsResponseType>('cards/card')
+    return instance.get<CardsResponseType>('cards/card', {params: data})
       .then(res => res.data.cards)
   },
   createCard(data: PostCardType) {
     return instance.post('cards/card', {card: data})
   },
-  deleteCard(cardId: string) { // доделать
-    return instance.delete('cards/card')
+  deleteCard(cardId: string) {
+    return instance.delete('cards/card', {params: {id: cardId}})
   },
   updateCard(data: UpdateCardType) {
     return instance.put('cards/card', {card: data})
@@ -50,7 +50,7 @@ type CardsType = {
 }
 
 type queryParamsCardsType = {
-  cardAnswer?:string
+  cardAnswer?: string
   cardQuestion?: string
   cardsPack_id: string
   min?: number

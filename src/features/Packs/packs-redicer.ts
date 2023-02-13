@@ -1,8 +1,7 @@
 import {createAsyncThunk, createSlice, Dispatch} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {setIsLoggedInAC} from '../Login/auth-reducer';
-import {GetPacksResponseType, packsAPI, PackType} from '../../api/paksAPI';
+import {packsAPI, PackType} from '../../api/packsAPI';
 import {AppRootStateType} from '../../app/store';
 
 
