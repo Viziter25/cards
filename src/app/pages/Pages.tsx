@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Pages.module.scss'
-import { Route, Routes } from 'react-router-dom';
+import {Routes, Route, Navigate} from 'react-router-dom';
 import { PATH } from '../../common/constants/path';
 import { Login } from '../../features/Login/Login';
 import { Registration } from '../../features/Registration/Registration';

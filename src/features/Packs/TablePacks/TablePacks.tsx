@@ -3,6 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
 import {setPacksTC} from '../packs-redicer';
 import {ActionButtonTable} from './ActionButtonTable';
+import {date} from '../../../common/utils/dateConvertor';
 
 export const TablePacks = () => {
 
@@ -39,7 +40,7 @@ export const TablePacks = () => {
                 component="th" scope="row">{pack.name}</TableCell>
               <TableCell
                 align="center">{pack.cardsCount}</TableCell>
-              <TableCell align="center">{pack.updated}</TableCell>
+              <TableCell align="center">{date(pack.updated)}</TableCell>
               <TableCell align="center">{pack.user_name}</TableCell>
               <TableCell align="center">
                 <ActionButtonTable/>

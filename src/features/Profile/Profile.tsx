@@ -26,12 +26,6 @@ export const Profile = React.memo(() => {
   const [name, setName] = useState<string>(profile.name)
   const [error, setError] = useState<string>('')
 
-  /* useEffect(() => {
-    if (isLogin) {
-      dispatch(getProfileTC())
-    }
-    return
-  }, [dispatch, isLogin]) */
 
   const openAvatarEditMode = () => {
     setAvatarEditMode(!avatarEditMode)
@@ -73,7 +67,7 @@ export const Profile = React.memo(() => {
     <div className={s.profileContainer}>
       <div className={s.backArrow}>
         <NavLink to={PATH.PACKS}><img src={backArrow} className={s.backArrowImg} alt={'arrow'}></img></NavLink>
-        <span className={s.backArrowText}>Back to Packs List</span>
+        <NavLink to={PATH.PACKS} className={s.backArrowText}>Back to Packs List</NavLink>
       </div>
       <Paper className={s.paper} elevation={3}>
         <h3 className={s.title}>personal information</h3>
