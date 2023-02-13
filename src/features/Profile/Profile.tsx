@@ -1,6 +1,7 @@
 import defaultAvatar from './assets/avatar.jpg'
 import camera from './assets/camera.svg'
 import logout from './assets/logout.svg'
+import backArrow from './assets/backArrow.svg'
 import s from './Profile.module.scss'
 import React, { ChangeEvent, useCallback, useState } from 'react'
 import { Button, Paper } from '@mui/material'
@@ -9,8 +10,9 @@ import SuperButton from '../../common/components/SuperButton/SuperButton'
 import { logOutTC, updateProfileTC } from './profile-reducer'
 import { Navigate } from 'react-router-dom'
 import { SuperInput } from '../../common/components/SuperInput/SuperInput'
-import { useAppDispatch, useAppSelector } from "../../app/store";
-import { PATH } from "../../common/constants/path";
+import { useAppDispatch, useAppSelector } from "../../app/store"
+import { NavLink } from 'react-router-dom'
+import { PATH } from "../../common/constants/path"
 
 
 export const Profile = React.memo(() => {
@@ -69,6 +71,10 @@ export const Profile = React.memo(() => {
 
   return (
     <div className={s.profileContainer}>
+      <div className={s.backArrow}>
+        <NavLink to={PATH.PACKS}><img src={backArrow} className={s.backArrowImg} alt={'arrow'}></img></NavLink>
+        <span className={s.backArrowText}>Back to Packs List</span>
+      </div>
       <Paper className={s.paper} elevation={3}>
         <h3 className={s.title}>personal information</h3>
         <div className={s.avatarContainer}>
