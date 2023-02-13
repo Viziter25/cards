@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   app: appReducer,
-  packs: setPacksReducer
+  packsPage: setPacksReducer
 })
 
 export const store = configureStore({
