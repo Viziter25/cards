@@ -9,6 +9,7 @@ import {NewPassword} from '../../features/NewPassword/NewPassword';
 import {Error404} from '../../features/Error404/Error404';
 import {Test} from '../../features/Test/Test';
 import {CheckEmail} from "../../features/CheckEmail/CheckEmail";
+import {Packs} from '../../features/Packs/Packs';
 
 export const Pages = () => {
   return (
@@ -24,6 +25,7 @@ export const Pages = () => {
         <Route path={PATH.ERROR404} element={<Error404/>}/>
         <Route path='*' element={<Navigate to={'/404'}/>}/>
         <Route path={PATH.TEST} element={<Test/>}/>
+        <Route path={PATH.PACKS} element={<Packs/>}/>
       </Routes>
     </div>
   );
