@@ -5,6 +5,7 @@ import {authReducer} from '../features/Login/auth-reducer';
 import {configureStore} from "@reduxjs/toolkit";
 import {profileReducer} from "../features/Profile/profile-reducer";
 import {appReducer} from "./appReducer";
+import { packsReducer } from '../features/Packs/packs-reducer';
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -12,7 +13,8 @@ import {appReducer} from "./appReducer";
 const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
-  app: appReducer
+  app: appReducer,
+  packs: packsReducer,
 })
 
 export const store = configureStore({

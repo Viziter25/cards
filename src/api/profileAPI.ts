@@ -10,7 +10,7 @@ const instance = axios.create({
 //api
 export const profileAPI = {
     updateProfile(name: string, avatar: string) {
-        return instance.put<'', AxiosResponse<{updatedUser: ProfileType, error: string}>,UpdateProfileType>('auth/me', {name, avatar})
+        return instance.put<'', AxiosResponse<{updatedUser: ProfileType, error: string}>, UpdateProfileType>('auth/me', {name, avatar})
     },
     logOut() {
         return instance.delete<{info: string, error: string}>('auth/me')

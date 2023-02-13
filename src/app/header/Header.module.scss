@@ -22,11 +22,14 @@
             align-items: center;
             color: #000000;
             border-bottom: 1px dashed #000000;
+            cursor: pointer;
+            text-decoration: none;
          }
          .userPhoto {
             width: 48px;
             height: 48px;
             border-radius: 100%;
+            cursor: pointer;
          }
       }
    }
