@@ -5,6 +5,7 @@ import {setPacksTC, setSortPacksAC} from '../packs-redicer';
 import {ActionButtonTable} from './ActionButtonTable';
 import {date} from '../../../common/utils/dateConvertor';
 import SuperSort from "../../../common/components/SuperSort/SuperSort";
+import s from './tablePacks.module.scss'
 
 export const TablePacks = () => {
 
@@ -17,6 +18,7 @@ export const TablePacks = () => {
   const max = useAppSelector(state => state.packsPage.queryParams.max)
   const packName = useAppSelector(state => state.packsPage.queryParams.packName)
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
+  const isLoading = useAppSelector(state => state.app.isLoading)
 
   const [sort, setSort] = useState('')
 
@@ -29,38 +31,42 @@ export const TablePacks = () => {
   }, [dispatch, sort])
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{minWidth: 650}} aria-label="simple table">
-        <TableHead sx={{backgroundColor: '#EFEFEF'}}>
-          <TableRow>
-            <TableCell><SuperSort sort={sort} nameValue={'Name'} value={'name'} onChange={setSort}/></TableCell>
-            <TableCell align="center"><SuperSort sort={sort} nameValue={'Cards'} value={'cardsCount'} onChange={setSort}/></TableCell>
-            <TableCell align="center"><SuperSort nameValue={'Last Updated'} sort={sort} value={'updated'} onChange={setSort}/></TableCell>
-            <TableCell align="center"><SuperSort nameValue={'Created by'} sort={sort} value={'user_name'} onChange={setSort}/></TableCell>
-            <TableCell align="center"><span>Actions</span></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-
-          {packs.map((pack) => (
-            <TableRow
-              key={pack._id}
-              sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-              <TableCell
-                component="th" scope="row">{pack.name}</TableCell>
-              <TableCell
-                align="center">{pack.cardsCount}</TableCell>
-              <TableCell align="center">{date(pack.updated)}</TableCell>
-              <TableCell align="center">{pack.user_name}</TableCell>
-              <TableCell align="center">
-                <ActionButtonTable/>
-              </TableCell>
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{minWidth: 650}} aria-label="simple table">
+          <TableHead sx={{backgroundColor: '#EFEFEF'}}>
+            <TableRow>
+              <TableCell><SuperSort sort={sort} nameValue={'Name'} value={'name'} onChange={setSort}/></TableCell>
+              <TableCell align="center"><SuperSort sort={sort} nameValue={'Cards'} value={'cardsCount'}
+                                                   onChange={setSort}/></TableCell>
+              <TableCell align="center"><SuperSort nameValue={'Last Updated'} sort={sort} value={'updated'}
+                                                   onChange={setSort}/></TableCell>
+              <TableCell align="center"><SuperSort nameValue={'Created by'} sort={sort} value={'user_name'}
+                                                   onChange={setSort}/></TableCell>
+              <TableCell align="center"><span>Actions</span></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {packs.map((pack) => (
+              <TableRow
+                key={pack._id}
+                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                <TableCell
+                  component="th" scope="row">{pack.name}</TableCell>
+                <TableCell
+                  align="center">{pack.cardsCount}</TableCell>
+                <TableCell align="center">{date(pack.updated)}</TableCell>
+                <TableCell align="center">{pack.user_name}</TableCell>
+                <TableCell align="center">
+                  <ActionButtonTable/>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {!packs.length && isLoading !== 'loading' && <div className={s.warn}>Change query parameters</div>}
+    </div>
   );
 };
 

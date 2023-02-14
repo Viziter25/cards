@@ -3,6 +3,7 @@ import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
 import {packsAPI, PackType} from '../../api/packsAPI';
 import {AppRootStateType} from '../../app/store';
+import {setIsLoading} from "../../app/appReducer";
 
 
 // type InitState = {
@@ -78,7 +79,7 @@ export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC} = slice.ac
 
 //thunks
 export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
-
+  dispatch(setIsLoading({isLoading: 'loading'}))
   const {
     packName,
     sortPacks,
@@ -88,11 +89,10 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
     pageCount,
     page
   } = getState().packsPage.queryParams
-
   try {
     const res = await packsAPI.getPacks({packName, sortPacks, user_id, min, max, pageCount, page})
-
     dispatch(setPacksAC(res.data))
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }

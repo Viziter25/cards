@@ -5,12 +5,13 @@ import {Pages} from './pages/Pages';
 import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
 import {useAppDispatch, useAppSelector} from "./store";
 import {authMeTC} from "../features/Login/auth-reducer";
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, LinearProgress} from "@mui/material";
 
 function App() {
 
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const isLoading = useAppSelector(state => state.app.isLoading)
 
   useEffect(() => {
       dispatch(authMeTC())
@@ -26,6 +27,7 @@ function App() {
   return (
     <div className="App">
       <Header/>
+      {isLoading === 'loading' && <LinearProgress/>}
       <Pages/>
       <ErrorSnackbar/>
     </div>

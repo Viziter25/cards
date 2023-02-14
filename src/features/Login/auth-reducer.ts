@@ -1,6 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 import {authAPI, ForgotPasswordType, LoginType, NewPasswordType} from '../../api/authAPI';
-import {setIsInitialized} from "../../app/appReducer";
+import {setIsInitialized, setIsLoading} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import {AxiosError} from "axios";
 import {errorUtil} from "../../common/utils/error utils";
@@ -26,30 +26,36 @@ export const {setIsLoggedInAC} = slice.actions
 
 //thunks
 export const loginTC = (data: LoginType) => async (dispatch: Dispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     const res = await authAPI.login(data)
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
     dispatch(getProfileAC({profile: res}))
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
   }
 }
 
 export const authMeTC = () => async (dispatch: Dispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     const res = await authAPI.me()
     dispatch(getProfileAC({profile: res.data}))
     dispatch(setIsLoggedInAC({isLoggedIn: true}))
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {
-    errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
+    dispatch(setIsLoading({isLoading: 'failed'}))
   } finally {
     dispatch(setIsInitialized({isInitialized :true}))
   }
 }
 
 export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Dispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await authAPI.forgotPassword(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
     return true
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
@@ -59,9 +65,10 @@ export const recPasswordTC = (data: ForgotPasswordType) => async (dispatch: Disp
 
 
 export const registerTC = (data: any) => async (dispatch: Dispatch) => {
-
+  dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await registrAPI.registration(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
     return true
   } catch (e) {
     errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
@@ -70,8 +77,10 @@ export const registerTC = (data: any) => async (dispatch: Dispatch) => {
 }
 
 export const createPasswordTC = (data:NewPasswordType) => async (dispatch: Dispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await authAPI.createPassword(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
     return true
   } catch (e) {
     errorUtil(e as AxiosError<{error: string}>, dispatch)

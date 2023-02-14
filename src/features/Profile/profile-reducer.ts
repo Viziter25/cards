@@ -3,6 +3,7 @@ import { profileAPI, ProfileType } from "../../api/profileAPI"
 import { setIsLoggedInAC } from "../Login/auth-reducer"
 import {errorUtil} from "../../common/utils/error utils";
 import {AxiosError} from "axios";
+import {setIsLoading} from "../../app/appReducer";
 
 export const initState = {} as ProfileType
 
@@ -31,20 +32,22 @@ export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
 
 //thunks
 export const updateProfileTC = (name: string, avatar: string) => async (dispatch: Dispatch) => {
-
+    dispatch(setIsLoading({isLoading: 'loading'}))
     try {
         const res = await profileAPI.updateProfile(name, avatar)
         dispatch(updateProfileAC({profile: res.data.updatedUser}))
+        dispatch(setIsLoading({isLoading: 'succeeded'}))
     } catch (e) {
         errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
     }
 }
 export const logOutTC = () => async (dispatch: Dispatch) => {
-
+    dispatch(setIsLoading({isLoading: 'loading'}))
     try {
         await profileAPI.logOut()
         dispatch(setIsLoggedInAC({isLoggedIn: false}))
         dispatch(logOutAC())
+        dispatch(setIsLoading({isLoading: 'succeeded'}))
     } catch (e) {
         errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
     }
