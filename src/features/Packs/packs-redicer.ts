@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, Dispatch} from '@reduxjs/toolkit';
+import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
 import {packsAPI, PackType} from '../../api/packsAPI';
@@ -38,7 +38,7 @@ const initialState = {
   },
   queryParams: {
     pageCount: 10,
-    sortPacks: '0updated',
+    sortPacks: '',
     min: 0,
     max: 4,
     page: 1,
@@ -54,6 +54,12 @@ const slice = createSlice({
   reducers: {
     setPacksAC(state, action) {
       state.packs = action.payload
+    },
+    setPackNameAC(state, action: PayloadAction<{ packName: string }>) {
+      state.queryParams.packName = action.payload.packName
+    },
+    setUserIdAC(state, action: PayloadAction<{userId: string}>) {
+      state.queryParams.user_id = action.payload.userId
     }
   },
   // extraReducers: builder => {
@@ -64,7 +70,7 @@ const slice = createSlice({
 })
 
 export const setPacksReducer = slice.reducer
-export const {setPacksAC} = slice.actions
+export const {setPacksAC, setPackNameAC, setUserIdAC} = slice.actions
 
 
 //thunks

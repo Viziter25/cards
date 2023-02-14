@@ -9,13 +9,17 @@ export const TablePacks = () => {
 
   const dispatch = useAppDispatch()
   const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
-
-  console.log('packs', packs)
-
+  const pageCount = useAppSelector(state => state.packsPage.queryParams.pageCount)
+  const page = useAppSelector(state => state.packsPage.queryParams.page)
+  const sortPacks = useAppSelector(state => state.packsPage.queryParams.sortPacks)
+  const min = useAppSelector(state => state.packsPage.queryParams.min)
+  const max = useAppSelector(state => state.packsPage.queryParams.max)
+  const packName = useAppSelector(state => state.packsPage.queryParams.packName)
+  const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
 
   useEffect(() => {
     dispatch(setPacksTC())
-  }, [])
+  }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
 
 
   return (
