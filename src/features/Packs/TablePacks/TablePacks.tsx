@@ -10,7 +10,6 @@ export const TablePacks = () => {
   const dispatch = useAppDispatch()
   const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
 
-  console.log('packs', packs)
 
 
   useEffect(() => {
@@ -43,7 +42,7 @@ export const TablePacks = () => {
               <TableCell align="center">{date(pack.updated)}</TableCell>
               <TableCell align="center">{pack.user_name}</TableCell>
               <TableCell align="center">
-                <ActionButtonTable/>
+                <ActionButtonTable  packId = {pack._id} userId = {pack.user_id}/>
               </TableCell>
             </TableRow>
           ))}

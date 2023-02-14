@@ -1,8 +1,8 @@
-import {createAsyncThunk, createSlice, Dispatch} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {packsAPI, PackType} from '../../api/packsAPI';
-import {AppRootStateType} from '../../app/store';
+import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from '../../api/packsAPI';
+import {AppRootStateType, AppThunkDispatch} from '../../app/store';
 
 
 // type InitState = {
@@ -52,7 +52,7 @@ const slice = createSlice({
   name: 'packs',
   initialState: initialState,
   reducers: {
-    setPacksAC(state, action) {
+    setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
       state.packs = action.payload
     }
   },
@@ -84,6 +84,38 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
     const res = await packsAPI.getPacks({packName, sortPacks, user_id, min, max, pageCount, page})
 
     dispatch(setPacksAC(res.data))
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+
+export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispatch) => {
+  try {
+    const res = await packsAPI.createPack(data)
+
+    dispatch(setPacksTC())
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+
+export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) => {
+  try {
+    const res = await packsAPI.deletePack(data)
+
+    dispatch(setPacksTC())
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+export const updatePackTC = (data:PackUpdateType) => async (dispatch: AppThunkDispatch) => {
+  try {
+    const res = await packsAPI.updatePack(data)
+
+    dispatch(setPacksTC())
   } catch (e) {
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }
