@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
-import {setPacksTC} from '../packs-redicer';
+import {setPacksTC, setSortPacksAC} from '../packs-redicer';
 import {ActionButtonTable} from './ActionButtonTable';
 import {date} from '../../../common/utils/dateConvertor';
+import SuperSort from "../../../common/components/SuperSort/SuperSort";
 
 export const TablePacks = () => {
 
@@ -17,21 +18,26 @@ export const TablePacks = () => {
   const packName = useAppSelector(state => state.packsPage.queryParams.packName)
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
 
+  const [sort, setSort] = useState('')
+
   useEffect(() => {
     dispatch(setPacksTC())
   }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
 
+  useEffect(() => {
+    dispatch(setSortPacksAC({sortBy: sort}))
+  }, [dispatch, sort])
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{minWidth: 650}} aria-label="simple table">
         <TableHead sx={{backgroundColor: '#EFEFEF'}}>
           <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="center">Cards</TableCell>
-            <TableCell align="center">Last Updated</TableCell>
-            <TableCell align="center">Created by</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell><SuperSort sort={sort} nameValue={'Name'} value={'name'} onChange={setSort}/></TableCell>
+            <TableCell align="center"><SuperSort sort={sort} nameValue={'Cards'} value={'cardsCount'} onChange={setSort}/></TableCell>
+            <TableCell align="center"><SuperSort nameValue={'Last Updated'} sort={sort} value={'updated'} onChange={setSort}/></TableCell>
+            <TableCell align="center"><SuperSort nameValue={'Created by'} sort={sort} value={'user_name'} onChange={setSort}/></TableCell>
+            <TableCell align="center"><span>Actions</span></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

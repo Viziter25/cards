@@ -60,6 +60,9 @@ const slice = createSlice({
     },
     setUserIdAC(state, action: PayloadAction<{userId: string}>) {
       state.queryParams.user_id = action.payload.userId
+    },
+    setSortPacksAC(state, action: PayloadAction<{sortBy: string}>){
+      state.queryParams.sortPacks = action.payload.sortBy
     }
   },
   // extraReducers: builder => {
@@ -70,7 +73,7 @@ const slice = createSlice({
 })
 
 export const setPacksReducer = slice.reducer
-export const {setPacksAC, setPackNameAC, setUserIdAC} = slice.actions
+export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC} = slice.actions
 
 
 //thunks
