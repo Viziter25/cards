@@ -1,0 +1,17 @@
+@import "../../../common/styles/mixin";
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 36px;
+    .selectContainer {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        .text1 .text2 {
+            @include text(400, 12px, 15px);
+        }
+    }
+}
+

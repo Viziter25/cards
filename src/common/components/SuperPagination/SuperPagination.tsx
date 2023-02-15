@@ -1,7 +1,7 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
-import {Pagination} from '@mui/material'
-import s from './SuperPagination.module.css'
+import { Pagination } from '@mui/material'
+import s from './SuperPagination.module.scss'
 import SuperSelect from '../SuperSelect/SuperSelect';
 
 export type SuperPaginationPropsType = {
@@ -24,7 +24,6 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
     onChange(page, pageSize)
   }, [pageSize])
 
-
   const onChangeCallback = (event: React.ChangeEvent<unknown>, page: number) => {
     onChange(page, pageSize)
   }
@@ -37,10 +36,7 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
     <div className={s.pagination}>
       <Pagination
         id={id + '-pagination'}
-        sx={{
-          // стили для Pagination // пишет студент
-
-        }}
+        sx={{}}
         page={page}
         count={lastPage}
         onChange={onChangeCallback}
@@ -50,24 +46,21 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
         shape="rounded"
       />
 
-      <span className={s.text1}>
-                Показать
-            </span>
-
-      <SuperSelect
-        id={id + '-pagination-select'}
-        value={itemsCountForPage}
-        options={[
-          {id: 4, value: 4},
-          {id: 7, value: 7},
-          {id: 10, value: 10},
-        ]}
-        onChange={onChangeSelect}
-      />
-
-      <span className={s.text2}>
-                строк в таблице
-            </span>
+      <div className={s.selectContainer}>
+        <span className={s.text1}>Show</span>
+        <SuperSelect
+          id={id + '-pagination-select'}
+          value={itemsCountForPage}
+          options={[
+            { id: 5, value: 5 },
+            { id: 10, value: 10 },
+            { id: 15, value: 15 },
+            { id: 20, value: 20 },
+          ]}
+          onChange={onChangeSelect}
+        />
+        <span className={s.text2}>Cards per Page</span>
+      </div>
     </div>
   )
 }

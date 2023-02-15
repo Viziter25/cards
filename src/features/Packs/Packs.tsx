@@ -8,6 +8,11 @@ import {IsMyPack} from "../../common/components/isMyPack/IsMyPack";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../common/constants/path";
 import {MiniHeader} from "../../common/components/MiniHeader/MiniHeader";
+import { Button } from '@mui/material'
+import { setPackNameAC } from "./packs-reducer";
+import { SliderComponent } from './Slider/SliderComponent';
+import { RemoveFilters } from './RemoveFilters/RemoveFilters';
+import { Paginator } from './Paginator/Paginator';
 
 export const Packs = () => {
 
@@ -24,7 +29,7 @@ export const Packs = () => {
 
   const clickHandler = () => {
     dispatch(createPackTC({
-        name: 'new Packs by Zlotnik',
+        name: 'new Packs',
         private:false
       }
     ))
@@ -38,10 +43,11 @@ export const Packs = () => {
           <SearchInput searchHandler={searchHandler}/>
         </div>
         <IsMyPack/>
+        <SliderComponent />
+        <RemoveFilters />
       </div>
-      {/* search component */}
-      <TablePacks/>
-      {/* pagination component */}
+      <TablePacks />
+      <Paginator />
     </div>
   );
 };
