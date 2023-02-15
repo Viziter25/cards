@@ -6,6 +6,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {profileReducer} from "../features/Profile/profile-reducer";
 import {appReducer} from "./appReducer";
 import {setPacksReducer} from '../features/Packs/packs-redicer';
+import {cardsReducer} from "../features/Packs/Cards/cards-reducer";
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   app: appReducer,
-  packsPage: setPacksReducer
+  packsPage: setPacksReducer,
+  cardsPage: cardsReducer
 })
 
 export const store = configureStore({

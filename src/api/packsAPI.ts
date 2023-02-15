@@ -21,14 +21,6 @@ export const packsAPI = {
   }
 }
 
-
-
-
-
-
-
-
-
 // types
 export type GetPacksType = {
   packName?: string

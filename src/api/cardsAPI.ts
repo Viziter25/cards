@@ -5,10 +5,10 @@ const instance = axios.create({
   withCredentials: true
 })
 
-export const cardPacksApiDemo = {
+export const cardApi = {
   getCards(data: queryParamsCardsType) {
     return instance.get<CardsResponseType>('cards/card', {params: data})
-      .then(res => res.data.cards)
+      .then(res => res.data)
   },
   createCard(data: PostCardType) {
     return instance.post('cards/card', {card: data})
@@ -21,7 +21,7 @@ export const cardPacksApiDemo = {
   }
 }
 
-type CardsResponseType = {
+export type CardsResponseType = {
   cards: Array<CardsType>
   packUserId: string,
   packName: string,
@@ -37,7 +37,7 @@ type CardsResponseType = {
   tokenDeathTime: number
 }
 
-type CardsType = {
+export type CardsType = {
   answer: string
   question: string
   cardsPack_id: string
@@ -49,7 +49,7 @@ type CardsType = {
   _id: string
 }
 
-type queryParamsCardsType = {
+export type queryParamsCardsType = {
   cardAnswer?: string
   cardQuestion?: string
   cardsPack_id: string

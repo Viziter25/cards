@@ -6,6 +6,7 @@ import {ActionButtonTable} from './ActionButtonTable';
 import {date} from '../../../common/utils/dateConvertor';
 import SuperSort from "../../../common/components/SuperSort/SuperSort";
 import s from './tablePacks.module.scss'
+import {NavLink} from "react-router-dom";
 
 export const TablePacks = () => {
 
@@ -52,7 +53,7 @@ export const TablePacks = () => {
                 key={pack._id}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell
-                  component="th" scope="row">{pack.name}</TableCell>
+                  component="th" scope="row"><NavLink style={{textDecoration:'none', color: 'black'}} to={`/cards/${pack._id}`}>{pack.name}</NavLink></TableCell>
                 <TableCell
                   align="center">{pack.cardsCount}</TableCell>
                 <TableCell align="center">{date(pack.updated)}</TableCell>

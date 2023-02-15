@@ -1,13 +1,13 @@
 import React from 'react';
 import {TablePacks} from './TablePacks/TablePacks';
 import s from './Packs.module.scss'
-import {Button} from '@mui/material'
 import {SearchInput} from "../../common/components/searchInput/SearchInput";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {setPackNameAC} from "./packs-redicer";
 import {IsMyPack} from "../../common/components/isMyPack/IsMyPack";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../common/constants/path";
+import {MiniHeader} from "../../common/components/MiniHeader/MiniHeader";
 
 export const Packs = () => {
 
@@ -24,12 +24,11 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <div className={s.miniHeader}>
-        <span className={s.title}>Packs list</span>
-        <Button className={s.button} variant={"contained"}>Add new pack</Button>
-      </div>
+      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'}/>
       <div className={s.filter}>
-        <SearchInput searchHandler={searchHandler}/>
+        <div className={s.searchInput}>
+          <SearchInput searchHandler={searchHandler}/>
+        </div>
         <IsMyPack/>
       </div>
       {/* search component */}

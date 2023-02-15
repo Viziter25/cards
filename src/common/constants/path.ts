@@ -6,6 +6,7 @@ export const PATH = {
   NEW_PASSWORD: '/new_password/:token',
   PROFILE: '/',
   PACKS: '/packs',
+  CARDS: '/cards/:packId',
   ERROR404: '/404',
   TEST: '/test',
 }

@@ -11,6 +11,7 @@ import { Error404 } from '../../features/Error404/Error404';
 import { Test } from '../../features/Test/Test';
 import { CheckEmail } from "../../features/CheckEmail/CheckEmail";
 import { Packs } from '../../features/Packs/Packs';
+import {Cards} from "../../features/Packs/Cards/Cards";
 
 export const Pages = () => {
   return (
@@ -23,6 +24,7 @@ export const Pages = () => {
         <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
+        <Route path={PATH.CARDS} element={<Cards />} />
         <Route path={PATH.ERROR404} element={<Error404 />} />
         <Route path='*' element={<Navigate to={'/404'} />} />
         <Route path={PATH.TEST} element={<Test />} />

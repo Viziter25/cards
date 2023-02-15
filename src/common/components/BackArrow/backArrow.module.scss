@@ -1,0 +1,20 @@
+.backArrow {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+  .backArrowImg {
+    width: 15px;
+    height: 10px;
+    margin-right: 10px;
+  }
+  .backArrowText {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    text-decoration: none;
+  }
+}

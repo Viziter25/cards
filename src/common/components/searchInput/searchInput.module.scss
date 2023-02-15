@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 39%;
   row-gap: 10px;
   span {
     @include text(500, 14px, 17px);
