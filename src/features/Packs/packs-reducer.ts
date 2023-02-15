@@ -3,6 +3,7 @@ import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
 import {packsAPI, PackType} from '../../api/packsAPI';
 import {AppRootStateType} from '../../app/store';
+import { Test } from '../Test/Test';
 
 
 // type InitState = {
@@ -35,18 +36,22 @@ import {AppRootStateType} from '../../app/store';
 const initialState = {
   packs: {
     cardPacks: [] as  PackType[],
+    page: null as unknown as number,
+    pageCount: null as unknown as number,
+    cardPacksTotalCount: null as unknown as number,
+    minCardsCount: null as unknown as number,
+    maxCardsCount: null as unknown as number,
   },
   queryParams: {
-    pageCount: 10,
-    sortPacks: '',
-    min: 0,
-    max: 4,
-    page: 1,
-    packName: '',
-    user_id: ''
+    pageCount: null as unknown as number,
+    sortPacks: null as unknown as string,
+    min: null as unknown as number,
+    max: null as unknown as number,
+    page: null as unknown as number,
+    packName: null as unknown as string,
+    user_id: null as unknown as string
   }
 }
-
 
 const slice = createSlice({
   name: 'packs',
@@ -63,6 +68,16 @@ const slice = createSlice({
     },
     setSortPacksAC(state, action: PayloadAction<{sortBy: string}>){
       state.queryParams.sortPacks = action.payload.sortBy
+    },
+    setSliderValuesAC(state, action: PayloadAction<{sliderValues: number[]}>){
+      state.queryParams.min = action.payload.sliderValues[0]
+      state.queryParams.max = action.payload.sliderValues[1]
+    },
+    setCurrentPageAC(state, action: PayloadAction<{currentPage: number}>){
+      state.queryParams.page = action.payload.currentPage
+    },
+    setPageCountAC(state, action: PayloadAction<{pageCount: number}>){
+      state.queryParams.pageCount = action.payload.pageCount
     }
   },
   // extraReducers: builder => {
@@ -73,8 +88,15 @@ const slice = createSlice({
 })
 
 export const setPacksReducer = slice.reducer
-export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC} = slice.actions
-
+export const {
+  setPacksAC,
+  setPackNameAC,
+  setUserIdAC,
+  setSortPacksAC,
+  setSliderValuesAC,
+  setCurrentPageAC,
+  setPageCountAC
+} = slice.actions
 
 //thunks
 export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
