@@ -32,11 +32,11 @@ export const ActionButtonTable = (props: ActionButtonTableType) => {
     <div>
       {myId === props.userId ?
         <div className={s.actionButton}>
-          <a href="#"><img src={teacherIcon} alt=""/></a>
-          <a href="#" onClick={updatePackHandler}><img src={editIcon} alt=""/></a>
-          <a href="#" onClick={deletePackHandler}><img src={deleteIcon} alt=""/></a>
+          <img src={teacherIcon} alt=""/>
+          <img onClick={updatePackHandler} src={editIcon} alt=""/>
+          <img onClick={deletePackHandler} src={deleteIcon} alt=""/>
         </div> :
-        <a href="#" ><img src={teacherIcon} alt=""/></a>
+        <img src={teacherIcon} alt=""/>
       }
     </div>
   );

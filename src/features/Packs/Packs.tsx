@@ -3,7 +3,7 @@ import {TablePacks} from './TablePacks/TablePacks';
 import s from './Packs.module.scss'
 import {SearchInput} from "../../common/components/searchInput/SearchInput";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import {setPackNameAC} from "./packs-redicer";
+import {createPackTC, setPackNameAC} from "./packs-redicer";
 import {IsMyPack} from "../../common/components/isMyPack/IsMyPack";
 import {Navigate} from "react-router-dom";
 import {PATH} from "../../common/constants/path";
@@ -32,7 +32,7 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'}/>
+      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={clickHandler}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
           <SearchInput searchHandler={searchHandler}/>
