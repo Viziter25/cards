@@ -22,6 +22,14 @@ export const Packs = () => {
     return <Navigate to={PATH.LOGIN}/>
   }
 
+  const clickHandler = () => {
+    dispatch(createPackTC({
+        name: 'new Packs by Zlotnik',
+        private:false
+      }
+    ))
+  }
+
   return (
     <div className={s.container}>
       <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'}/>

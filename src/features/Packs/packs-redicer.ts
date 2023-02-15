@@ -1,8 +1,8 @@
-import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {packsAPI, PackType} from '../../api/packsAPI';
-import {AppRootStateType} from '../../app/store';
+import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from '../../api/packsAPI';
+import {AppRootStateType, AppThunkDispatch} from '../../app/store';
 import {setIsLoading} from "../../app/appReducer";
 
 
@@ -53,7 +53,7 @@ const slice = createSlice({
   name: 'packs',
   initialState: initialState,
   reducers: {
-    setPacksAC(state, action) {
+    setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
       state.packs = action.payload
     },
     setPackNameAC(state, action: PayloadAction<{ packName: string }>) {
@@ -89,10 +89,47 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
     pageCount,
     page
   } = getState().packsPage.queryParams
+
   try {
     const res = await packsAPI.getPacks({packName, sortPacks, user_id, min, max, pageCount, page})
+
     dispatch(setPacksAC(res.data))
     dispatch(setIsLoading({isLoading: 'succeeded'}))
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+
+export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
+  try {
+    const res = await packsAPI.createPack(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
+    dispatch(setPacksTC())
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+
+export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
+  try {
+    const res = await packsAPI.deletePack(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
+    dispatch(setPacksTC())
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+
+export const updatePackTC = (data:PackUpdateType) => async (dispatch: AppThunkDispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
+  try {
+    const res = await packsAPI.updatePack(data)
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
+    dispatch(setPacksTC())
   } catch (e) {
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }

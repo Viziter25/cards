@@ -11,13 +11,13 @@ export const packsAPI = {
     return instance.get<GetPacksResponseType>('cards/pack', {params: data})
   },
   createPack(data: PackPostType) {
-    return instance.post('cards/pack', {cardsPack: data})
+    return instance.post<CreatePackResponseType>('cards/pack', {cardsPack: data})
   },
   deletePack(packId: string) {
-    return instance.delete('cards/pack',{params: {id: packId}})
+    return instance.delete<DeletePackResponseType>('cards/pack',{params: {id: packId}})
   },
   updatePack(data: PackUpdateType) {
-    return instance.put('cards/pack', {cardsPack: data})
+    return instance.put<UpdatePackResponseType>('cards/pack', {cardsPack: data})
   }
 }
 
@@ -47,19 +47,83 @@ export type PackType = {
   user_id: string // id user  который создал колоду
   user_name: string
   private: boolean
-  name: 'test pack' // название колоды
-  cardsCount: 0 // кол-во карточек в колоде
+  name: string // название колоды
+  cardsCount: number // кол-во карточек в колоде
   created: string
   updated: string
 }
 
-type PackUpdateType = {
+export type PackUpdateType = {
   _id: string
   name?: string
 }
 
-type PackPostType = {
+export type UpdatePackResponseType = {
+  updatedCardsPack: {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+  }
+}
+
+export type PackPostType = {
   name?: string
   deckCover?: string
   private: boolean
 }
+
+export type CreatePackResponseType = {
+  newCardsPack: {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+  }
+}
+
+
+
+
+export type DeletePackResponseType = {
+  deletedCardsPack: {
+    cardsCount: number
+    created: string
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+  }
+}
+
