@@ -11,7 +11,7 @@ function App() {
 
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(state => state.app.isInitialized)
-  const isLoading = useAppSelector(state => state.app.isLoading)
+
 
   useEffect(() => {
       dispatch(authMeTC())
@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <Header/>
-      {isLoading === 'loading' && <LinearProgress/>}
+
       <Pages/>
       <ErrorSnackbar/>
     </div>

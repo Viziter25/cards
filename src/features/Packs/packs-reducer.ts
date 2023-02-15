@@ -89,15 +89,8 @@ const slice = createSlice({
 })
 
 export const setPacksReducer = slice.reducer
-export const {
-  setPacksAC,
-  setPackNameAC,
-  setUserIdAC,
-  setSortPacksAC,
-  setSliderValuesAC,
-  setCurrentPageAC,
-  setPageCountAC
-} = slice.actions
+export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderValuesAC, setCurrentPageAC, setPageCountAC} = slice.actions
+
 
 //thunks
 export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
@@ -114,7 +107,6 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
 
   try {
     const res = await packsAPI.getPacks({packName, sortPacks, user_id, min, max, pageCount, page})
-
     dispatch(setPacksAC(res.data))
     dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {
@@ -126,7 +118,7 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
 export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
-    const res = await packsAPI.createPack(data)
+    await packsAPI.createPack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))
     dispatch(setPacksTC())
   } catch (e) {
@@ -138,7 +130,7 @@ export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispa
 export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
-    const res = await packsAPI.deletePack(data)
+    await packsAPI.deletePack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))
     dispatch(setPacksTC())
   } catch (e) {
@@ -149,7 +141,7 @@ export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) 
 export const updatePackTC = (data:PackUpdateType) => async (dispatch: AppThunkDispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
-    const res = await packsAPI.updatePack(data)
+    await packsAPI.updatePack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))
     dispatch(setPacksTC())
   } catch (e) {

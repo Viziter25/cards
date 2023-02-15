@@ -19,7 +19,7 @@ export const Paginator = React.memo(() => {
   return (
     <SuperPagination
       page={currentPage || 1}
-      itemsCountForPage={packsPageCount}
+      itemsCountForPage={packsPageCount || 5}
       totalCount={packsTotalCount}
       onChange={onChangePagination}
     />

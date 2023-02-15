@@ -1,9 +1,9 @@
 import React from 'react';
 import deleteIcon from '../../../common/icons/delete.svg'
-import teacherIcon from '../../../common/icons/learn.svg'
+import teacherIcon  from '../../../common/icons/learn.svg'
 import editIcon from '../../../common/icons/edit.svg'
 import {useAppDispatch, useAppSelector} from '../../../app/store';
-import {deletePackTC, updatePackTC} from '../packs-redicer';
+import {deletePackTC, updatePackTC} from '../packs-reducer';
 import s from '../TablePacks/ActiveButton.module.scss'
 
 type ActionButtonTableType = {

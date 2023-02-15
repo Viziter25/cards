@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
-import {setPacksTC, setSortPacksAC} from '../packs-redicer';
+import {setPacksTC, setSortPacksAC} from '../packs-reducer';
 import {ActionButtonTable} from './ActionButtonTable';
 import {date} from '../../../common/utils/dateConvertor';
 import SuperSort from "../../../common/components/SuperSort/SuperSort";

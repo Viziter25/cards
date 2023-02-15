@@ -47,7 +47,7 @@ export const SliderComponent = React.memo(() => {
             max: maxCardsCount - 1,
           }}
           onChange={changeMinInputHandler}
-          value={sliderValue[0]}
+          value={sliderValue[0] ? sliderValue[0]  : 0}
         />
         <Slider min={0} max={maxCardsCount} value={sliderValue} onChange={changeSliderHandler} className={s.slider} />
         <Input
@@ -58,7 +58,7 @@ export const SliderComponent = React.memo(() => {
             max: maxCardsCount,
           }}
           onChange={changeMaxInputHandler}
-          value={sliderValue[1]}
+          value={sliderValue[1] ? sliderValue[1] : 0}
         />
       </div>
 

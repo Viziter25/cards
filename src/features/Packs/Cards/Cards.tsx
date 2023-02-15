@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow";
 import {PATH} from "../../../common/constants/path";
@@ -24,6 +24,8 @@ export const Cards = () => {
   const page = useAppSelector(state => state.cardsPage.queryParams.page)
   const pageCount = useAppSelector(state => state.cardsPage.queryParams.pageCount)
 
+  const [searchInputValue, setSearchInputValue] = useState('')
+
   useEffect(() => {
     if (packId) {
       dispatch(setCardsTC(packId))
@@ -39,7 +41,7 @@ export const Cards = () => {
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
       <MiniHeader title={cardsName} buttonTitle={'Learn to pack'} isButton={!cardsTotalCount}/>
       <div className={s.filter}>
-        <SearchInput searchHandler={searchHandler}/>
+        <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
       </div>
       <TableCards/>
     </div>
