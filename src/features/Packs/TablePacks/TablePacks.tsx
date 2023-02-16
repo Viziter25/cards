@@ -12,7 +12,6 @@ export const TablePacks = () => {
 
   const dispatch = useAppDispatch()
   const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
-  const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const pageCount = useAppSelector(state => state.packsPage.queryParams.pageCount)
   const page = useAppSelector(state => state.packsPage.queryParams.page)
   const sortPacks = useAppSelector(state => state.packsPage.queryParams.sortPacks)
@@ -22,8 +21,6 @@ export const TablePacks = () => {
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoading = useAppSelector(state => state.app.isLoading)
 
-
-
   const [sort, setSort] = useState('')
 
   useEffect(() => {
@@ -32,6 +29,7 @@ export const TablePacks = () => {
 
   useEffect(() => {
     dispatch(setSortPacksAC({sortBy: sort}))
+
   }, [dispatch, sort])
 
   return (

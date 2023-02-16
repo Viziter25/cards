@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import s from './cards.module.scss'
-import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
-import { PATH } from "../../../common/constants/path"
-import { useAppDispatch, useAppSelector } from "../../../app/store"
-import { createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion } from "./cards-reducer"
-import { MiniHeader } from "../../../common/components/MiniHeader/MiniHeader"
-import { useParams } from "react-router-dom"
-import { TableCards } from "./TableCards/TableCards"
-import { SearchInput } from "../../../common/components/searchInput/SearchInput"
-import { Button } from '@mui/material'
-import { PackActions } from './PackActions/PackActions'
+import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
+import {PATH} from "../../../common/constants/path"
+import {useAppDispatch, useAppSelector} from "../../../app/store"
+import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
+import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
+import {useParams} from "react-router-dom"
+import {TableCards} from "./TableCards/TableCards"
+import {SearchInput} from "../../../common/components/searchInput/SearchInput"
+import {Button} from '@mui/material'
+import {PackActions} from './PackActions/PackActions'
 import SuperPagination from '../../../common/components/SuperPagination/SuperPagination';
 
 export const Cards = () => {
@@ -30,11 +30,8 @@ export const Cards = () => {
   const profileId = useAppSelector(state => state.profile._id)
 
   const [searchInputValue, setSearchInputValue] = useState('')
-
-
   const pageCountPagination = useAppSelector(state => state.cardsPage.cards.pageCount)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
-
   useEffect(() => {
     if (packId) {
       dispatch(getCardsTC(packId))
@@ -64,7 +61,7 @@ export const Cards = () => {
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
         <div className={s.addCardContainer}>
           <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
-          <Button className={s.button} variant={"contained"}>{'Add New Card'}</Button>
+          <Button onClick={onClickHandler} className={s.button} variant={"contained"}>{'Add New Card'}</Button>
         </div>
         :
         <div>

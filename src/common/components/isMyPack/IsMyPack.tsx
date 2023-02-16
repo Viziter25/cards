@@ -13,7 +13,9 @@ export const IsMyPack = () => {
   const dispatch = useAppDispatch()
 
   const isMyHandler = (isMyPacks: boolean) => {
-    isMyPacks ? dispatch(setUserIdAC({ userId })) : dispatch(setUserIdAC({ userId: '' }))
+    isMyPacks ?
+      dispatch(setUserIdAC({ userId })) :
+      dispatch(setUserIdAC({ userId: '' }))
   }
 
   return (
