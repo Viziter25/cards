@@ -3,10 +3,13 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import SuperSort from "../../../../common/components/SuperSort/SuperSort";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {setSortCardsAC} from "../cards-reducer";
+import s from "../../TablePacks/tablePacks.module.scss";
 
 export const TableCards = () => {
 
   const cards = useAppSelector(state => state.cardsPage.cards.cards)
+  const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
+  const isLoading = useAppSelector(state => state.app.isLoading)
   const dispatch = useAppDispatch()
   const [sort, setSort] = useState('')
 
@@ -43,6 +46,7 @@ export const TableCards = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      {!cardsTotalCount && isLoading !== 'loading' && <div className={s.warn}>Change query parameters</div>}
     </div>
   );
 };
