@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import s from './miniHeader.module.scss'
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 
 type MiniHeaderPropsType = {
   title: string
@@ -10,11 +10,11 @@ type MiniHeaderPropsType = {
 }
 
 export const MiniHeader: FC<MiniHeaderPropsType> = ({
-                                                      title,
-                                                      buttonTitle,
-                                                      isButton,
-                                                      callback
-                                                    }) => {
+  title,
+  buttonTitle,
+  isButton,
+  callback
+}) => {
   const onClickHandler = () => {
     callback && callback()
   }
