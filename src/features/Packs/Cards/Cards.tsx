@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import s from './cards.module.scss'
-import {BackArrow} from "../../../common/components/BackArrow/BackArrow";
-import {PATH} from "../../../common/constants/path";
-import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {setCardsTC, setQuestion} from "./cards-reducer";
-import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader";
-import {useParams} from "react-router-dom";
-import {TableCards} from "./TableCards/TableCards";
-import {SearchInput} from "../../../common/components/searchInput/SearchInput";
-import {Button} from "@mui/material";
+import React, { useEffect, useState } from 'react'
+import s from './Cards.module.scss'
+import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
+import { PATH } from "../../../common/constants/path"
+import { useAppDispatch, useAppSelector } from "../../../app/store"
+import { createCardTC, getCardsTC, setQuestion } from "./cards-reducer"
+import { MiniHeader } from "../../../common/components/MiniHeader/MiniHeader"
+import { useParams } from "react-router-dom"
+import { TableCards } from "./TableCards/TableCards"
+import { SearchInput } from "../../../common/components/searchInput/SearchInput"
+import { Button } from '@mui/material'
+import { PackActions } from './PackActions/PackActions'
 
 export const Cards = () => {
 
   const {packId} = useParams()
 
   const dispatch = useAppDispatch()
-  const cardsName = useAppSelector(state => state.cardsPage.cards.packName)
+  const packName = useAppSelector(state => state.cardsPage.cards.packName)
   const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const cardAnswer = useAppSelector(state => state.cardsPage.queryParams.cardAnswer)
   const cardQuestion = useAppSelector(state => state.cardsPage.queryParams.cardQuestion)
@@ -24,7 +25,7 @@ export const Cards = () => {
   const sortCards = useAppSelector(state => state.cardsPage.queryParams.sortCards)
   const page = useAppSelector(state => state.cardsPage.queryParams.page)
   const pageCount = useAppSelector(state => state.cardsPage.queryParams.pageCount)
-  const cards = useAppSelector(state => state.cardsPage.cards)
+  const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
   const profileId = useAppSelector(state => state.profile._id)
 
   const [searchInputValue, setSearchInputValue] = useState('')
@@ -38,12 +39,18 @@ export const Cards = () => {
   const searchHandler = (question: string) => {
     dispatch(setQuestion({question: question}))
   }
+  const onClickHandler = () => {
+    packId && dispatch(createCardTC(packId, { cardsPack_id: packId }))
+  }
 
   return (
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
-      <MiniHeader title={cardsName} buttonTitle={'Learn to pack'} isButton={!cardsTotalCount}/>
-      {!cardsTotalCount && !cardQuestion && profileId === cards.packUserId ?
+      <div className={s.miniHeader}>
+        <MiniHeader title={packName} buttonTitle={'Add new card'} callback={onClickHandler} isButton={!cardsTotalCount || (profileId !== packUserId)} />
+        {(profileId === packUserId) && packId && <PackActions packId={packId} />}
+      </div>
+      {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
         <div className={s.addCardContainer}>
           <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
           <Button className={s.button} variant={"contained"}>{'Add New Card'}</Button>

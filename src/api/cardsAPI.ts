@@ -5,24 +5,34 @@ const instance = axios.create({
   withCredentials: true
 })
 
-export const cardApi = {
-  getCards(data: queryParamsCardsType) {
+export const cardsApi = {
+  getCards(data: QueryParamsCardsType) {
     return instance.get<CardsResponseType>('cards/card', {params: data})
-      .then(res => res.data)
   },
   createCard(data: PostCardType) {
     return instance.post('cards/card', {card: data})
   },
+  updateCard(data: UpdateCardType) {
+    return instance.put('cards/card', {card: data})
+  },
   deleteCard(cardId: string) {
     return instance.delete('cards/card', {params: {id: cardId}})
   },
-  updateCard(data: UpdateCardType) {
-    return instance.put('cards/card', {card: data})
-  }
 }
 
+export type CardType = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  shots: number
+  user_id: string
+  created: string
+  updated: string
+  _id: string
+}
 export type CardsResponseType = {
-  cards: Array<CardsType>
+  cards: Array<CardType>
   packUserId: string,
   packName: string,
   packPrivate: boolean,
@@ -36,20 +46,7 @@ export type CardsResponseType = {
   token: string,
   tokenDeathTime: number
 }
-
-export type CardsType = {
-  answer: string
-  question: string
-  cardsPack_id: string
-  grade: number
-  shots: number
-  user_id: string
-  created: string
-  updated: string
-  _id: string
-}
-
-export type queryParamsCardsType = {
+export type QueryParamsCardsType = {
   cardAnswer?: string
   cardQuestion?: string
   cardsPack_id: string
@@ -59,13 +56,7 @@ export type queryParamsCardsType = {
   page?: number
   pageCount?: number
 }
-
-type UpdateCardType = {
-  _id: string
-  question?: string
-}
-
-type PostCardType = {
+export type PostCardType = {
   cardsPack_id: string
   question?: string
   answer?: string
@@ -75,4 +66,8 @@ type PostCardType = {
   questionImg?: string
   questionVideo?: string
   answerVideo?: string
+}
+export type UpdateCardType = {
+  _id: string
+  question?: string
 }

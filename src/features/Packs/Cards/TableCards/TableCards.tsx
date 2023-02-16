@@ -3,8 +3,6 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import SuperSort from "../../../../common/components/SuperSort/SuperSort";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {setSortCardsAC} from "../cards-reducer";
-import s from "../../TablePacks/tablePacks.module.scss";
-import {Grades} from "../Grades/Grades";
 
 export const TableCards = () => {
 
@@ -12,6 +10,8 @@ export const TableCards = () => {
   const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const cardQuestion = useAppSelector(state => state.cardsPage.queryParams.cardQuestion)
   const isLoading = useAppSelector(state => state.app.isLoading)
+  const profileId = useAppSelector(state => state.profile._id)
+  const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
   const dispatch = useAppDispatch()
   const [sort, setSort] = useState('')
 
@@ -32,6 +32,7 @@ export const TableCards = () => {
                                                    onChange={setSort}/></TableCell>
               <TableCell align="center"><SuperSort nameValue={'Grade'} sort={sort} value={'grade'}
                                                    onChange={setSort}/></TableCell>
+              {(profileId === packUserId) && <TableCell align="center"></TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,6 +44,9 @@ export const TableCards = () => {
                 <TableCell align="center">{card.answer}</TableCell>
                 <TableCell align="center">{card.updated}</TableCell>
                 <TableCell align="center"><Grades rating={card.grade}/></TableCell>
+                {(profileId === packUserId) &&
+                    <TableCell align="center"><CardsActions packId={card.cardsPack_id} id={card._id} /></TableCell>
+                }
               </TableRow>
             ))}
           </TableBody>

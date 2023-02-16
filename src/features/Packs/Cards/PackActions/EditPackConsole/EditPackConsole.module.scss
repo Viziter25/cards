@@ -1,0 +1,33 @@
+.container {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    width: 116px;
+    height: 116px;
+    background: white;
+    z-index: 5;
+    border: 1px solid #CFCFCF;
+    border-radius: 5px;
+    padding: 16px;
+    .item {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 14px;
+        cursor: pointer;
+        img {
+            width: 16px;
+            height: 16px;
+        }
+        span {
+            display: block;
+            height: 16px;
+        }
+    }
+}
+    
