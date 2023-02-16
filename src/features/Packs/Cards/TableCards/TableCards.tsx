@@ -3,6 +3,10 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import SuperSort from "../../../../common/components/SuperSort/SuperSort";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {setSortCardsAC} from "../cards-reducer";
+import {Grades} from "../Grades/Grades";
+import {CardsActions} from "../CardsActions/CardsActions";
+import s from './tableCards.module.scss'
+import {date} from "../../../../common/utils/dateConvertor";
 
 export const TableCards = () => {
 
@@ -42,7 +46,7 @@ export const TableCards = () => {
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell align="center">{card.question}</TableCell>
                 <TableCell align="center">{card.answer}</TableCell>
-                <TableCell align="center">{card.updated}</TableCell>
+                <TableCell align="center">{date(card.updated)}</TableCell>
                 <TableCell align="center"><Grades rating={card.grade}/></TableCell>
                 {(profileId === packUserId) &&
                     <TableCell align="center"><CardsActions packId={card.cardsPack_id} id={card._id} /></TableCell>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import s from './Cards.module.scss'
+import s from './cards.module.scss'
 import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
 import { PATH } from "../../../common/constants/path"
 import { useAppDispatch, useAppSelector } from "../../../app/store"
@@ -32,7 +32,7 @@ export const Cards = () => {
 
   useEffect(() => {
     if (packId) {
-      dispatch(setCardsTC(packId))
+      dispatch(getCardsTC(packId))
     }
   }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount])
 
@@ -47,7 +47,7 @@ export const Cards = () => {
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
       <div className={s.miniHeader}>
-        <MiniHeader title={packName} buttonTitle={'Add new card'} callback={onClickHandler} isButton={!cardsTotalCount || (profileId !== packUserId)} />
+        <MiniHeader title={packName} buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'} callback={(profileId !== packUserId) ? () => {} : onClickHandler} isButton={!cardsTotalCount}/>
         {(profileId === packUserId) && packId && <PackActions packId={packId} />}
       </div>
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
@@ -57,8 +57,8 @@ export const Cards = () => {
         </div>
         :
         <div>
-
-          {!cardsTotalCount && !cardQuestion ? <div>123</div> : <div>
+          {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
+          </div> : <div>
             <div className={s.filter}>
               <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
                            setSearchInputValue={setSearchInputValue}/>
