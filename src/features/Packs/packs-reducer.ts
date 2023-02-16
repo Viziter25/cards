@@ -3,7 +3,7 @@ import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
 import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from '../../api/packsAPI';
 import {AppRootStateType, AppThunkDispatch} from '../../app/store';
-import {setIsLoading} from "../../app/appReducer";
+import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 
 
 // type InitState = {
@@ -41,6 +41,7 @@ const initialState = {
     cardPacksTotalCount: null as unknown as number,
     minCardsCount: null as unknown as number,
     maxCardsCount: null as unknown as number,
+    entityStatus: 'idle' as RequestStatusType
   },
   queryParams: {
     pageCount: null as unknown as number,
@@ -49,7 +50,7 @@ const initialState = {
     max: null as unknown as number,
     page: null as unknown as number,
     packName: null as unknown as string,
-    user_id: null as unknown as string
+    user_id: null as unknown as string,
   }
 }
 
@@ -59,7 +60,8 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
-      state.packs = action.payload
+      state.packs = {...action.payload, entityStatus: 'idle'}
+
     },
     setPackNameAC(state, action: PayloadAction<{ packName: string }>) {
       state.queryParams.packName = action.payload.packName
@@ -79,6 +81,9 @@ const slice = createSlice({
     },
     setPageCountAC(state, action: PayloadAction<{pageCount: number}>){
       state.queryParams.pageCount = action.payload.pageCount
+    },
+    changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+      state.packs.entityStatus = action.payload.status
     }
   },
   // extraReducers: builder => {
@@ -89,7 +94,7 @@ const slice = createSlice({
 })
 
 export const setPacksReducer = slice.reducer
-export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderValuesAC, setCurrentPageAC, setPageCountAC} = slice.actions
+export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderValuesAC, setCurrentPageAC, setPageCountAC, changeTodolistEntityStatusAC} = slice.actions
 
 
 //thunks
@@ -117,6 +122,7 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
 
 export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
+  dispatch(changeTodolistEntityStatusAC({status: 'loading'}))
   try {
     await packsAPI.createPack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))
@@ -129,6 +135,7 @@ export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispa
 
 export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
+  dispatch(setIdDisabled({idDisabled: data}))
   try {
     await packsAPI.deletePack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))

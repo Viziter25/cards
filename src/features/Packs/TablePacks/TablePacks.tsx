@@ -12,6 +12,7 @@ export const TablePacks = () => {
 
   const dispatch = useAppDispatch()
   const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
+  const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const pageCount = useAppSelector(state => state.packsPage.queryParams.pageCount)
   const page = useAppSelector(state => state.packsPage.queryParams.page)
   const sortPacks = useAppSelector(state => state.packsPage.queryParams.sortPacks)
@@ -20,6 +21,8 @@ export const TablePacks = () => {
   const packName = useAppSelector(state => state.packsPage.queryParams.packName)
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoading = useAppSelector(state => state.app.isLoading)
+
+
 
   const [sort, setSort] = useState('')
 
@@ -59,7 +62,7 @@ export const TablePacks = () => {
                 <TableCell align="center">{date(pack.updated)}</TableCell>
                 <TableCell align="center">{pack.user_name}</TableCell>
                 <TableCell align="center">
-                  <ActionButtonTable  packId = {pack._id} userId = {pack.user_id}/>
+                  <ActionButtonTable  packId = {pack._id} userId = {pack.user_id} cardsCount={pack.cardsCount}/>
                 </TableCell>
               </TableRow>
             ))}

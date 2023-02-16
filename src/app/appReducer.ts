@@ -3,7 +3,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 const initialState = {
   isInitialized: false,
   isLoading: 'idle' as RequestStatusType,
-  error: null as null | string
+  error: null as null | string,
+  idDisabled: ''
 }
 
 const slice = createSlice({
@@ -18,12 +19,15 @@ const slice = createSlice({
     },
     setIsLoading(state, action: PayloadAction<{isLoading: RequestStatusType}>) {
       state.isLoading = action.payload.isLoading
+    },
+    setIdDisabled(state, action:PayloadAction<{idDisabled: string}> ) {
+      state.idDisabled = action.payload.idDisabled
     }
   }
 })
 
 export const appReducer = slice.reducer
-export const {setError, setIsInitialized, setIsLoading} = slice.actions
+export const {setError, setIsInitialized, setIsLoading, setIdDisabled} = slice.actions
 
 
 //types

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {RequestStatusType} from '../app/appReducer';
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
@@ -51,6 +52,7 @@ export type PackType = {
   cardsCount: number // кол-во карточек в колоде
   created: string
   updated: string
+  entityStatus: RequestStatusType
 }
 
 export type PackUpdateType = {

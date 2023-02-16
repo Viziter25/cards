@@ -3,11 +3,12 @@ import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow";
 import {PATH} from "../../../common/constants/path";
 import {useAppDispatch, useAppSelector} from "../../../app/store";
-import {setCardsTC, setQuestion} from "./cards-reducer";
+import {setCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from './cards-reducer';
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader";
 import {useParams} from "react-router-dom";
 import {TableCards} from "./TableCards/TableCards";
 import {SearchInput} from "../../../common/components/searchInput/SearchInput";
+import SuperPagination from '../../../common/components/SuperPagination/SuperPagination';
 
 export const Cards = () => {
 
@@ -23,8 +24,11 @@ export const Cards = () => {
   const sortCards = useAppSelector(state => state.cardsPage.queryParams.sortCards)
   const page = useAppSelector(state => state.cardsPage.queryParams.page)
   const pageCount = useAppSelector(state => state.cardsPage.queryParams.pageCount)
-
   const [searchInputValue, setSearchInputValue] = useState('')
+
+
+  const pageCountPagination = useAppSelector(state => state.cardsPage.cards.pageCount)
+  const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
 
   useEffect(() => {
     if (packId) {
@@ -36,6 +40,12 @@ export const Cards = () => {
     dispatch(setQuestion({question: question}))
   }
 
+  const onChangePagination = (newPage: number, newCount: number) => {
+    dispatch(setCurrentCardsPageAC({ currentPage: newPage }))
+    dispatch(setPageCardsCountAC({ pageCount: newCount }))
+  }
+
+
   return (
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
@@ -44,6 +54,7 @@ export const Cards = () => {
         <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
       </div>
       <TableCards/>
+      <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
     </div>
   );
 };

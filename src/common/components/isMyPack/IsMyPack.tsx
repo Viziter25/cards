@@ -8,6 +8,7 @@ export const IsMyPack = () => {
 
   const isMy = useAppSelector(state => state.packsPage.queryParams.user_id)
   const userId = useAppSelector(state => state.profile._id)
+  const entityStatus = useAppSelector(state => state.packsPage.packs.entityStatus)
 
   const dispatch = useAppDispatch()
 
@@ -21,10 +22,10 @@ export const IsMyPack = () => {
       <div className={s.buttons}>
         <Button variant={isMy ? 'contained' : 'outlined'}
           className={isMy ? `${s.button} ${s.whiteColor}` : s.button}
-          onClick={() => isMyHandler(true)}>My</Button>
+          onClick={() => isMyHandler(true)} disabled={ entityStatus=== 'loading'}>My</Button>
         <Button variant={!isMy ? 'contained' : 'outlined'}
           className={!isMy ? `${s.button} ${s.whiteColor}` : s.button}
-          onClick={() => isMyHandler(false)}>All</Button>
+          onClick={() => isMyHandler(false)} disabled={ entityStatus=== 'loading'}>All</Button>
       </div>
     </div>
   );

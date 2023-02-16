@@ -33,12 +33,18 @@ const slice = createSlice({
     },
     setQuestion(state, action: PayloadAction<{question: string }>) {
       state.queryParams.cardQuestion = action.payload.question
+    },
+    setCurrentCardsPageAC(state, action: PayloadAction<{currentPage: number}>){
+      state.queryParams.page = action.payload.currentPage
+    },
+    setPageCardsCountAC(state, action: PayloadAction<{pageCount: number}>){
+      state.queryParams.pageCount = action.payload.pageCount
     }
   }
 })
 
 export const cardsReducer = slice.reducer
-export const {setCardsAC, setSortCardsAC, setQuestion} = slice.actions
+export const {setCardsAC, setSortCardsAC, setQuestion, setCurrentCardsPageAC, setPageCardsCountAC} = slice.actions
 
 export const setCardsTC = (cardsPack_id: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
   dispatch(setIsLoading({isLoading: 'loading'}))

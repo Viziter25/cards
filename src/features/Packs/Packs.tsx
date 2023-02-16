@@ -17,6 +17,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
+
   const [searchInputValue, setSearchInputValue] = useState('')
   const searchHandler = (packName: string) => {
     dispatch(setPackNameAC({packName}))
