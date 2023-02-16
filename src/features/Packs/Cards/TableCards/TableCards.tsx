@@ -4,6 +4,7 @@ import SuperSort from "../../../../common/components/SuperSort/SuperSort";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
 import {setSortCardsAC} from "../cards-reducer";
 import s from "../../TablePacks/tablePacks.module.scss";
+import {Grades} from "../Grades/Grades";
 
 export const TableCards = () => {
 
@@ -40,7 +41,7 @@ export const TableCards = () => {
                 <TableCell align="center">{card.question}</TableCell>
                 <TableCell align="center">{card.answer}</TableCell>
                 <TableCell align="center">{card.updated}</TableCell>
-                <TableCell align="center">{card.grade}</TableCell>
+                <TableCell align="center"><Grades rating={card.grade}/></TableCell>
               </TableRow>
             ))}
           </TableBody>
