@@ -41,17 +41,18 @@ export const Cards = () => {
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
       <MiniHeader title={cardsName} buttonTitle={'Learn to pack'} isButton={!cardsTotalCount}/>
-      {cardsTotalCount ?
+      {!cardsTotalCount && !cardQuestion ?
+        <div className={s.addCardContainer}>
+          <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
+          <Button className={s.button} variant={"contained"}>{'Add New Card'}</Button>
+        </div>
+        :
         <div>
           <div className={s.filter}>
             <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
                          setSearchInputValue={setSearchInputValue}/>
           </div>
           <TableCards/>
-        </div> :
-        <div className={s.addCardContainer}>
-          <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
-          <Button className={s.button} variant={"contained"}>{'Add New Card'}</Button>
         </div>
       }
     </div>
