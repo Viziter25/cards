@@ -1,0 +1,22 @@
+.console {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  .consoleInfo {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    opacity: 0.5;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}

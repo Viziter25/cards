@@ -1,6 +1,38 @@
+@import "../../../common/styles/mixin";
+
 .cardsContainer {
   width: 85%;
+  .miniHeader {
+    position: relative;
+  }
   .filter {
     margin: 30px 0;
   }
+  .addCardContainer {
+    margin-top: 90px;
+    .addCardsWarn{
+      @include text(500, 16px, 20px);
+      opacity: 0.5;
+    }
+    .button {
+      font-family: 'Montserrat', sans-serif;
+      width: 175px;
+      height: 36px;
+      border-radius: 20px;
+      text-transform: none;
+      margin-top: 37px;
+      box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+  }
+  .warn {
+    display: block;
+    margin-top: 86px;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    opacity: 0.5;
+}
 }
