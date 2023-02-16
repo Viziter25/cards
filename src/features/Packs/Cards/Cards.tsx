@@ -3,7 +3,7 @@ import s from './cards.module.scss'
 import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
 import { PATH } from "../../../common/constants/path"
 import { useAppDispatch, useAppSelector } from "../../../app/store"
-import { createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC setQuestion } from "./cards-reducer"
+import { createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion } from "./cards-reducer"
 import { MiniHeader } from "../../../common/components/MiniHeader/MiniHeader"
 import { useParams } from "react-router-dom"
 import { TableCards } from "./TableCards/TableCards"
