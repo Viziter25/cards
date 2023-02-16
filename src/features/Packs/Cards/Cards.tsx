@@ -24,6 +24,8 @@ export const Cards = () => {
   const sortCards = useAppSelector(state => state.cardsPage.queryParams.sortCards)
   const page = useAppSelector(state => state.cardsPage.queryParams.page)
   const pageCount = useAppSelector(state => state.cardsPage.queryParams.pageCount)
+  const cards = useAppSelector(state => state.cardsPage.cards)
+  const profileId = useAppSelector(state => state.profile._id)
 
   const [searchInputValue, setSearchInputValue] = useState('')
 
@@ -41,18 +43,21 @@ export const Cards = () => {
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
       <MiniHeader title={cardsName} buttonTitle={'Learn to pack'} isButton={!cardsTotalCount}/>
-      {!cardsTotalCount && !cardQuestion ?
+      {!cardsTotalCount && !cardQuestion && profileId === cards.packUserId ?
         <div className={s.addCardContainer}>
           <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
           <Button className={s.button} variant={"contained"}>{'Add New Card'}</Button>
         </div>
         :
         <div>
-          <div className={s.filter}>
-            <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
-                         setSearchInputValue={setSearchInputValue}/>
-          </div>
-          <TableCards/>
+
+          {!cardsTotalCount && !cardQuestion ? <div>123</div> : <div>
+            <div className={s.filter}>
+              <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
+                           setSearchInputValue={setSearchInputValue}/>
+            </div>
+            <TableCards/>
+          </div>}
         </div>
       }
     </div>

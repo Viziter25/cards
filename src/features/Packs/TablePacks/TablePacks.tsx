@@ -53,13 +53,14 @@ export const TablePacks = () => {
                 key={pack._id}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                 <TableCell
-                  component="th" scope="row"><NavLink style={{textDecoration:'none', color: 'black'}} to={`/cards/${pack._id}`}>{pack.name}</NavLink></TableCell>
+                  component="th" scope="row"><NavLink style={{textDecoration: 'none', color: 'black'}}
+                                                      to={`/cards/${pack._id}`}>{pack.name}</NavLink></TableCell>
                 <TableCell
                   align="center">{pack.cardsCount}</TableCell>
                 <TableCell align="center">{date(pack.updated)}</TableCell>
                 <TableCell align="center">{pack.user_name}</TableCell>
                 <TableCell align="center">
-                  <ActionButtonTable  packId = {pack._id} userId = {pack.user_id}/>
+                  <ActionButtonTable packId={pack._id} userId={pack.user_id}/>
                 </TableCell>
               </TableRow>
             ))}

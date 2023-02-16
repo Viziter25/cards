@@ -10,6 +10,7 @@ export const TableCards = () => {
 
   const cards = useAppSelector(state => state.cardsPage.cards.cards)
   const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
+  const cardQuestion = useAppSelector(state => state.cardsPage.queryParams.cardQuestion)
   const isLoading = useAppSelector(state => state.app.isLoading)
   const dispatch = useAppDispatch()
   const [sort, setSort] = useState('')
@@ -47,7 +48,7 @@ export const TableCards = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {!cardsTotalCount && isLoading !== 'loading' && <div className={s.warn}>Change query parameters</div>}
+      {!cardsTotalCount && cardQuestion && isLoading  !== 'loading' && <div className={s.warn}>Change query parameters</div>}
     </div>
   );
 };
