@@ -1,8 +1,8 @@
-import {createSlice, Dispatch, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from '../../api/packsAPI';
-import {AppRootStateType, AppThunkDispatch} from '../../app/store';
+import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from './packsAPI';
+import { AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 
 
@@ -98,20 +98,12 @@ export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderV
 
 
 //thunks
-export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+export const setPacksTC = ():AppThunk => async (dispatch, getState) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
-  const {
-    packName,
-    sortPacks,
-    user_id,
-    min,
-    max,
-    pageCount,
-    page
-  } = getState().packsPage.queryParams
+  const queryParams = getState().packsPage.queryParams
 
   try {
-    const res = await packsAPI.getPacks({packName, sortPacks, user_id, min, max, pageCount, page})
+    const res = await packsAPI.getPacks(queryParams)
     dispatch(setPacksAC(res.data))
     dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {
@@ -120,7 +112,7 @@ export const setPacksTC = () => async (dispatch: Dispatch, getState: () => AppRo
 }
 
 
-export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispatch) => {
+export const createPackTC = (data:PackPostType):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   dispatch(changeTodolistEntityStatusAC({status: 'loading'}))
   try {
@@ -133,7 +125,7 @@ export const createPackTC = (data:PackPostType) => async (dispatch:AppThunkDispa
 }
 
 
-export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) => {
+export const deletePackTC = (data:string):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   dispatch(setIdDisabled({idDisabled: data}))
   try {
@@ -145,7 +137,7 @@ export const deletePackTC = (data:string) => async (dispatch: AppThunkDispatch) 
   }
 }
 
-export const updatePackTC = (data:PackUpdateType) => async (dispatch: AppThunkDispatch) => {
+export const updatePackTC = (data:PackUpdateType):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await packsAPI.updatePack(data)

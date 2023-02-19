@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../../app/store';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
-import {setPacksTC, setSortPacksAC} from '../packs-reducer';
-import {ActionButtonTable} from './ActionButtonTable';
-import {date} from '../../../common/utils/dateConvertor';
-import SuperSort from "../../../common/components/SuperSort/SuperSort";
+import React, {useEffect } from 'react';
+import {useAppDispatch, useAppSelector} from 'app/store';
+import {Paper, Table, TableBody, TableContainer} from '@mui/material';
+import {setPacksTC} from '../packs-reducer';
 import s from './tablePacks.module.scss'
-import {NavLink} from "react-router-dom";
+import {TableRows} from './TableRow/TableRows';
+import {TableHeader} from './TableHead/TableHeader';
 
 export const TablePacks = () => {
 
@@ -21,48 +19,26 @@ export const TablePacks = () => {
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoading = useAppSelector(state => state.app.isLoading)
 
-  const [sort, setSort] = useState('')
 
   useEffect(() => {
     dispatch(setPacksTC())
   }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
 
-  useEffect(() => {
-    dispatch(setSortPacksAC({sortBy: sort}))
-
-  }, [dispatch, sort])
 
   return (
     <div>
       <TableContainer component={Paper}>
         <Table sx={{minWidth: 650}} aria-label="simple table">
-          <TableHead sx={{backgroundColor: '#EFEFEF'}}>
-            <TableRow>
-              <TableCell><SuperSort sort={sort} nameValue={'Name'} value={'name'} onChange={setSort}/></TableCell>
-              <TableCell align="center"><SuperSort sort={sort} nameValue={'Cards'} value={'cardsCount'}
-                                                   onChange={setSort}/></TableCell>
-              <TableCell align="center"><SuperSort nameValue={'Last Updated'} sort={sort} value={'updated'}
-                                                   onChange={setSort}/></TableCell>
-              <TableCell align="center"><SuperSort nameValue={'Created by'} sort={sort} value={'user_name'}
-                                                   onChange={setSort}/></TableCell>
-              <TableCell align="center"><span>Actions</span></TableCell>
-            </TableRow>
-          </TableHead>
+          <TableHeader/>
           <TableBody>
             {packs.map((pack) => (
-              <TableRow
-                key={pack._id}
-                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell
-                  component="th" scope="row"><NavLink style={{textDecoration:'none', color: 'black'}} to={`/cards/${pack._id}`}>{pack.name}</NavLink></TableCell>
-                <TableCell
-                  align="center">{pack.cardsCount}</TableCell>
-                <TableCell align="center">{date(pack.updated)}</TableCell>
-                <TableCell align="center">{pack.user_name}</TableCell>
-                <TableCell align="center">
-                  <ActionButtonTable  packId = {pack._id} userId = {pack.user_id} cardsCount={pack.cardsCount}/>
-                </TableCell>
-              </TableRow>
+              <TableRows key={pack._id}
+                         cardsCount={pack.cardsCount}
+                         updated={pack.updated}
+                         user_id={pack.user_id}
+                         _id={pack._id}
+                         name={pack.name}
+                         user_name={pack.user_name}/>
             ))}
           </TableBody>
         </Table>

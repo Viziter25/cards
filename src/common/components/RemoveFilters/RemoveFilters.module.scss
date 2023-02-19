@@ -1,0 +1,20 @@
+@import "../../styles/mixin";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    .title {
+        @include text(500, 14px, 17px);
+    }
+    .iconContainer {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #E8E8E8;
+        cursor: pointer;
+    }
+}

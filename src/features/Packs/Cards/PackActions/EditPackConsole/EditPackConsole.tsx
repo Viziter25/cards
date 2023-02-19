@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
-import s from './EditPackConsole.module.scss'
+import s from './editPackConsole.module.scss'
 import teachIcon from '../../../../../common/icons/learn.svg'
 import updateIcon from '../../../../../common/icons/edit.svg'
 import deleteIcon from '../../../../../common/icons/delete.svg'

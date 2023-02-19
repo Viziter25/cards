@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
 import {TablePacks} from './TablePacks/TablePacks';
-import s from './Packs.module.scss'
-import {SearchInput} from "../../common/components/searchInput/SearchInput";
-import {useAppDispatch, useAppSelector} from "../../app/store";
-import {IsMyPack} from "../../common/components/isMyPack/IsMyPack";
-import {Navigate} from "react-router-dom";
-import {PATH} from "../../common/constants/path";
-import {MiniHeader} from "../../common/components/MiniHeader/MiniHeader";
-import {createPackTC, setPackNameAC} from "./packs-reducer";
-import {SliderComponent} from './Slider/SliderComponent';
-import {RemoveFilters} from './RemoveFilters/RemoveFilters';
-import {Paginator} from './Paginator/Paginator';
+import s from './packs.module.scss'
+import {SearchInput} from '../../common/components/SearchInput/SearchInput';
+import {useAppDispatch, useAppSelector} from '../../app/store';
+import {IsMyPack} from '../../common/components/IsMyPack/IsMyPack';
+import {Navigate} from 'react-router-dom';
+import {PATH} from '../../common/constants/path';
+import {MiniHeader} from '../../common/components/MiniHeader/MiniHeader';
+import {createPackTC, setPackNameAC} from './packs-reducer';
+import {RemoveFilters} from '../../common/components/RemoveFilters/RemoveFilters';
+import {Paginator} from '../../common/components/Paginator/Paginator';
+import {SliderComponent} from 'common/components/Slider/SliderComponent';
+
 
 export const Packs = () => {
 
@@ -18,20 +19,17 @@ export const Packs = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const [searchInputValue, setSearchInputValue] = useState('')
+
   const searchHandler = (packName: string) => {
     dispatch(setPackNameAC({packName}))
   }
-  console.log('1')
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN}/>
   }
 
   const clickHandler = () => {
-    dispatch(createPackTC({
-        name: 'new Packs',
-        private:false
-      }
-    ))
+    dispatch(createPackTC({name: 'new Packs', private: false}))
   }
 
   return (
@@ -39,14 +37,15 @@ export const Packs = () => {
       <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={clickHandler}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
-          <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
+          <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
+                       setSearchInputValue={setSearchInputValue}/>
         </div>
         <IsMyPack/>
-        <SliderComponent />
-        <RemoveFilters setSearchInputValue={setSearchInputValue} />
+        <SliderComponent/>
+        <RemoveFilters setSearchInputValue={setSearchInputValue}/>
       </div>
-      <TablePacks />
-      <Paginator />
+      <TablePacks/>
+      <Paginator/>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import {Header} from './header/Header';
 import {Pages} from './pages/Pages';
 import {ErrorSnackbar} from "../common/components/ErrorSnackbar/ErrorSnackbar";
 import {useAppDispatch, useAppSelector} from "./store";
-import {authMeTC} from "../features/Login/auth-reducer";
+import {authMeTC} from "../features/Auth/auth-reducer";
 import {CircularProgress} from "@mui/material";
 
 function App() {

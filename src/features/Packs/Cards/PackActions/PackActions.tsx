@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import s from './PackActions.module.scss'
+import s from './packActions.module.scss'
 import consoleIcon from '../../../../common/icons/console.svg'
 import { EditPackConsole } from './EditPackConsole/EditPackConsole'
 

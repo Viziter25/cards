@@ -7,7 +7,7 @@ import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, se
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
 import {useParams} from "react-router-dom"
 import {TableCards} from "./TableCards/TableCards"
-import {SearchInput} from "../../../common/components/searchInput/SearchInput"
+import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
 import {Button} from '@mui/material'
 import {PackActions} from './PackActions/PackActions'
 import SuperPagination from '../../../common/components/SuperPagination/SuperPagination';

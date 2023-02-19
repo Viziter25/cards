@@ -8,5 +8,4 @@ export const PATH = {
   PACKS: '/packs',
   CARDS: '/cards/:packId',
   ERROR404: '/404',
-  TEST: '/test',
 }

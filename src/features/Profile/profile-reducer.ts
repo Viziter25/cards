@@ -1,6 +1,6 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
-import { profileAPI, ProfileType } from "../../api/profileAPI"
-import { setIsLoggedInAC } from "../Login/auth-reducer"
+import { profileAPI, ProfileType } from "./profileAPI"
+import { setIsLoggedInAC } from "../Auth/auth-reducer"
 import {errorUtil} from "../../common/utils/error utils";
 import {AxiosError} from "axios";
 import {setIsLoading} from "../../app/appReducer";

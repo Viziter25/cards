@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import s from './backArrow.module.scss'
 import {NavLink} from "react-router-dom";
-import backArrow from "../../../features/Profile/assets/backArrow.svg";
+import backArrow from "../../icons/iconProfile/backArrow.svg";
 
 type BackArrowPropsType = {
   to: string

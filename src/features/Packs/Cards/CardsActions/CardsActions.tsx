@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import s from './CardsActions.module.scss'
+import s from './cardsActions.module.scss'
 import deleteIcon from '../../../../common/icons/delete.svg'
 import editIcon from '../../../../common/icons/edit.svg'
 import { useAppDispatch, useAppSelector } from '../../../../app/store'

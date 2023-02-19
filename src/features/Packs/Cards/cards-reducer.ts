@@ -1,7 +1,7 @@
-import {cardsApi, CardsResponseType, CardType, PostCardType, QueryParamsCardsType, UpdateCardType} from "../../../api/cardsAPI";
+import {cardsApi, CardsResponseType, CardType, PostCardType, QueryParamsCardsType, UpdateCardType} from "./cardsAPI";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setIsLoading} from "../../../app/appReducer";
-import {AppRootStateType, AppThunkDispatch} from "../../../app/store";
+import { AppThunk} from '../../../app/store';
 import {errorUtil} from "../../../common/utils/error utils";
 import {AxiosError} from "axios";
 
@@ -35,7 +35,7 @@ const slice = createSlice({
 export const cardsReducer = slice.reducer
 export const {setCardsAC, setSortCardsAC, setQuestion, setCurrentCardsPageAC, setPageCardsCountAC} = slice.actions
 
-export const getCardsTC = (cardsPack_id: string) => async (dispatch: AppThunkDispatch, getState: () => AppRootStateType) => {
+export const getCardsTC = (cardsPack_id: string):AppThunk => async (dispatch, getState) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   const {cardAnswer, cardQuestion, min, max, sortCards, page, pageCount} = getState().cardsPage.queryParams
   try {
@@ -47,7 +47,7 @@ export const getCardsTC = (cardsPack_id: string) => async (dispatch: AppThunkDis
   }
 }
 
-export const createCardTC = (packId:string, data: PostCardType) => async (dispatch: AppThunkDispatch) => {
+export const createCardTC = (packId:string, data: PostCardType):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await cardsApi.createCard(data)
@@ -57,7 +57,7 @@ export const createCardTC = (packId:string, data: PostCardType) => async (dispat
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }
 }
-export const updateCardTC = (packId:string, data: UpdateCardType) => async (dispatch: AppThunkDispatch) => {
+export const updateCardTC = (packId:string, data: UpdateCardType):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await cardsApi.updateCard(data)
@@ -67,7 +67,7 @@ export const updateCardTC = (packId:string, data: UpdateCardType) => async (disp
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }
 }
-export const deleteCardTC = (packId:string, cardId: string) => async (dispatch: AppThunkDispatch) => {
+export const deleteCardTC = (packId:string, cardId: string):AppThunk => async (dispatch) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await cardsApi.deleteCard(cardId)
