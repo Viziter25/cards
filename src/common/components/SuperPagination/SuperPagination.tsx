@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, {ChangeEvent, memo, useEffect, useState} from 'react'
 
 import { Pagination } from '@mui/material'
 import s from './SuperPagination.module.scss'
@@ -12,7 +12,7 @@ export type SuperPaginationPropsType = {
   onChange: (page: number, count: number) => void
 }
 
-const SuperPagination: React.FC<SuperPaginationPropsType> = (
+export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
   {
     page, itemsCountForPage, totalCount, onChange, id = 'hw15',
   }
@@ -30,6 +30,7 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
 
   const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     setPageSize(+event.currentTarget.value)
+    onChange(page, pageSize)
   }
 
   return (
@@ -63,6 +64,5 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
       </div>
     </div>
   )
-}
+})
 
-export default SuperPagination

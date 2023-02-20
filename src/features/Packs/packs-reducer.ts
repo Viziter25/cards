@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from './packsAPI';
+import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
 import { AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 
@@ -36,24 +36,17 @@ import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReduc
 const initialState = {
   packs: {
     cardPacks: [] as  PackType[],
-    page: null as unknown as number,
-    pageCount: null as unknown as number,
-    cardPacksTotalCount: null as unknown as number,
-    minCardsCount: null as unknown as number,
-    maxCardsCount: null as unknown as number,
-    entityStatus: 'idle' as RequestStatusType
-  },
+  } as GetPacksResponseType & {entityStatus: RequestStatusType},
   queryParams: {
-    pageCount: null as unknown as number,
-    sortPacks: null as unknown as string,
-    min: null as unknown as number,
-    max: null as unknown as number,
-    page: null as unknown as number,
-    packName: null as unknown as string,
-    user_id: null as unknown as string,
-  }
+    sortPacks: '',
+    page: 1,
+    pageCount: 5,
+    min: 0,
+    max: 78,
+    packName: '',
+    user_id: ''
+  } as PacksQueryParamsType
 }
-
 
 const slice = createSlice({
   name: 'packs',
@@ -101,7 +94,6 @@ export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderV
 export const setPacksTC = ():AppThunk => async (dispatch, getState) => {
   dispatch(setIsLoading({isLoading: 'loading'}))
   const queryParams = getState().packsPage.queryParams
-
   try {
     const res = await packsAPI.getPacks(queryParams)
     dispatch(setPacksAC(res.data))

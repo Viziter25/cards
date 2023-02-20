@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useEffect} from 'react';
+import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import SearchIcon from "@mui/icons-material/Search";
 import {TextField} from "@mui/material";
 import useDebounce from "../../../hooks/debounce";
@@ -6,16 +6,11 @@ import s from './searchInput.module.scss'
 
 type SearchInputPropsType = {
   searchHandler: (packName: string) => void
-  searchInputValue: string
-  setSearchInputValue: (searchInputValue: string) => void
+  defaultValue?: string
 }
 
-export const SearchInput: FC<SearchInputPropsType> = ({
-                                                        searchHandler,
-                                                        searchInputValue,
-                                                        setSearchInputValue
-                                                      }) => {
-
+export const SearchInput: FC<SearchInputPropsType> = ({searchHandler, defaultValue}) => {
+  const [searchInputValue, setSearchInputValue] = useState(defaultValue || '')
 
   const debouncedPackName = useDebounce(searchInputValue, 750)
 

@@ -16,16 +16,17 @@ export const SliderComponent = React.memo(() => {
   const maxQuery = useAppSelector(st => st.packsPage.queryParams.max)
   const status = useAppSelector(state => state.packsPage.packs.entityStatus)
 
-  const [sliderValue, setSliderValue] = useState<number[]>([minCardsCount, maxCardsCount])
+  const [sliderValue, setSliderValue] = useState<number[]>([minQuery, maxQuery])
 
-  const sliderDebaunce = useDebounce(sliderValue, 1000)
+  const sliderDebounce = useDebounce(sliderValue, 1000)
 
   useEffect(() => {
-    setSliderValue([minQuery || minCardsCount, maxQuery || maxCardsCount])
-  }, [minCardsCount, maxCardsCount, minQuery, maxQuery])
+    setSliderValue([minCardsCount, maxCardsCount])
+  }, [minCardsCount, maxCardsCount])
+
   useEffect(() => {
-    dispatch(setSliderValuesAC({sliderValues: sliderDebaunce}))
-  }, [dispatch, sliderDebaunce])
+    dispatch(setSliderValuesAC({sliderValues: sliderDebounce}))
+  }, [dispatch, sliderDebounce])
 
   const changeSliderHandler = (event: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number[]);
@@ -46,7 +47,7 @@ export const SliderComponent = React.memo(() => {
           inputProps={{
             step: 1,
             min: 0,
-            max: maxCardsCount - 1,
+            max: maxCardsCount - 1 || 1,
           }}
           onChange={changeMinInputHandler}
           value={sliderValue[0] ? sliderValue[0] : 0}

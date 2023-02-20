@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {TablePacks} from './TablePacks/TablePacks';
 import s from './packs.module.scss'
 import {SearchInput} from '../../common/components/SearchInput/SearchInput';
@@ -7,7 +7,7 @@ import {IsMyPack} from '../../common/components/IsMyPack/IsMyPack';
 import {Navigate} from 'react-router-dom';
 import {PATH} from '../../common/constants/path';
 import {MiniHeader} from '../../common/components/MiniHeader/MiniHeader';
-import {createPackTC, setPackNameAC} from './packs-reducer';
+import {createPackTC, setCurrentPageAC, setPackNameAC, setPacksTC, setPageCountAC} from './packs-reducer';
 import {RemoveFilters} from '../../common/components/RemoveFilters/RemoveFilters';
 import {Paginator} from '../../common/components/Paginator/Paginator';
 import {SliderComponent} from 'common/components/Slider/SliderComponent';
@@ -16,20 +16,34 @@ import {SliderComponent} from 'common/components/Slider/SliderComponent';
 export const Packs = () => {
 
   const dispatch = useAppDispatch()
+  const pageCount = useAppSelector(state => state.packsPage.queryParams.pageCount)
+  const page = useAppSelector(state => state.packsPage.queryParams.page)
+  const sortPacks = useAppSelector(state => state.packsPage.queryParams.sortPacks)
+  const min = useAppSelector(state => state.packsPage.queryParams.min)
+  const max = useAppSelector(state => state.packsPage.queryParams.max)
+  const packName = useAppSelector(state => state.packsPage.queryParams.packName)
+  const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-  const [searchInputValue, setSearchInputValue] = useState('')
+  useEffect(() => {
+    dispatch(setPacksTC())
+  }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
 
   const searchHandler = (packName: string) => {
     dispatch(setPackNameAC({packName}))
   }
 
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN}/>
-  }
-
   const clickHandler = () => {
     dispatch(createPackTC({name: 'new Packs', private: false}))
+  }
+
+  const onPagination = (newPage: number, newCount: number) => {
+    dispatch(setCurrentPageAC({currentPage: newPage}))
+    dispatch(setPageCountAC({pageCount: newCount}))
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN}/>
   }
 
   return (
@@ -37,15 +51,14 @@ export const Packs = () => {
       <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={clickHandler}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
-          <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
-                       setSearchInputValue={setSearchInputValue}/>
+          <SearchInput searchHandler={searchHandler} defaultValue={packName}/>
         </div>
         <IsMyPack/>
         <SliderComponent/>
-        <RemoveFilters setSearchInputValue={setSearchInputValue}/>
+        <RemoveFilters />
       </div>
       <TablePacks/>
-      <Paginator/>
+      <Paginator onPagination={onPagination}/>
     </div>
   );
 };

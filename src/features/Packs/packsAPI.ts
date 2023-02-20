@@ -125,3 +125,13 @@ export type DeletePackResponseType = {
   }
 }
 
+export type PacksQueryParamsType = {
+  pageCount: number
+  sortPacks: string
+  min: number
+  max: number
+  page: number
+  packName: string
+  user_id: string
+}
+

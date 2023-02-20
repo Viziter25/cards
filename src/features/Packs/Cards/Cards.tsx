@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
@@ -10,7 +10,8 @@ import {TableCards} from "./TableCards/TableCards"
 import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
 import {Button} from '@mui/material'
 import {PackActions} from './PackActions/PackActions'
-import SuperPagination from '../../../common/components/SuperPagination/SuperPagination';
+import {SuperPagination} from 'common/components/SuperPagination/SuperPagination';
+
 
 export const Cards = () => {
 
@@ -29,7 +30,6 @@ export const Cards = () => {
   const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
   const profileId = useAppSelector(state => state.profile._id)
 
-  const [searchInputValue, setSearchInputValue] = useState('')
   const pageCountPagination = useAppSelector(state => state.cardsPage.cards.pageCount)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   useEffect(() => {
@@ -68,8 +68,7 @@ export const Cards = () => {
           {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
           </div> : <div>
             <div className={s.filter}>
-              <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
-                           setSearchInputValue={setSearchInputValue}/>
+              <SearchInput searchHandler={searchHandler} defaultValue={cardQuestion}/>
             </div>
             <TableCards/>
             <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
