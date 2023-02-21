@@ -1,21 +1,21 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import s from './cards.module.scss'
-import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
-import {PATH} from "../../../common/constants/path"
-import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
-import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
-import {useParams} from "react-router-dom"
-import {TableCards} from "./TableCards/TableCards"
-import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
-import {Button} from '@mui/material'
-import {PackActions} from './PackActions/PackActions'
-import {SuperPagination} from 'common/components/SuperPagination/SuperPagination';
+import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
+import { PATH } from "../../../common/constants/path"
+import { useAppDispatch, useAppSelector } from "../../../app/store"
+import { createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion } from "./cards-reducer"
+import { MiniHeader } from "../../../common/components/MiniHeader/MiniHeader"
+import { useParams } from "react-router-dom"
+import { TableCards } from "./TableCards/TableCards"
+import { SearchInput } from "../../../common/components/SearchInput/SearchInput"
+import { Button } from '@mui/material'
+import { PackActions } from './PackActions/PackActions'
+import { SuperPagination } from 'common/components/SuperPagination/SuperPagination';
 
 
 export const Cards = () => {
 
-  const {packId} = useParams()
+  const { packId } = useParams()
 
   const dispatch = useAppDispatch()
   const packName = useAppSelector(state => state.cardsPage.cards.packName)
@@ -36,10 +36,10 @@ export const Cards = () => {
     if (packId) {
       dispatch(getCardsTC(packId))
     }
-  }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount])
+  }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount, packName])
 
   const searchHandler = (question: string) => {
-    dispatch(setQuestion({question: question}))
+    dispatch(setQuestion({ question: question }))
   }
   const onClickHandler = () => {
     packId && dispatch(createCardTC(packId, { cardsPack_id: packId }))
@@ -53,9 +53,9 @@ export const Cards = () => {
 
   return (
     <div className={s.cardsContainer}>
-      <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
+      <BackArrow to={PATH.PACKS} title={'Back to Packs List'} />
       <div className={s.miniHeader}>
-        <MiniHeader title={packName} buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'} callback={(profileId !== packUserId) ? () => {} : onClickHandler} isButton={!cardsTotalCount}/>
+        <MiniHeader title={packName} buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'} callback={(profileId !== packUserId) ? () => { } : onClickHandler} isButton={!cardsTotalCount} />
         {(profileId === packUserId) && packId && <PackActions packId={packId} />}
       </div>
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
@@ -68,10 +68,10 @@ export const Cards = () => {
           {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
           </div> : <div>
             <div className={s.filter}>
-              <SearchInput searchHandler={searchHandler} defaultValue={cardQuestion}/>
+              <SearchInput searchHandler={searchHandler} defaultValue={cardQuestion} />
             </div>
-            <TableCards/>
-            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
+            <TableCards />
+            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination} />
           </div>}
         </div>
       }

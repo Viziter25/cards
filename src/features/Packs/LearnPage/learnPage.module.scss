@@ -1,0 +1,76 @@
+.container {
+    width: 85%;
+    display: grid;
+    flex-direction: column;
+    .paper {
+        justify-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 30px;
+        width: 435px;
+        margin-top: 18px;
+        .question {
+            font-family: 'Montserrat', sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000000;
+        }
+        .shotsNumber {
+            margin-top: 13px;
+            font-family: 'Montserrat', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 24px;
+            color: #000000;
+            opacity: 0.5;
+        }
+        .answer {
+            margin-top: 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000000;
+        }
+        .rateTitle {
+            margin-top: 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000000;
+        }
+        .rateItem {
+            margin-top: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            cursor: pointer;
+            .checkBox {
+                margin: 0;
+            }
+            .title {
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 24px;
+                color: #000000;
+            }
+        }
+        .button {
+            font-family: 'Montserrat', sans-serif;
+            width: 375px;
+            height: 36px;
+            border-radius: 20px;
+            text-transform: none;
+            margin-top: 29px;
+            box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+    }
+}

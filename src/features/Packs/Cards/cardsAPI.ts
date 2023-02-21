@@ -15,6 +15,9 @@ export const cardsApi = {
   deleteCard(cardId: string) {
     return instance.delete('cards/card', {params: {id: cardId}})
   },
+  updatedGrade(data: UpdatedGradeType) {
+    return instance.put<'', AxiosResponse, UpdatedGradeType>('cards/grade', data)
+  },
 }
 
 
@@ -68,4 +71,8 @@ export type PostCardType = {
 export type UpdateCardType = {
   _id: string
   question?: string
+}
+export type UpdatedGradeType = { 
+  card_id: string
+  grade: number
 }
