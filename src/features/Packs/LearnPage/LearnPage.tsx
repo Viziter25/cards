@@ -78,7 +78,7 @@ export const LearnPage = () => {
 
   return (
     <div className={s.container}>
-      <BackArrow to={PATH.PACKS} title={'Back to Packs List'} />
+      <BackArrow to={`/cards/${packId}`} title={'Back to Cards List'} />
       <MiniHeader title={`Learn "${packName}"`} isButton={true} positionCenter={true} />
       <Paper className={s.paper} elevation={3}>
         <span className={s.question}><b>Question:</b> {card.question}</span>

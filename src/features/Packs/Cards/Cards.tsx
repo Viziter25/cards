@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
