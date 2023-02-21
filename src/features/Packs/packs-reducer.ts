@@ -16,7 +16,9 @@ const initialState = {
     min: 0,
     max: 78,
     packName: '',
-    user_id: ''
+    user_id: '',
+    minLocalValue: 0,
+    maxLocalValue: 0
   } as PacksQueryParamsType
 }
 
@@ -49,6 +51,12 @@ const slice = createSlice({
     },
     changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.packs.entityStatus = action.payload.status
+    },
+    changeMinLocalValue(state, action: PayloadAction<{ minValue: number }>) {
+      state.queryParams.minLocalValue = action.payload.minValue
+    },
+    changeMaxLocalValue(state, action: PayloadAction<{ maxValue: number }>) {
+      state.queryParams.maxLocalValue = action.payload.maxValue
     }
   }
 })
@@ -63,6 +71,8 @@ export const {
   setCurrentPageAC,
   setPageCountAC,
   changeTodolistEntityStatusAC,
+  changeMinLocalValue,
+  changeMaxLocalValue
 } = slice.actions
 
 //thunks

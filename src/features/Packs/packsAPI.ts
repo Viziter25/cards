@@ -133,5 +133,7 @@ export type PacksQueryParamsType = {
   page: number
   packName: string
   user_id: string
+  minLocalValue: number
+  maxLocalValue: number
 }
 

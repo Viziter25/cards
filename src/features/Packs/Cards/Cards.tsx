@@ -3,7 +3,7 @@ import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
 import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
+import {createCardTC, getCardsTC, setCurrentCardsPageAC, setQuestion} from "./cards-reducer"
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
 import {useParams} from "react-router-dom"
 import {TableCards} from "./TableCards/TableCards"
@@ -48,9 +48,8 @@ export const Cards = () => {
     packId && dispatch(createCardTC(packId, { cardsPack_id: packId }))
   }
 
-  const onChangePagination = (newPage: number, newCount: number) => {
+  const onChangePagination = (newPage: number) => {
     dispatch(setCurrentCardsPageAC({ currentPage: newPage }))
-    dispatch(setPageCardsCountAC({ pageCount: newCount }))
   }
 
 
@@ -74,7 +73,7 @@ export const Cards = () => {
               <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue}/>
             </div>
             <TableCards/>
-           {/* <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>*/}
+            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
           </div>}
         </div>
       }

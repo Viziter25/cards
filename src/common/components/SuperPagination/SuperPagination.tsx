@@ -5,13 +5,14 @@ import s from './SuperPagination.module.scss'
 import SuperSelect from '../SuperSelect/SuperSelect';
 import {useAppDispatch} from "../../../app/store";
 import {setPageCountAC} from "../../../features/Packs/packs-reducer";
+import {setPageCardsCountAC} from "../../../features/Packs/Cards/cards-reducer";
 
 export type SuperPaginationPropsType = {
   id?: string
   page: number
   itemsCountForPage: number
   totalCount: number
-  onChange: (page: number) => void
+  onChange: (page: number, newCount: number) => void
 }
 
 export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
@@ -24,16 +25,16 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
   const lastPage = Math.ceil(totalCount / itemsCountForPage) // пишет студент // вычислить количество страниц
 
   useEffect(() => {
-    onChange(page)
+    onChange(page, itemsCountForPage)
   }, [onChange, page, itemsCountForPage])
 
   const onChangeCallback = (event: React.ChangeEvent<unknown>, page: number) => {
-    onChange(page)
+    onChange(page, itemsCountForPage)
   }
 
   const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setPageCountAC({pageCount: +event.currentTarget.value}))
-    onChange(page)
+    dispatch(setPageCardsCountAC({pageCount: +event.currentTarget.value}))
   }
 
   return (
