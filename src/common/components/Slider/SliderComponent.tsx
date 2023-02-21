@@ -50,7 +50,7 @@ export const SliderComponent = React.memo(() => {
           onChange={changeMinInputHandler}
           value={sliderValue[0] ? sliderValue[0] : 0}
         />
-        <Slider disabled={status === 'loading'} min={0} max={maxCardsCount} value={sliderValue}
+        <Slider disabled={status === 'loading'} min={minCardsCount} max={maxCardsCount} value={sliderValue}
                 onChange={changeSliderHandler} className={s.slider}/>
         <Input
           className={sliderValue[1] < 10 ? s.input1 : s.input2}
