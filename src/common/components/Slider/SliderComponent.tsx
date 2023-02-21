@@ -17,9 +17,7 @@ export const SliderComponent = React.memo(() => {
   const status = useAppSelector(state => state.packsPage.packs.entityStatus)
 
   const [sliderValue, setSliderValue] = useState<number[]>([minQuery, maxQuery])
-
   const sliderDebounce = useDebounce(sliderValue, 1000)
-
   useEffect(() => {
     setSliderValue([minCardsCount, maxCardsCount])
   }, [minCardsCount, maxCardsCount])

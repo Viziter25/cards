@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TablePacks} from './TablePacks/TablePacks';
 import s from './packs.module.scss'
 import {SearchInput} from '../../common/components/SearchInput/SearchInput';
@@ -7,7 +7,7 @@ import {IsMyPack} from '../../common/components/IsMyPack/IsMyPack';
 import {Navigate} from 'react-router-dom';
 import {PATH} from '../../common/constants/path';
 import {MiniHeader} from '../../common/components/MiniHeader/MiniHeader';
-import {createPackTC, setCurrentPageAC, setPackNameAC, setPacksTC, setPageCountAC} from './packs-reducer';
+import {createPackTC, setCurrentPageAC, setPackNameAC, setPacksTC} from './packs-reducer';
 import {RemoveFilters} from '../../common/components/RemoveFilters/RemoveFilters';
 import {Paginator} from '../../common/components/Paginator/Paginator';
 import {SliderComponent} from 'common/components/Slider/SliderComponent';
@@ -25,6 +25,8 @@ export const Packs = () => {
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
+  const [searchInputValue, setSearchInputValue] = useState(packName)
+
   useEffect(() => {
     dispatch(setPacksTC())
   }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
@@ -37,9 +39,8 @@ export const Packs = () => {
     dispatch(createPackTC({name: 'new Packs', private: false}))
   }
 
-  const onPagination = (newPage: number, newCount: number) => {
+  const onPagination = (newPage: number) => {
     dispatch(setCurrentPageAC({currentPage: newPage}))
-    dispatch(setPageCountAC({pageCount: newCount}))
   }
 
   if (!isLoggedIn) {
@@ -51,14 +52,14 @@ export const Packs = () => {
       <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={clickHandler}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
-          <SearchInput searchHandler={searchHandler} defaultValue={packName}/>
+          <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
         </div>
         <IsMyPack/>
         <SliderComponent/>
-        <RemoveFilters />
+        <RemoveFilters setSearchInputValue={setSearchInputValue}/>
       </div>
       <TablePacks/>
-      <Paginator onPagination={onPagination}/>
+      <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
     </div>
   );
 };

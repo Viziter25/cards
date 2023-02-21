@@ -5,34 +5,6 @@ import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, Pack
 import { AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 
-
-// type InitState = {
-//   packs: PackType[],
-//   queryParams: {
-//     pageCount:number
-//     sort:string
-//     page:number
-//     packName:string
-//     isMyPacks: boolean
-//     min:number
-//     max:number
-//     userId: null
-//   }
-// }
-
-// export const fetchPacks = createAsyncThunk(
-//   'packs/fetchByIdStatus',
-//   async (params: {}, {dispatch, getState}) => {
-//     try {
-//       const {data} = await packsAPI.getPacks(params)
-//       return  data
-//     } catch (e: any) {
-//
-//     }
-//   }
-// )
-
-
 const initialState = {
   packs: {
     cardPacks: [] as  PackType[],
@@ -78,17 +50,20 @@ const slice = createSlice({
     changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.packs.entityStatus = action.payload.status
     }
-  },
-  // extraReducers: builder => {
-  //  builder.addCase(fetchPacks.fulfilled, (state, action) => {
-  //    if(action.payload) state.packs = action.payload
-  //  })
-  // }
+  }
 })
 
 export const setPacksReducer = slice.reducer
-export const {setPacksAC, setPackNameAC, setUserIdAC, setSortPacksAC, setSliderValuesAC, setCurrentPageAC, setPageCountAC, changeTodolistEntityStatusAC} = slice.actions
-
+export const {
+  setPacksAC,
+  setPackNameAC,
+  setUserIdAC,
+  setSortPacksAC,
+  setSliderValuesAC,
+  setCurrentPageAC,
+  setPageCountAC,
+  changeTodolistEntityStatusAC,
+} = slice.actions
 
 //thunks
 export const setPacksTC = ():AppThunk => async (dispatch, getState) => {

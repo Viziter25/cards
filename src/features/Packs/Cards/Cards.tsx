@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
@@ -32,6 +32,9 @@ export const Cards = () => {
 
   const pageCountPagination = useAppSelector(state => state.cardsPage.cards.pageCount)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
+
+  const [searchInputValue, setSearchInputValue] = useState(cardQuestion || '')
+
   useEffect(() => {
     if (packId) {
       dispatch(getCardsTC(packId))
@@ -68,10 +71,10 @@ export const Cards = () => {
           {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
           </div> : <div>
             <div className={s.filter}>
-              <SearchInput searchHandler={searchHandler} defaultValue={cardQuestion}/>
+              <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue}/>
             </div>
             <TableCards/>
-            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
+           {/* <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>*/}
           </div>}
         </div>
       }

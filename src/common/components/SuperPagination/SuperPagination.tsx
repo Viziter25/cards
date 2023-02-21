@@ -1,15 +1,17 @@
-import React, {ChangeEvent, memo, useEffect, useState} from 'react'
+import React, {ChangeEvent, memo, useEffect} from 'react'
 
-import { Pagination } from '@mui/material'
+import {Pagination} from '@mui/material'
 import s from './SuperPagination.module.scss'
 import SuperSelect from '../SuperSelect/SuperSelect';
+import {useAppDispatch} from "../../../app/store";
+import {setPageCountAC} from "../../../features/Packs/packs-reducer";
 
 export type SuperPaginationPropsType = {
   id?: string
   page: number
   itemsCountForPage: number
   totalCount: number
-  onChange: (page: number, count: number) => void
+  onChange: (page: number) => void
 }
 
 export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
@@ -17,20 +19,21 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
     page, itemsCountForPage, totalCount, onChange, id = 'hw15',
   }
 ) => {
-  const [pageSize, setPageSize] = useState(itemsCountForPage)
-  const lastPage = Math.ceil(totalCount / pageSize) // пишет студент // вычислить количество страниц
+
+  const dispatch = useAppDispatch()
+  const lastPage = Math.ceil(totalCount / itemsCountForPage) // пишет студент // вычислить количество страниц
 
   useEffect(() => {
-    onChange(page, pageSize)
-  }, [onChange, page, pageSize])
+    onChange(page)
+  }, [onChange, page, itemsCountForPage])
 
   const onChangeCallback = (event: React.ChangeEvent<unknown>, page: number) => {
-    onChange(page, pageSize)
+    onChange(page)
   }
 
   const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    setPageSize(+event.currentTarget.value)
-    onChange(page, pageSize)
+    dispatch(setPageCountAC({pageCount: +event.currentTarget.value}))
+    onChange(page)
   }
 
   return (
