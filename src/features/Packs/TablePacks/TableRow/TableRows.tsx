@@ -26,7 +26,8 @@ export const TableRows:FC<PropsType> = React.memo(({name, user_name,user_id,upda
         <TableCell align="center">{date(updated)}</TableCell>
         <TableCell align="center">{user_name}</TableCell>
         <TableCell align="center">
-          <ActionButtonTable  packId = {_id} userId = {user_id} cardsCount={cardsCount}/>
+          <ActionButtonTable  packId = {_id} userId = {user_id} cardsCount={cardsCount} name={name}/>
+
         </TableCell>
       </TableRow>
     )

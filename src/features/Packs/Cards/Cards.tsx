@@ -3,7 +3,7 @@ import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
 import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
+import {getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
 import {useParams} from "react-router-dom"
 import {TableCards} from "./TableCards/TableCards"
@@ -42,7 +42,7 @@ export const Cards = () => {
     dispatch(setQuestion({question: question}))
   }
   const onClickHandler = () => {
-    packId && dispatch(createCardTC(packId, { cardsPack_id: packId }))
+    return true
   }
 
   const onChangePagination = (newPage: number, newCount: number) => {
@@ -55,8 +55,13 @@ export const Cards = () => {
     <div className={s.cardsContainer}>
       <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
       <div className={s.miniHeader}>
-        <MiniHeader title={packName} buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'} callback={(profileId !== packUserId) ? () => {} : onClickHandler} isButton={!cardsTotalCount}/>
+        <MiniHeader title={packName}
+                    buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'}
+                    callback={(profileId !== packUserId) ? () => {} : onClickHandler}
+                    isButton={!cardsTotalCount}/>
+
         {(profileId === packUserId) && packId && <PackActions packId={packId} />}
+
       </div>
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
         <div className={s.addCardContainer}>

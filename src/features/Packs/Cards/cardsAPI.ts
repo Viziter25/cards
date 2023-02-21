@@ -7,10 +7,10 @@ export const cardsApi = {
     return instance.get<CardsResponseType>('cards/card', {params: data})
   },
   createCard(data: PostCardType) {
-    return instance.post<'',AxiosResponse, {card:PostCardType}>('cards/card', {card: data})
+    return instance.post<'', AxiosResponse, { card: PostCardType }>('cards/card', {card: data})
   },
   updateCard(data: UpdateCardType) {
-    return instance.put<'', AxiosResponse, {card:UpdateCardType}>('cards/card', {card: data})
+    return instance.put<'', AxiosResponse, { card: UpdateCardType }>('cards/card', {card: data})
   },
   deleteCard(cardId: string) {
     return instance.delete('cards/card', {params: {id: cardId}})
@@ -68,4 +68,5 @@ export type PostCardType = {
 export type UpdateCardType = {
   _id: string
   question?: string
+  answer?: string
 }
