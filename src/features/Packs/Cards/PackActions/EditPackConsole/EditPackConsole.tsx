@@ -1,12 +1,11 @@
 import React, { Dispatch, FC, SetStateAction } from 'react'
 import s from './editPackConsole.module.scss'
-import teachIcon from '../../../../../common/icons/learn.svg'
-import updateIcon from '../../../../../common/icons/edit.svg'
-import deleteIcon from '../../../../../common/icons/delete.svg'
-import { useAppDispatch } from '../../../../../app/store'
-import { deletePackTC, updatePackTC } from '../../../packs-reducer'
+import teachIcon from 'common/icons/learn.svg'
+import updateIcon from 'common/icons/edit.svg'
+import deleteIcon from 'common/icons/delete.svg'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { deletePackTC, updatePackTC } from 'features/Packs/packs-reducer'
 import { NavLink } from 'react-router-dom'
-
 
 type EditPackConsolePropsType = {
   packId: string
@@ -16,6 +15,7 @@ type EditPackConsolePropsType = {
 export const EditPackConsole: FC<EditPackConsolePropsType> = ({ packId, setIsEditConsole }) => {
 
   const dispatch = useAppDispatch()
+  const cards = useAppSelector(state => state.cardsPage.cards.cards)
 
   const deletePackHandler = () => {
     dispatch(deletePackTC(packId))
@@ -32,13 +32,15 @@ export const EditPackConsole: FC<EditPackConsolePropsType> = ({ packId, setIsEdi
 
   return (
     <div className={s.container}>
-      <div className={s.item}>
-        <img src={teachIcon} alt="teachIcon" />
-        <span>Learn</span>
-      </div>
+      {!!cards.length &&
+        <div className={s.item}>
+          <img src={teachIcon} alt="teachIcon" />
+          <NavLink style={{ display: 'block', height: '16px', textDecoration: 'none', color: 'black' }} to={`/learn/${packId}`}>Learn</NavLink>
+        </div>
+      }
       <div className={s.item} onClick={updatePackHandler}>
         <img src={updateIcon} alt="updateIcon" />
-        <span>Edit</span>
+        <NavLink style={{ display: 'block', height: '16px', textDecoration: 'none', color: 'black' }} to={`/cards/${packId}`}>Edit</NavLink>
       </div>
       <div className={s.item} onClick={deletePackHandler}>
         <img src={deleteIcon} alt="deleteIcon" />

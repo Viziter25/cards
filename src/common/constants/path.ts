@@ -7,5 +7,6 @@ export const PATH = {
   PROFILE: '/',
   PACKS: '/packs',
   CARDS: '/cards/:packId',
+  LEARN: '/learn/:packId',
   ERROR404: '/404',
 }

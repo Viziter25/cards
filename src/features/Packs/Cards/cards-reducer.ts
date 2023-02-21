@@ -1,4 +1,4 @@
-import {cardsApi, CardsResponseType, CardType, PostCardType, QueryParamsCardsType, UpdateCardType} from "./cardsAPI";
+import {cardsApi, CardsResponseType, CardType, PostCardType, QueryParamsCardsType, UpdateCardType, UpdatedGradeType} from "./cardsAPI";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setIsLoading} from "../../../app/appReducer";
 import { AppThunk} from '../../../app/store';
@@ -71,6 +71,16 @@ export const deleteCardTC = (packId:string, cardId: string):AppThunk => async (d
   dispatch(setIsLoading({isLoading: 'loading'}))
   try {
     await cardsApi.deleteCard(cardId)
+    dispatch(getCardsTC(packId))
+    dispatch(setIsLoading({isLoading: 'succeeded'}))
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+}
+export const updateGradeTC = (packId:string, data: UpdatedGradeType):AppThunk => async (dispatch) => {
+  dispatch(setIsLoading({isLoading: 'loading'}))
+  try {
+    await cardsApi.updatedGrade(data)
     dispatch(getCardsTC(packId))
     dispatch(setIsLoading({isLoading: 'succeeded'}))
   } catch (e) {

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import s from './cards.module.scss'
 import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
 import {PATH} from "../../../common/constants/path"
 import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {createCardTC, getCardsTC, setCurrentCardsPageAC, setQuestion} from "./cards-reducer"
+import {createCardTC, getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
 import {useParams} from "react-router-dom"
 import {TableCards} from "./TableCards/TableCards"
@@ -39,7 +39,7 @@ export const Cards = () => {
     if (packId) {
       dispatch(getCardsTC(packId))
     }
-  }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount])
+  }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount, packName])
 
   const searchHandler = (question: string) => {
     dispatch(setQuestion({question: question}))
@@ -48,8 +48,9 @@ export const Cards = () => {
     packId && dispatch(createCardTC(packId, { cardsPack_id: packId }))
   }
 
-  const onChangePagination = (newPage: number) => {
+  const onChangePagination = (newPage: number, newCount: number) => {
     dispatch(setCurrentCardsPageAC({ currentPage: newPage }))
+    dispatch(setPageCardsCountAC({ pageCount: newCount }))
   }
 
 
