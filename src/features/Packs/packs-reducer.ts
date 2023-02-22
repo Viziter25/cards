@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from './packsAPI';
+import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
 import {AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 import {loadState} from "../../common/utils/localStorage";
@@ -50,6 +50,9 @@ const slice = createSlice({
     },
     changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.packs.entityStatus = action.payload.status
+    },
+    removeFiltersAC(state, action: PayloadAction<{ emptyFilters: PacksQueryParamsType }>) {
+      state.queryParams = action.payload.emptyFilters
     }
   }
 })
@@ -63,7 +66,8 @@ export const {
   setSliderValuesAC,
   setCurrentPageAC,
   setPageCountAC,
-  changeTodolistEntityStatusAC
+  changeTodolistEntityStatusAC,
+  removeFiltersAC
 } = slice.actions
 
 //thunks

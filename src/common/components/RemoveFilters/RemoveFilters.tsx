@@ -1,32 +1,26 @@
 import s from './RemoveFilters.module.scss'
 import removeFiltersIcon from '../../icons/removeFiltersIcon.svg'
-import React, {FC} from 'react'
+import React from 'react'
 import {useAppDispatch, useAppSelector} from '../../../app/store'
-import {
-  setCurrentPageAC,
-  setPageCountAC,
-  setSliderValuesAC,
-  setSortPacksAC,
-  setUserIdAC
-} from '../../../features/Packs/packs-reducer'
+import {removeFiltersAC} from '../../../features/Packs/packs-reducer'
 
-type RemoveFiltersPropsType = {
-  setSearchInputValue: (searchInputValue: string) => void
-}
 
-export const RemoveFilters:FC<RemoveFiltersPropsType> = React.memo(({setSearchInputValue}) => {
+export const RemoveFilters = React.memo(() => {
 
   const dispatch = useAppDispatch()
   const minCardsCount = useAppSelector(st => st.packsPage.packs.minCardsCount)
   const maxCardsCount = useAppSelector(st => st.packsPage.packs.maxCardsCount)
 
   const removeFilters = () => {
-    setSearchInputValue('')
-    dispatch(setUserIdAC({userId: ''}))
-    dispatch(setSortPacksAC({sortBy: ''}))
-    dispatch(setSliderValuesAC({sliderValues: [minCardsCount, maxCardsCount]}))
-    dispatch(setCurrentPageAC({currentPage: 1}))
-    dispatch(setPageCountAC({pageCount: 5}))
+    dispatch(removeFiltersAC({emptyFilters: {
+        sortPacks: '',
+        page: 1,
+        pageCount: 10,
+        min: minCardsCount,
+        max: maxCardsCount,
+        packName: '',
+        user_id: ''
+      }}))
   }
 
   return (
