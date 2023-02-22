@@ -4,7 +4,9 @@ const initialState = {
   isInitialized: false,
   isLoading: 'idle' as RequestStatusType,
   error: null as null | string,
-  idDisabled: ''
+  idDisabled: '',
+  isOpen: false,
+  buttonName: ''
 }
 
 const slice = createSlice({
@@ -22,12 +24,18 @@ const slice = createSlice({
     },
     setIdDisabled(state, action:PayloadAction<{idDisabled: string}> ) {
       state.idDisabled = action.payload.idDisabled
+    },
+    isOpenModal(state, action:PayloadAction<{ isOpen: boolean  }> ) {
+      state.isOpen = action.payload.isOpen
+    },
+    buttonModal(state, action:PayloadAction<{ buttonName: string  }> ) {
+      state.buttonName = action.payload.buttonName
     }
   }
 })
 
 export const appReducer = slice.reducer
-export const {setError, setIsInitialized, setIsLoading, setIdDisabled} = slice.actions
+export const {setError, setIsInitialized, setIsLoading, setIdDisabled, isOpenModal, buttonModal} = slice.actions
 
 
 //types

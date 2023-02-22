@@ -49,7 +49,9 @@ export const TableCards = () => {
                 <TableCell align="center">{date(card.updated)}</TableCell>
                 <TableCell align="center"><Grades rating={card.grade}/></TableCell>
                 {(profileId === packUserId) &&
-                    <TableCell align="center"><CardsActions packId={card.cardsPack_id} id={card._id} /></TableCell>
+                    <TableCell align="center">
+                        <CardsActions packId={card.cardsPack_id} id={card._id} question={card.question} answer={card.answer} />
+                    </TableCell>
                 }
               </TableRow>
             ))}

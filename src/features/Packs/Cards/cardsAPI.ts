@@ -71,6 +71,7 @@ export type PostCardType = {
 export type UpdateCardType = {
   _id: string
   question?: string
+  answer?: string
 }
 export type UpdatedGradeType = { 
   card_id: string

@@ -1,0 +1,57 @@
+@import "../../../styles/mixin";
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 35px;
+
+  .loginContent {
+    border-radius: 2px;
+    width: 90%;
+
+    .form {
+      display: flex;
+      flex-direction: column;
+
+      .input {
+        margin-bottom: 30px;
+      }
+
+      .error {
+        color: red;
+        margin-bottom: 10px;
+      }
+
+      .checkBoxCont {
+        display: flex;
+        align-items: center;
+
+        .checkBox {
+          width: 10px;
+          height: 10px;
+          margin-right: 10px;
+        }
+
+        span {
+          @include text(500, 14px, 17px);
+        }
+      }
+      .buttonBlock {
+        padding-top: 40px;
+        display: flex;
+
+        justify-content: center;
+        .button {
+          font-family: 'Montserrat', sans-serif;
+          width: 50%;
+          border-radius: 20px;
+        }
+      }
+
+    }
+  }
+}
+
+
+
+

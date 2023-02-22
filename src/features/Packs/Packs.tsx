@@ -7,7 +7,7 @@ import {IsMyPack} from '../../common/components/IsMyPack/IsMyPack';
 import {Navigate} from 'react-router-dom';
 import {PATH} from '../../common/constants/path';
 import {MiniHeader} from '../../common/components/MiniHeader/MiniHeader';
-import {createPackTC, setCurrentPageAC, setPackNameAC, setPacksTC} from './packs-reducer';
+import {setCurrentPageAC, setPackNameAC, setPacksTC} from './packs-reducer';
 import {RemoveFilters} from '../../common/components/RemoveFilters/RemoveFilters';
 import {Paginator} from '../../common/components/Paginator/Paginator';
 import {SliderComponent} from 'common/components/Slider/SliderComponent';
@@ -34,9 +34,9 @@ export const Packs = () => {
   const searchHandler = (packName: string) => {
     dispatch(setPackNameAC({packName}))
   }
-
-  const clickHandler = () => {
-    dispatch(createPackTC({name: 'new Packs', private: false}))
+  const [open, setOpen] = useState(false);
+  const onClickHandler = () => {
+    setOpen(true)
   }
 
   const onPagination = (newPage: number) => {
@@ -49,7 +49,7 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={clickHandler}/>
+      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={onClickHandler} open={open} setOpen={setOpen}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
           <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
