@@ -7,6 +7,7 @@ import {profileReducer} from "../features/Profile/profile-reducer";
 import {appReducer} from "./appReducer";
 import {setPacksReducer} from '../features/Packs/packs-reducer';
 import {cardsReducer} from "../features/Packs/Cards/cards-reducer";
+import {saveState} from "../common/utils/localStorage";
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -23,6 +24,11 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
+
+store.subscribe(() => {
+  saveState(store.getState())
+})
+
 // непосредственно создаём store
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<typeof rootReducer>

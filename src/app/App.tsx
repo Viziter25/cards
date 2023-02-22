@@ -12,7 +12,6 @@ function App() {
   const dispatch = useAppDispatch()
   const isInitialized = useAppSelector(state => state.app.isInitialized)
 
-
   useEffect(() => {
       dispatch(authMeTC())
   }, [dispatch])

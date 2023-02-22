@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import SuperSort from "../../../../common/components/SuperSort/SuperSort";
 import {useAppDispatch, useAppSelector} from "../../../../app/store";
@@ -16,12 +16,12 @@ export const TableCards = () => {
   const isLoading = useAppSelector(state => state.app.isLoading)
   const profileId = useAppSelector(state => state.profile._id)
   const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
+  const sort = useAppSelector(state => state.cardsPage.queryParams.sortCards)
   const dispatch = useAppDispatch()
-  const [sort, setSort] = useState('')
 
-  useEffect(() => {
-    dispatch(setSortCardsAC({sortBy: sort}))
-  }, [dispatch, sort])
+  const setSort = (value: string) => {
+    dispatch(setSortCardsAC({sortBy: value}))
+  }
 
   return (
     <div>

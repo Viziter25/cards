@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtil} from '../../common/utils/error utils';
 import {AxiosError} from 'axios';
-import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
-import { AppThunk} from '../../app/store';
+import {GetPacksResponseType, PackPostType, packsAPI, PackType, PackUpdateType} from './packsAPI';
+import {AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
+import {loadState} from "../../common/utils/localStorage";
 
 const initialState = {
   packs: {
@@ -12,19 +13,17 @@ const initialState = {
   queryParams: {
     sortPacks: '',
     page: 1,
-    pageCount: 5,
+    pageCount: 10,
     min: 0,
     max: 78,
     packName: '',
-    user_id: '',
-    minLocalValue: 0,
-    maxLocalValue: 0
-  } as PacksQueryParamsType
+    user_id: ''
+  }
 }
 
 const slice = createSlice({
   name: 'packs',
-  initialState: initialState,
+  initialState: loadState() as typeof initialState || initialState,
   reducers: {
     setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
       state.packs = {...action.payload, entityStatus: 'idle'}
@@ -51,12 +50,6 @@ const slice = createSlice({
     },
     changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.packs.entityStatus = action.payload.status
-    },
-    changeMinLocalValue(state, action: PayloadAction<{ minValue: number }>) {
-      state.queryParams.minLocalValue = action.payload.minValue
-    },
-    changeMaxLocalValue(state, action: PayloadAction<{ maxValue: number }>) {
-      state.queryParams.maxLocalValue = action.payload.maxValue
     }
   }
 })
@@ -70,9 +63,7 @@ export const {
   setSliderValuesAC,
   setCurrentPageAC,
   setPageCountAC,
-  changeTodolistEntityStatusAC,
-  changeMinLocalValue,
-  changeMaxLocalValue
+  changeTodolistEntityStatusAC
 } = slice.actions
 
 //thunks

@@ -20,17 +20,12 @@ export const Cards = () => {
   const dispatch = useAppDispatch()
   const packName = useAppSelector(state => state.cardsPage.cards.packName)
   const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
-  const cardAnswer = useAppSelector(state => state.cardsPage.queryParams.cardAnswer)
   const cardQuestion = useAppSelector(state => state.cardsPage.queryParams.cardQuestion)
-  const min = useAppSelector(state => state.cardsPage.queryParams.min)
-  const max = useAppSelector(state => state.cardsPage.queryParams.max)
   const sortCards = useAppSelector(state => state.cardsPage.queryParams.sortCards)
   const page = useAppSelector(state => state.cardsPage.queryParams.page)
   const pageCount = useAppSelector(state => state.cardsPage.queryParams.pageCount)
   const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
   const profileId = useAppSelector(state => state.profile._id)
-
-  const pageCountPagination = useAppSelector(state => state.cardsPage.cards.pageCount)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
 
   const [searchInputValue, setSearchInputValue] = useState(cardQuestion || '')
@@ -39,7 +34,7 @@ export const Cards = () => {
     if (packId) {
       dispatch(getCardsTC(packId))
     }
-  }, [packId, dispatch, cardAnswer, cardQuestion, min, max, sortCards, page, pageCount, packName])
+  }, [packId, dispatch, cardQuestion, sortCards, page, pageCount, packName])
 
   const searchHandler = (question: string) => {
     dispatch(setQuestion({question: question}))
@@ -52,7 +47,6 @@ export const Cards = () => {
     dispatch(setCurrentCardsPageAC({ currentPage: newPage }))
     dispatch(setPageCardsCountAC({ pageCount: newCount }))
   }
-
 
   return (
     <div className={s.cardsContainer}>
@@ -74,7 +68,7 @@ export const Cards = () => {
               <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue}/>
             </div>
             <TableCards/>
-            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
+            <SuperPagination page={page} itemsCountForPage={pageCount} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
           </div>}
         </div>
       }

@@ -4,7 +4,7 @@ import s from './packs.module.scss'
 import {SearchInput} from '../../common/components/SearchInput/SearchInput';
 import {useAppDispatch, useAppSelector} from '../../app/store';
 import {IsMyPack} from '../../common/components/IsMyPack/IsMyPack';
-import {Navigate, useSearchParams} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {PATH} from '../../common/constants/path';
 import {MiniHeader} from '../../common/components/MiniHeader/MiniHeader';
 import {createPackTC, setCurrentPageAC, setPackNameAC, setPacksTC} from './packs-reducer';
@@ -26,21 +26,9 @@ export const Packs = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const [searchInputValue, setSearchInputValue] = useState(packName)
-  const [searchParams, setSearchParams] = useSearchParams()
-
-  console.log(searchParams)
 
   useEffect(() => {
     dispatch(setPacksTC())
-    setSearchParams({
-      pageCount: JSON.stringify(pageCount),
-      page: JSON.stringify(page),
-      sortPacks,
-      min: JSON.stringify(min),
-      max: JSON.stringify(max),
-      packName,
-      user_id
-    })
   }, [pageCount, page, sortPacks, min, max, packName, user_id, dispatch])
 
   const searchHandler = (packName: string) => {

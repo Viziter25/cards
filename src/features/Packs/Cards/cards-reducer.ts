@@ -1,13 +1,22 @@
-import {cardsApi, CardsResponseType, CardType, PostCardType, QueryParamsCardsType, UpdateCardType, UpdatedGradeType} from "./cardsAPI";
+import {cardsApi, CardsResponseType, CardType, PostCardType, UpdateCardType, UpdatedGradeType} from "./cardsAPI";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setIsLoading} from "../../../app/appReducer";
-import { AppThunk} from '../../../app/store';
+import {AppThunk} from '../../../app/store';
 import {errorUtil} from "../../../common/utils/error utils";
 import {AxiosError} from "axios";
 
 const initialState = {
   cards: {cards: [] as CardType[]} as CardsResponseType,
-  queryParams: {} as QueryParamsCardsType
+  queryParams: {
+    cardAnswer: '',
+    cardQuestion: '',
+    cardsPack_id: '',
+    min: 0,
+    max: 0,
+    sortCards: '',
+    page: 1,
+    pageCount: 10
+  }
 }
 
 const slice = createSlice({
