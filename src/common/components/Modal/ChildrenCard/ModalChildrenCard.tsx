@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import {Button, TextField} from '@mui/material';
 import s from './modalChildrenCard.module.scss'
 
@@ -25,10 +24,10 @@ export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler,
       question: question,
       answer: answer
     },
-    validationSchema: Yup.object({
-      question: Yup.string().required('Required'),
-      answer: Yup.string().required('Required'),
-    }),
+    // validationSchema: Yup.object({
+    //   question: Yup.string().required('Required'),
+    //   answer: Yup.string().required('Required')
+    // }),
     onSubmit: (values) => {
       dispatchHandler(values)
       closeHandler()

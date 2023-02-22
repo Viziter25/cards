@@ -19,7 +19,6 @@ export type ValuesPropsType = {
 
 export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler, packName, delet}) => {
 
-
   const formik = useFormik({
     initialValues: {
       name: packName,
@@ -74,6 +73,7 @@ export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler,
                       variant={'contained'}>
                 {delet ? 'Delete' : 'Save'}
               </Button>
+
             </div>
           </div>
         </form>

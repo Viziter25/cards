@@ -1,34 +1,62 @@
-import React, { Dispatch, FC, SetStateAction } from 'react'
+import React, {Dispatch, FC, SetStateAction} from 'react'
 import s from './editPackConsole.module.scss'
 import teachIcon from '../../../../../common/icons/learn.svg'
 import updateIcon from '../../../../../common/icons/edit.svg'
 import deleteIcon from '../../../../../common/icons/delete.svg'
-import { useAppDispatch } from '../../../../../app/store'
+import {useAppDispatch} from '../../../../../app/store'
 import { deletePackTC, updatePackTC } from '../../../packs-reducer'
-import { NavLink } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import {ModalChildrenPack} from '../../../../../common/components/Modal/ChildrenPank/ModalChildrenPack';
+import {ModalComponent} from '../../../../../common/components/Modal/ModalComponent';
+
 
 
 type EditPackConsolePropsType = {
   packId: string
   setIsEditConsole: Dispatch<SetStateAction<boolean>>
+  packName: string
+  open: boolean
+  callback: () => void
+  setOpen: (open:boolean) => void
+  setClickButton: (lickButton: string) => void
+  clickButton: string
 }
 
-export const EditPackConsole: FC<EditPackConsolePropsType> = ({ packId, setIsEditConsole }) => {
+export const EditPackConsole: FC<EditPackConsolePropsType> = ({ packId, setIsEditConsole, packName,open,callback , setOpen, setClickButton, clickButton}) => {
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const deletePackHandler = () => {
-    dispatch(deletePackTC(packId))
-    setIsEditConsole(false)
-  }
+
+  const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
+
+
 
   const updatePackHandler = () => {
+
+    callback && callback()
+    setClickButton('update')
+
+  }
+
+  const deletePackHandler = () => {
+    callback && callback()
+    setClickButton('delete')
+  }
+
+  const dispatchDeleteHandler = () => {
+    dispatch(deletePackTC(packId))
+    navigate(`/packs`)
+
+  }
+  const dispatchUpdateHandler = (values:any) => {
     dispatch(updatePackTC({
       _id: packId,
-      name: 'updated pack'
+      name: values.name
     }))
     setIsEditConsole(false)
   }
+
 
   return (
     <div className={s.container}>
@@ -42,8 +70,25 @@ export const EditPackConsole: FC<EditPackConsolePropsType> = ({ packId, setIsEdi
       </div>
       <div className={s.item} onClick={deletePackHandler}>
         <img src={deleteIcon} alt="deleteIcon" />
-        <NavLink style={{ display: 'block', height: '16px', textDecoration: 'none', color: 'black' }} to={`/packs`}>Delete</NavLink>
+        <span>Delete</span>
       </div>
+
+
+      <ModalComponent title={titleModal} closeHandler={() => setOpen(false)}  open={open}>
+        {
+          clickButton === 'update'
+            ? <ModalChildrenPack closeHandler={()=> setOpen(false)}
+                                 dispatchHandler={dispatchUpdateHandler}
+                                 packName={packName}
+            />
+            : <ModalChildrenPack closeHandler={()=> setOpen(false)}
+                                 dispatchHandler={dispatchDeleteHandler}
+                                 packName={packName}
+                                 delet={clickButton}
+            />
+        }
+      </ModalComponent>
+
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import s from './miniHeader.module.scss'
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../app/store';
@@ -14,29 +14,33 @@ type MiniHeaderPropsType = {
   title: string
   buttonTitle?: string
   isButton?: boolean
-  callback?: () => void
+  callback: () => void
+  open:boolean
+  setOpen: (open:boolean) => void
 }
 
 export const MiniHeader: FC<MiniHeaderPropsType> = ({
                                                       title,
                                                       buttonTitle,
                                                       isButton,
-                                                      callback
+                                                      callback,
+                                                      open,
+                                                      setOpen
                                                     }) => {
   const {packId} = useParams()
 
 
   const dispatch = useAppDispatch()
-  const [open, setOpen] = useState(false);
+
 
   const onClickHandler = () => {
-    setOpen(true)
     callback && callback()
   }
 
   const dispatchHandlerPack = (values: any) => {
     dispatch(createPackTC(values))
   }
+
   const dispatchHandlerCard = (values: ValuesPropsType) => {
     packId && dispatch(createCardTC(packId, {
       cardsPack_id: packId,
@@ -50,13 +54,13 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
   return (
     <div className={s.miniHeader}>
       <span className={s.title}>{title}</span>
-      {isButton || <Button disabled={status === 'loading'} className={s.button} variant={'contained'}
-                           onClick={onClickHandler}>{buttonTitle}</Button>}
+
+      {/*Modal*/}
 
       {buttonTitle === 'Add new pack'
         ?
         <ModalComponent title={'Add new pack'} closeHandler={() => setOpen(false)} open={open}>
-          <ModalChildrenPack closeHandler={() => setOpen(false)} dispatchHandler={dispatchHandlerPack}/>
+          <ModalChildrenPack closeHandler={() =>  setOpen(false)} dispatchHandler={dispatchHandlerPack}/>
         </ModalComponent>
         :
         <ModalComponent title={'Add new card'} closeHandler={() => setOpen(false)} open={open}>
@@ -64,6 +68,12 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
         </ModalComponent>
       }
 
+      {isButton || <Button disabled={status === 'loading'}
+                           className={s.button}
+                           variant={'contained'}
+                           onClick={onClickHandler}>
+                      {buttonTitle}
+                    </Button>}
 
     </div>
   );

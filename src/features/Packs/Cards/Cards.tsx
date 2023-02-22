@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import s from './cards.module.scss'
-import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
-import {PATH} from "../../../common/constants/path"
-import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
-import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
-import {useParams} from "react-router-dom"
-import {TableCards} from "./TableCards/TableCards"
-import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
+import {BackArrow} from '../../../common/components/BackArrow/BackArrow'
+import {PATH} from '../../../common/constants/path'
+import {useAppDispatch, useAppSelector} from '../../../app/store'
+import {getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from './cards-reducer'
+import {MiniHeader} from '../../../common/components/MiniHeader/MiniHeader'
+import {useParams} from 'react-router-dom'
+import {TableCards} from './TableCards/TableCards'
+import {SearchInput} from '../../../common/components/SearchInput/SearchInput'
 import {Button} from '@mui/material'
 import {PackActions} from './PackActions/PackActions'
 import SuperPagination from '../../../common/components/SuperPagination/SuperPagination';
+
 
 export const Cards = () => {
 
@@ -41,13 +42,21 @@ export const Cards = () => {
   const searchHandler = (question: string) => {
     dispatch(setQuestion({question: question}))
   }
+
+  const [open, setOpen] = useState(false);
   const onClickHandler = () => {
-    return true
+    setOpen(true)
+    // dispatch(isOpenModal({isOpen: true}))
   }
 
+
+  // const onClickHandler = () => {
+  //   dispatch(isOpenModal({isOpen: true}))
+  // }
+
   const onChangePagination = (newPage: number, newCount: number) => {
-    dispatch(setCurrentCardsPageAC({ currentPage: newPage }))
-    dispatch(setPageCardsCountAC({ pageCount: newCount }))
+    dispatch(setCurrentCardsPageAC({currentPage: newPage}))
+    dispatch(setPageCardsCountAC({pageCount: newCount}))
   }
 
 
@@ -57,28 +66,38 @@ export const Cards = () => {
       <div className={s.miniHeader}>
         <MiniHeader title={packName}
                     buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'}
-                    callback={(profileId !== packUserId) ? () => {} : onClickHandler}
-                    isButton={!cardsTotalCount}/>
+                    callback={(profileId !== packUserId) ? () => {
+                    } : onClickHandler}
+                    isButton={!cardsTotalCount}
+                    open={open}
+                    setOpen={setOpen}
+        />
 
-        {(profileId === packUserId) && packId && <PackActions packId={packId} />}
+        {(profileId === packUserId) && packId && <PackActions packName={packName} packId={packId}/>}
 
       </div>
-      {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
+      {!cardsTotalCount && !cardQuestion && profileId === packUserId
+        ?
         <div className={s.addCardContainer}>
           <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
-          <Button onClick={onClickHandler} className={s.button} variant={"contained"}>{'Add New Card'}</Button>
+          <Button onClick={onClickHandler} className={s.button} variant={'contained'}>{'Add New Card'}</Button>
         </div>
         :
         <div>
-          {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
-          </div> : <div>
-            <div className={s.filter}>
-              <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
-                           setSearchInputValue={setSearchInputValue}/>
-            </div>
-            <TableCards/>
-            <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
-          </div>}
+          {
+            !cardsTotalCount && !cardQuestion
+              ?
+              <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack</div>
+              :
+              <div>
+                <div className={s.filter}>
+                  <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
+                               setSearchInputValue={setSearchInputValue}/>
+                </div>
+                <TableCards/>
+                <SuperPagination page={page || 1} itemsCountForPage={pageCountPagination || 5}
+                                 totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
+              </div>}
         </div>
       }
     </div>

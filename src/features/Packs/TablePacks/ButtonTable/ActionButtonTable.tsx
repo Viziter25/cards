@@ -27,7 +27,6 @@ export const ActionButtonTable:FC<ActionButtonTableType> = ({userId,packId, card
   const [clickButton, setClickButton] = useState('');
 
 const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
-
   const updatePackHandler = () => {
     setClickButton('update')
     setOpen(true)
@@ -45,8 +44,8 @@ const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
       _id: packId,
       name: values.name
     }))
-
   }
+
 
   const learnPackHandler = () => {
     console.log('learning')

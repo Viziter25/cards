@@ -41,8 +41,6 @@ export const CardsActions: FC<CardsActionsPropsType> = ({ packId, id,question,an
     }))
   }
   const deleteCardHandler = () => {
-    console.log('sdsdsd')
-
     dispatch(deleteCardTC(packId, id))
   }
 

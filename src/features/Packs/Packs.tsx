@@ -23,6 +23,10 @@ export const Packs = () => {
   const searchHandler = (packName: string) => {
     dispatch(setPackNameAC({packName}))
   }
+  const [open, setOpen] = useState(false);
+  const onClickHandler = () => {
+    setOpen(true)
+  }
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN}/>
@@ -32,7 +36,7 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'}/>
+      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={onClickHandler} open={open} setOpen={setOpen}/>
       <div className={s.filter}>
         <div className={s.searchInput}>
           <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
