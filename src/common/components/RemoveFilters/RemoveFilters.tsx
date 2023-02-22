@@ -2,7 +2,8 @@ import s from './RemoveFilters.module.scss'
 import removeFiltersIcon from '../../icons/removeFiltersIcon.svg'
 import React from 'react'
 import {useAppDispatch, useAppSelector} from '../../../app/store'
-import {removeFiltersAC} from '../../../features/Packs/packs-reducer'
+import { removeFiltersAC } from 'features/Packs/packs-reducer'
+
 
 
 export const RemoveFilters = React.memo(() => {
