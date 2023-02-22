@@ -15,9 +15,8 @@ type MiniHeaderPropsType = {
   buttonTitle?: string
   isButton?: boolean
   callback: () => void
-  open:boolean
-  setOpen: (open:boolean) => void
-  positionCenter?: boolean
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
 export const MiniHeader: FC<MiniHeaderPropsType> = ({
@@ -26,8 +25,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
                                                       isButton,
                                                       callback,
                                                       open,
-                                                      setOpen,
-                                                      positionCenter
+                                                      setOpen
                                                     }) => {
   const {packId} = useParams()
 
@@ -55,7 +53,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
 
 
   return (
-    <div className={positionCenter ? s.miniHeaderCenter : s.miniHeader}>
+    <div className={s.miniHeader}>
       <span className={s.title}>{title}</span>
 
       {/*Modal*/}
@@ -63,7 +61,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
       {buttonTitle === 'Add new pack'
         ?
         <ModalComponent title={'Add new pack'} closeHandler={() => setOpen(false)} open={open}>
-          <ModalChildrenPack closeHandler={() =>  setOpen(false)} dispatchHandler={dispatchHandlerPack}/>
+          <ModalChildrenPack closeHandler={() => setOpen(false)} dispatchHandler={dispatchHandlerPack}/>
         </ModalComponent>
         :
         <ModalComponent title={'Add new card'} closeHandler={() => setOpen(false)} open={open}>
@@ -75,8 +73,8 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
                            className={s.button}
                            variant={'contained'}
                            onClick={onClickHandler}>
-                      {buttonTitle}
-                    </Button>}
+        {buttonTitle}
+      </Button>}
 
     </div>
   );

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './learnPage.module.scss'
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { Navigate, useParams } from 'react-router-dom'
-import { PATH } from 'common/constants/path'
-import { BackArrow } from 'common/components/BackArrow/BackArrow'
-import { MiniHeader } from 'common/components/MiniHeader/MiniHeader'
-import { Button, Paper } from '@mui/material'
-import { CardType } from '../Cards/cardsAPI'
-import { getCardsTC, updateGradeTC } from '../Cards/cards-reducer'
+import {useAppDispatch, useAppSelector} from 'app/store'
+import {Navigate, useParams} from 'react-router-dom'
+import {PATH} from 'common/constants/path'
+import {BackArrow} from 'common/components/BackArrow/BackArrow'
+import {Button, Paper} from '@mui/material'
+import {CardType} from '../Cards/cardsAPI'
+import {getCardsTC, updateGradeTC} from '../Cards/cards-reducer'
 import SuperCheckbox from 'common/components/SuperCheckbox/SuperCheckbox'
 
 const getCard = (cards: CardType[]) => {
@@ -79,7 +78,7 @@ export const LearnPage = () => {
   return (
     <div className={s.container}>
       <BackArrow to={`/cards/${packId}`} title={'Back to Cards List'} />
-      <MiniHeader title={`Learn "${packName}"`} isButton={true} positionCenter={true} />
+      <span className={s.title}>{`Learn "${packName}"`}</span>
       <Paper className={s.paper} elevation={3}>
         <span className={s.question}><b>Question:</b> {card.question}</span>
         <span className={s.shotsNumber}>Количество попыток ответов на вопрос: {card.shots}</span>
@@ -88,7 +87,7 @@ export const LearnPage = () => {
           <>
             <span className={s.answer}><b>Answer:</b> {card.answer}</span>
             <span className={s.rateTitle}>Rate yourself:</span>
-            {grades.map((g, i) => (
+            {grades.map((g) => (
               <div key={g.id} className={s.rateItem} onClick={() => chooseItemHandler(g.id)}>
                 <SuperCheckbox checked={g.checked} className={s.checkBox} />
                 <span>{g.title}</span>
