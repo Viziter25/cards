@@ -56,7 +56,7 @@ export const Packs = () => {
         </div>
         <IsMyPack/>
         <SliderComponent/>
-        <RemoveFilters setSearchInputValue={setSearchInputValue}/>
+        <RemoveFilters/>
       </div>
       <TablePacks/>
       <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
