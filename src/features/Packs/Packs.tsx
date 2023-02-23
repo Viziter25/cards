@@ -16,6 +16,7 @@ import {SliderComponent} from 'common/components/Slider/SliderComponent';
 export const Packs = () => {
 
   const dispatch = useAppDispatch()
+  const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
   const pageCount = useAppSelector(state => state.packsPage.queryParams.pageCount)
   const page = useAppSelector(state => state.packsPage.queryParams.page)
   const sortPacks = useAppSelector(state => state.packsPage.queryParams.sortPacks)
@@ -49,18 +50,25 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={onClickHandler} open={open} setOpen={setOpen}/>
-      <div className={s.filter}>
-        <div className={s.searchInput}>
-          <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue}/>
+      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={onClickHandler} open={open}
+                  setOpen={setOpen}/>
+      {!packs.length ?<div><IsMyPack/> <div className={s.warn}>This list is empty, you can add new pack
+      </div></div>  : <>
+        <div className={s.filter}>
+          <div className={s.searchInput}>
+            <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
+                         setSearchInputValue={setSearchInputValue}/>
+          </div>
+          <IsMyPack/>
+          <SliderComponent/>
+          <RemoveFilters/>
         </div>
-        <IsMyPack/>
-        <SliderComponent/>
-        <RemoveFilters/>
-      </div>
-      <TablePacks/>
-      <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
+        <TablePacks/>
+        <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
+      </>
+      }
     </div>
+
   );
 };
 

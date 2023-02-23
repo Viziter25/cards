@@ -16,12 +16,7 @@ export const PackActions: FC<PackActionsPropsType> = ({ packId,packName }) => {
 
   const onClickHandler = () => {
     setOpen(true)
-    // dispatch(isOpenModal({isOpen: true}))
   }
-  // const onClickButtonHandler = () => {
-  //   setClickButton('update')
-  //   // dispatch(isOpenModal({isOpen: true}))
-  // }
 
   return (
     <div className={s.console}>

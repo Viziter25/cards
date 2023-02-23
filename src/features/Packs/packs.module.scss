@@ -1,9 +1,23 @@
 .container {
   width: 85%;
+
+  .warn {
+    display: block;
+    margin-top: 86px;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    opacity: 0.5;
+  }
+
   .filter {
     display: flex;
     justify-content: space-between;
     margin: 30px 0;
+
     .searchInput {
       width: 39%;
     }

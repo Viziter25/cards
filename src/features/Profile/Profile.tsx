@@ -96,8 +96,7 @@ export const Profile = React.memo(() => {
         />
         <span className={error ? s.errorInfo : s.info}>{error ? error : 'your name'}</span>
         <span className={s.email}>{profile.email}</span>
-        {/*<SuperButton className={s.logautButton}><img src={logout} alt='logout'></img>Log out</SuperButton>*/}
-        <Button className={s.logautButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
+        <Button className={s.logoutButton} onClick={logOutHandler} variant="text"><img src={logout} alt='logout'></img>Log out</Button>
       </Paper>
     </div>
   )

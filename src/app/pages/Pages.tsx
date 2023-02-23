@@ -17,6 +17,7 @@ export const Pages = () => {
   return (
     <div className={s.pages}>
       <Routes>
+        <Route path={'/'} element={<Navigate to={PATH.PACKS}/>} />
         <Route path={PATH.REGISTRATION} element={<Registration />} />
         <Route path={PATH.LOGIN} element={<Login />} />
         <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />

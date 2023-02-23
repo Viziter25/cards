@@ -88,6 +88,8 @@
       line-height: 24px;
       margin: 0;
       padding: 0;
+      word-break: break-word;
+      width: 100%;
     }
     .info {
       color: #000000;
@@ -119,8 +121,10 @@
       line-height: 24px;
       margin-top: 15px;
       opacity: 0.5;
+      word-break: break-word;
+      width: 100%;
     }
-    .logautButton {
+    .logoutButton {
       display: flex;
       gap: 5px;
       background-color: #FCFCFC;

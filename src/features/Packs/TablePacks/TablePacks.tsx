@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useAppSelector} from 'app/store';
 import {Paper, Table, TableBody, TableContainer} from '@mui/material';
 import s from './tablePacks.module.scss'
@@ -8,7 +8,14 @@ import {TableHeader} from './TableHead/TableHeader';
 export const TablePacks = () => {
 
   const packs = useAppSelector(state => state.packsPage.packs.cardPacks)
+  const packName = useAppSelector(state => state.packsPage.queryParams.packName)
+  const min = useAppSelector(state => state.packsPage.queryParams.min)
+  const max = useAppSelector(state => state.packsPage.queryParams.max)
+  const minCardsCount = useAppSelector(state => state.packsPage.packs.minCardsCount)
+  const maxCardsCount = useAppSelector(state => state.packsPage.packs.maxCardsCount)
   const isLoading = useAppSelector(state => state.app.isLoading)
+
+  const [count, setCount] = useState([minCardsCount, maxCardsCount])
 
   return (
     <div>
@@ -28,7 +35,7 @@ export const TablePacks = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {!packs.length && isLoading !== 'loading' && <div className={s.warn}>Change query parameters</div>}
+      {((!packs.length && !!packName) || (!packs.length && count[0] !== min && count[1] !== max)) && isLoading !== 'loading' &&  <div className={s.warn}>Change query parameters</div>}
     </div>
   );
 };

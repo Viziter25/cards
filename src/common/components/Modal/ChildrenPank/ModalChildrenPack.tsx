@@ -42,7 +42,7 @@ export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler,
               delet
                 ?
                 <>
-                  <div>Do you really want to remove <b>{packName}</b>?</div>
+                  <div className={s.deleteQuestion}>Do you really want to remove <b>{packName}</b>?</div>
                   <div>All cards will be deleted</div>
                 </>
                 :

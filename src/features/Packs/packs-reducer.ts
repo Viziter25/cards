@@ -5,6 +5,7 @@ import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, Pack
 import {AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
 import {loadState} from "../../common/utils/localStorage";
+import {getCardsTC} from "./Cards/cards-reducer";
 
 const initialState = {
   packs: {
@@ -115,6 +116,7 @@ export const updatePackTC = (data:PackUpdateType):AppThunk => async (dispatch) =
     await packsAPI.updatePack(data)
     dispatch(setIsLoading({isLoading: 'succeeded'}))
     dispatch(setPacksTC())
+    dispatch(getCardsTC(data._id))
   } catch (e) {
     errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
   }

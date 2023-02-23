@@ -3,11 +3,11 @@ import {TableCell, TableHead, TableRow} from '@mui/material';
 import SuperSort from '../../../../common/components/SuperSort/SuperSort';
 import {setSortPacksAC} from '../../packs-reducer';
 import {useAppDispatch, useAppSelector} from '../../../../app/store';
-
+import * as selectors from "common/selectors/selectors";
 
 export const TableHeader = () => {
   const dispatch = useAppDispatch()
-  const sort = useAppSelector(state => state.packsPage.queryParams.sortPacks)
+  const sort = useAppSelector(selectors.sortPacks)
 
   const setSort = (value: string) => {
     dispatch(setSortPacksAC({sortBy: value}))

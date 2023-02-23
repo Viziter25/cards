@@ -17,6 +17,9 @@
             font-size: 16px;
             line-height: 24px;
             color: #000000;
+            width: 100%;
+            word-wrap: break-word;
+            text-align: left;
         }
         .shotsNumber {
             margin-top: 13px;
@@ -36,6 +39,9 @@
             font-size: 16px;
             line-height: 24px;
             color: #000000;
+            width: 100%;
+            word-wrap: break-word;
+            text-align: left;
         }
         .rateTitle {
             margin-top: 24px;
@@ -79,5 +85,7 @@
         font-size: 22px;
         line-height: 27px;
         color: #000000;
+        width: 85vw;
+        word-wrap: break-word;
     }
 }

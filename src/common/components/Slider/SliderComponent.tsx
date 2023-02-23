@@ -1,9 +1,9 @@
 import s from './SliderComponent.module.scss'
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Slider from '@mui/material/Slider'
 import useDebounce from '../../../hooks/debounce'
-import { useAppDispatch, useAppSelector } from '../../../app/store'
-import { setSliderValuesAC } from 'features/Packs/packs-reducer'
+import {useAppDispatch, useAppSelector} from '../../../app/store'
+import {setSliderValuesAC} from 'features/Packs/packs-reducer'
 
 
 export const SliderComponent = React.memo(() => {

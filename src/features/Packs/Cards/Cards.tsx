@@ -5,7 +5,7 @@ import {PATH} from "../../../common/constants/path"
 import {useAppDispatch, useAppSelector} from "../../../app/store"
 import {getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
 import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
-import {useParams} from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import {TableCards} from "./TableCards/TableCards"
 import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
 import {Button} from '@mui/material'
@@ -27,6 +27,7 @@ export const Cards = () => {
   const packUserId = useAppSelector(state => state.cardsPage.cards.packUserId)
   const profileId = useAppSelector(state => state.profile._id)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
+  const isLoading = useAppSelector(state => state.app.isLoading)
 
   const [searchInputValue, setSearchInputValue] = useState(cardQuestion || '')
 
@@ -35,6 +36,8 @@ export const Cards = () => {
       dispatch(getCardsTC(packId))
     }
   }, [packId, dispatch, cardQuestion, sortCards, page, pageCount, packName])
+
+  const navigate = useNavigate()
 
   const searchHandler = (question: string) => {
     dispatch(setQuestion({question: question}))
@@ -50,6 +53,7 @@ export const Cards = () => {
     dispatch(setPageCardsCountAC({ pageCount: newCount }))
   }
 
+  const isLearnOrAdd = (profileId !== packUserId) ? () => {navigate(`/learn/${packId}`)} : onClickHandler
 
   return (
     <div className={s.cardsContainer}>
@@ -57,8 +61,7 @@ export const Cards = () => {
       <div className={s.miniHeader}>
         <MiniHeader title={packName}
                     buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'}
-                    callback={(profileId !== packUserId) ? () => {
-                    } : onClickHandler}
+                    callback={isLearnOrAdd}
                     isButton={!cardsTotalCount}
                     open={open}
                     setOpen={setOpen}
@@ -74,7 +77,7 @@ export const Cards = () => {
         </div>
         :
         <div>
-          {!cardsTotalCount && !cardQuestion ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
+          {!cardsTotalCount && !cardQuestion && isLoading !== 'loading' ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
           </div> : <div>
             <div className={s.filter}>
               <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue}/>

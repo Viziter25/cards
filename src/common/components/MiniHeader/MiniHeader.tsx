@@ -9,7 +9,6 @@ import {ModalChildrenCard, ValuesPropsType} from '../Modal/ChildrenCard/ModalChi
 import {useParams} from 'react-router-dom';
 import {createCardTC} from '../../../features/Packs/Cards/cards-reducer';
 
-
 type MiniHeaderPropsType = {
   title: string
   buttonTitle?: string
@@ -29,7 +28,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
                                                     }) => {
   const {packId} = useParams()
 
-
+  const status = useAppSelector(state => state.packsPage.packs.entityStatus)
   const dispatch = useAppDispatch()
 
 
@@ -48,9 +47,6 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
       answer: values.answer
     }))
   }
-
-  const status = useAppSelector(state => state.packsPage.packs.entityStatus)
-
 
   return (
     <div className={s.miniHeader}>

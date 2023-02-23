@@ -43,7 +43,7 @@ export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler,
               delet
                 ?
                 <>
-                  <div>Do you really want to remove <b>{question}</b>?</div>
+                  <div className={s.deleteQuestion}>Do you really want to remove <b>{question}</b>?</div>
                   <div>All cards will be deleted</div>
                 </>
                 :
