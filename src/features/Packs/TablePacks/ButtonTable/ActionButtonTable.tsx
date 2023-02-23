@@ -47,17 +47,17 @@ const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
     }))
   }
 
-  const teacher = (cardsCount || (idDis !== packId )) ?  teacherIcon : teacherDisabledIcon
+  const teacher = (cardsCount && (idDis !== packId )) ?  teacherIcon : teacherDisabledIcon
 
   const updateButton =  (idDis=== packId )
                         ? <img src={editDisabledIcon} alt="icon"/>
                         : <img onClick={updatePackHandler} src={editIcon} alt="icon"/>
 
   const imgTeg = cardsCount
-                        ?  <NavLink style={{ display: 'block', height: '16px', textDecoration: 'none', color: 'black' }} to={`/learn/${packId}`}>
-      <img src={teacher} alt="icon" />
+                        ?  <NavLink to={`/learn/${packId}`}>
+      <img  src={teacher} alt="icon" />
     </NavLink>
-                        :  <img src={teacher} alt="icon"/>
+                        :  <img className={s.learnIcon} src={teacher} alt="icon"/>
 
   const deleteButton = idDis=== packId
                         ? <img src={deleteDisabledIcon} alt="icon"/>

@@ -1,11 +1,16 @@
 
 .actionBlock {
-    img {
-        cursor: pointer;
-    }
-    .actionButton {
-        display: flex;
-        justify-content: center;
-        gap: 14px;
-    }
+  img {
+    cursor: pointer;
+  }
+
+  .actionButton {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .learnIcon {
+    cursor: default;
+  }
 }

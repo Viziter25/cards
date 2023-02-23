@@ -15,7 +15,7 @@ export const Header = () => {
   const isLoading = useAppSelector(state => state.app.isLoading)
 
   return (
-    <header>
+    <header className={s.headerContainer}>
       <div className={s.header}>
         <div className={s.container}>
           <img src={label} className={s.label} alt='label'/>
