@@ -1,37 +1,52 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, FC, useState} from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {Button, Checkbox, TextField} from '@mui/material';
 import s from './modalChildrenPack.module.scss'
+import {onChangeImg} from 'common/utils/convertToBase64';
+import {useAppDispatch} from 'app/store';
+import defaultAva from 'common/image/no_cover.jpg';
 
 
 type PropsType = {
   packName?: string
   closeHandler: () => void
-  dispatchHandler: (values: ValuesPropsType) => void
+  dispatchHandler: (values: ValuesPackPropsType) => void
   delet?: string
+  deckCover?: string
 }
 
-export type ValuesPropsType = {
-  name?: string,
+export type ValuesPackPropsType = {
+  name?: string
+  deckCover?: string
   private?: boolean
 }
 
-export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler, packName, delet}) => {
+export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler, packName, delet, deckCover}) => {
+
+  const dispatch = useAppDispatch()
+
+  const [coverImg, setCoverImg] = useState<string>('')
+  const onChangeCoverInput = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeImg(e, dispatch, setCoverImg)
+  }
+
 
   const formik = useFormik({
     initialValues: {
       name: packName,
+      deckCover: deckCover,
       private: false
     },
     validationSchema: Yup.object({
       name: Yup.string().required('Required'),
     }),
     onSubmit: (values) => {
-      dispatchHandler(values)
+      dispatchHandler({...values, deckCover: coverImg})
       closeHandler()
     }
   })
+
 
   return (
     <div className={s.loginContainer}>
@@ -47,6 +62,26 @@ export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler,
                 </>
                 :
                 <>
+
+                  <div className={s.coverButton}>
+                    <div>
+                      <img
+                        src={ coverImg || deckCover || defaultAva}
+                        style={{width: '100px'}}
+                        alt="cover"
+                      />
+                    </div>
+                    <Button variant="text" component="label">
+                      {deckCover ? 'Change cover' : 'Choose cover'}
+                      <input
+                        type="file"
+                        onChange={onChangeCoverInput}
+                        style={{display: 'none'}}
+                        accept="image/*"
+                      />
+                    </Button>
+                  </div>
+
                   <TextField
                     className={s.input}
                     variant={'standard'}
@@ -54,6 +89,7 @@ export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler,
                     {...formik.getFieldProps('name')}
                   />
                   {formik.touched.name && formik.errors.name && <div className={s.error}>{formik.errors.name}</div>}
+
 
                   <div className={s.checkBoxCont}>
                     <Checkbox
@@ -67,7 +103,7 @@ export const ModalChildrenPack: FC<PropsType> = ({closeHandler, dispatchHandler,
 
             }
             <div className={s.buttonBlock}>
-              <Button color={delet ? 'error': 'info'}
+              <Button color={delet ? 'error' : 'info'}
                       className={s.button}
                       type="submit"
                       variant={'contained'}>

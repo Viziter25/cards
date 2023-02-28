@@ -62,7 +62,6 @@ const SuperSort: React.FC<SuperSortPropsType> = (
               alt={''}
             />
 
-      {/*{icon} /!*а это убрать*!/*/}
         </span>
   )
 }

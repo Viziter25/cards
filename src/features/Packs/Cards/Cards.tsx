@@ -67,6 +67,7 @@ export const Cards = () => {
                     setOpen={setOpen}
         />
 
+
         {(profileId === packUserId) && packId && <PackActions packName={packName} packId={packId}/>}
 
       </div>

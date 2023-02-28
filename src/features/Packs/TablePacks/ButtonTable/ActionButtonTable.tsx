@@ -17,9 +17,10 @@ type ActionButtonTableType = {
   packId: string
   cardsCount: number
   name: string
+  deckCover:string
 }
 
-export const ActionButtonTable:FC<ActionButtonTableType> = ({userId,packId, cardsCount,name}) => {
+export const ActionButtonTable:FC<ActionButtonTableType> = ({userId,packId, cardsCount,name,deckCover}) => {
 
   const dispatch = useAppDispatch()
   const myId = useAppSelector(state => state.profile._id)
@@ -43,7 +44,8 @@ const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
   const dispatchUpdateHandler = (values:any) => {
     dispatch(updatePackTC({
       _id: packId,
-      name: values.name
+      name: values.name,
+      deckCover: values.deckCover
     }))
   }
 
@@ -80,6 +82,8 @@ const titleModal = clickButton === 'update'? 'Edit pack' : 'Delete Pack'
           ? <ModalChildrenPack closeHandler={()=>setOpen(false)}
                                dispatchHandler={dispatchUpdateHandler}
                                packName={name}
+                               deckCover={deckCover}
+
             />
           : <ModalChildrenPack closeHandler={()=>setOpen(false)}
                                dispatchHandler={dispatchDeleteHandler}
