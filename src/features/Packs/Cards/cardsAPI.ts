@@ -31,6 +31,8 @@ export type CardType = {
   created: string
   updated: string
   _id: string
+  questionImg: string
+  answerImg: string
 }
 export type CardsResponseType = {
   cards: Array<CardType>
@@ -72,6 +74,8 @@ export type UpdateCardType = {
   _id: string
   question?: string
   answer?: string
+  answerImg?: string
+  questionImg?: string
 }
 export type UpdatedGradeType = { 
   card_id: string

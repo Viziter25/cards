@@ -80,12 +80,12 @@ export const LearnPage = () => {
       <BackArrow to={`/cards/${packId}`} title={'Back to Cards List'} />
       <span className={s.title}>{`Learn "${packName}"`}</span>
       <Paper className={s.paper} elevation={3}>
-        <span className={s.question}><b>Question:</b> {card.question}</span>
+        <span className={s.question}><b>Question:</b> {card.questionImg ? <img src={card.questionImg} alt=""/> : card.question}</span>
         <span className={s.shotsNumber}>Количество попыток ответов на вопрос: {card.shots}</span>
         {!isAnswerClicked && <Button className={s.button} onClick={showAnswerHandler} variant="contained">Show answer</Button>}
         {isAnswerClicked && (
           <>
-            <span className={s.answer}><b>Answer:</b> {card.answer}</span>
+            <span className={s.answer}><b>Answer:</b> {card.answerImg ? <img src={card.answerImg} alt=""/> : card.answer}</span>
             <span className={s.rateTitle}>Rate yourself:</span>
             {grades.map((g) => (
               <div key={g.id} className={s.rateItem} onClick={() => chooseItemHandler(g.id)}>

@@ -10,12 +10,14 @@ import {ModalChildrenCard, ValuesPropsType} from '../../../../common/components/
 
 type CardsActionsPropsType = {
   question:string
+  questionImg:string
   answer:string
+  answerImg:string
   packId: string
   id: string
 }
 
-export const CardsActions: FC<CardsActionsPropsType> = ({ packId, id,question,answer }) => {
+export const CardsActions: FC<CardsActionsPropsType> = ({ packId, id,question,answer , questionImg, answerImg}) => {
 
   const dispatch = useAppDispatch()
   const loading = useAppSelector(st => st.app.isLoading)
@@ -37,7 +39,9 @@ export const CardsActions: FC<CardsActionsPropsType> = ({ packId, id,question,an
     dispatch(updateCardTC(packId, {
       _id: id,
       question: values.question,
-      answer: values.answer
+      answer: values.answer,
+      questionImg: values.questionImg,
+      answerImg: values.answerImg
     }))
   }
   const deleteCardHandler = () => {
@@ -56,7 +60,9 @@ export const CardsActions: FC<CardsActionsPropsType> = ({ packId, id,question,an
             ? <ModalChildrenCard closeHandler={()=>setOpen(false)}
                                  dispatchHandler={updateCardHandler}
                                  question={question}
+                                 questionImg={questionImg}
                                  answer={answer}
+                                 answerImg={answerImg}
             />
             : <ModalChildrenCard closeHandler={()=>setOpen(false)}
                                  dispatchHandler={deleteCardHandler}

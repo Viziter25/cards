@@ -44,13 +44,13 @@ export const TableCards = () => {
               <TableRow
                 key={card._id}
                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.question}</TableCell>
-                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.answer}</TableCell>
+                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.questionImg ? <img className={s.img} src={card.questionImg} alt=""/> : card.question}</TableCell>
+                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.answerImg ? <img className={s.img} src={card.answerImg} alt=""/> : card.answer}</TableCell>
                 <TableCell align="center">{date(card.updated)}</TableCell>
                 <TableCell align="center"><Grades rating={card.grade}/></TableCell>
                 {(profileId === packUserId) &&
                     <TableCell align="center">
-                        <CardsActions packId={card.cardsPack_id} id={card._id} question={card.question} answer={card.answer} />
+                        <CardsActions questionImg={card.questionImg} answerImg={card.answerImg} packId={card.cardsPack_id} id={card._id} question={card.question} answer={card.answer} />
                     </TableCell>
                 }
               </TableRow>

@@ -1,0 +1,10 @@
+@import "../../../common/styles/mixin";
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  @include text(500, 14px, 20px);
+  color: #366EFF;
+  text-decoration: underline;
+}

@@ -29,6 +29,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
   const {packId} = useParams()
 
   const status = useAppSelector(state => state.packsPage.packs.entityStatus)
+
   const dispatch = useAppDispatch()
 
 
@@ -44,7 +45,9 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
     packId && dispatch(createCardTC(packId, {
       cardsPack_id: packId,
       question: values.question,
-      answer: values.answer
+      answer: values.answer,
+      questionImg: values.questionImg,
+      answerImg: values.answerImg
     }))
   }
 

@@ -1,23 +1,35 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {useFormik} from 'formik';
-import {Button, TextField} from '@mui/material';
+import {Button, MenuItem, Select, SelectChangeEvent, TextField} from '@mui/material';
 import s from './modalChildrenCard.module.scss'
+import {InputTypeFile} from "../../InputTypeFile/InputTypeFile";
 
 
 type PropsType = {
   closeHandler: () => void
   dispatchHandler: (values: ValuesPropsType) => void
   delet?: string
-  question?:string
-  answer?:string
+  question?: string
+  answer?: string
+  questionImg?: string
+  answerImg?: string
 }
 
 export type ValuesPropsType = {
   question?: string
   answer?: string
+  questionImg?: string
+  answerImg?: string
 }
 
-export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler, delet,question,answer}) => {
+export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler, delet, question, answer, questionImg, answerImg}) => {
+
+  const [selectValue, setSelectValue] = useState('text')
+  const [answerImgValue, setAnswerImgValue] = useState('')
+  const [questionImgValue, setQuestionImgValue] = useState('')
+  const onChangeSelectValue = (e: SelectChangeEvent) => {
+    setSelectValue(e.target.value)
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -29,8 +41,8 @@ export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler,
     //   answer: Yup.string().required('Required')
     // }),
     onSubmit: (values) => {
-      dispatchHandler(values)
-      closeHandler()
+        closeHandler()
+        dispatchHandler({...values, questionImg: questionImgValue, answerImg: answerImgValue})
     }
   })
 
@@ -48,25 +60,51 @@ export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler,
                 </>
                 :
                 <>
-                  <TextField
-                    className={s.input}
-                    variant={'standard'}
-                    label={'Question'}
-                    {...formik.getFieldProps('question')}
-                  />
-                  {formik.touched.question && formik.errors.question && <div className={s.error}>{formik.errors.question}</div>}
-                  <TextField
-                    className={s.input}
-                    variant={'standard'}
-                    label={'Answer'}
-                    {...formik.getFieldProps('answer')}
-                  />
-                  {formik.touched.answer && formik.errors.answer && <div className={s.error}>{formik.errors.answer}</div>}
-                </>
+                  <Select onChange={onChangeSelectValue} value={selectValue} size={'small'} sx={{marginBottom: '20px'}}>
+                    <MenuItem value={'text'}>Text</MenuItem>
+                    <MenuItem value={'picture'}>Picture</MenuItem>
+                  </Select>
 
+                  {selectValue === 'text' ?
+                    <>
+                      <TextField
+                        className={s.input}
+                        variant={'standard'}
+                        label={'Question'}
+                        {...formik.getFieldProps('question')}
+                      />
+                      {formik.touched.question && formik.errors.question &&
+                          <div className={s.error}>{formik.errors.question}</div>}
+                      <TextField
+                        className={s.input}
+                        variant={'standard'}
+                        label={'Answer'}
+                        {...formik.getFieldProps('answer')}
+                      />
+                      {formik.touched.answer && formik.errors.answer &&
+                          <div className={s.error}>{formik.errors.answer}</div>}
+                    </> :
+                    <div className={s.picture}>
+                      <div className={s.imgContainer}>
+                        <div className={s.uploadImage}>
+                          <span>Question:</span>
+                          <InputTypeFile question setQuestionImgValue={setQuestionImgValue}/>
+                        </div>
+                        <img src={questionImg} alt=""/>
+                      </div>
+                      <div className={s.imgContainer}>
+                        <div className={s.uploadImage}>
+                          <span>Answer:</span>
+                          <InputTypeFile setAnswerImgValue={setAnswerImgValue}/>
+                        </div>
+                        <img src={answerImg} alt=""/>
+                      </div>
+                    </div>
+                  }
+                </>
             }
             <div className={s.buttonBlock}>
-              <Button color={delet ? 'error': 'info'}
+              <Button color={delet ? 'error' : 'info'}
                       className={s.button}
                       type="submit"
                       variant={'contained'}>

@@ -4,7 +4,6 @@ import {AxiosError} from 'axios';
 import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
 import {AppThunk} from '../../app/store';
 import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
-import {loadState} from "../../common/utils/localStorage";
 import {getCardsTC} from "./Cards/cards-reducer";
 
 const initialState = {
@@ -24,7 +23,7 @@ const initialState = {
 
 const slice = createSlice({
   name: 'packs',
-  initialState: loadState() as typeof initialState || initialState,
+  initialState: initialState,
   reducers: {
     setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
       state.packs = {...action.payload, entityStatus: 'idle'}
