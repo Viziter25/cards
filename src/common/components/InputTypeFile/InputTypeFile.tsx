@@ -6,9 +6,10 @@ type InputTypeFilePropsType = {
   setQuestionImgValue?: (file: string) => void
   setAnswerImgValue?: (file: string) => void
   question?: boolean
+  update: boolean
 }
 
-export const InputTypeFile: FC<InputTypeFilePropsType> = ({setQuestionImgValue, setAnswerImgValue, question}) => {
+export const InputTypeFile: FC<InputTypeFilePropsType> = ({update ,setQuestionImgValue, setAnswerImgValue, question}) => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -31,7 +32,7 @@ export const InputTypeFile: FC<InputTypeFilePropsType> = ({setQuestionImgValue, 
 
   return (
     <div>
-      <button type={'button'} className={s.button} onClick={selectFileHandler}>upload cover</button>
+      <button type={'button'} className={s.button} onClick={selectFileHandler}>{update ? 'update cover' : 'upload cover'}</button>
       <input type="file" style={{display: 'none'}} ref={inputRef} onChange={uploadHandler}/>
     </div>
   );

@@ -19,10 +19,16 @@
         .imgContainer {
           display: flex;
           flex-direction: column;
-          row-gap: 10px;
+          margin-top: 20px;
           .uploadImage {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 20px;
+
+          }
+          .img {
+            width: 250px;
+            margin: 0 auto;
           }
         }
 

@@ -24,7 +24,7 @@ export type ValuesPropsType = {
 
 export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler, delet, question, answer, questionImg, answerImg}) => {
 
-  const [selectValue, setSelectValue] = useState('text')
+  const [selectValue, setSelectValue] = useState( (!!questionImg && 'picture') || 'text')
   const [answerImgValue, setAnswerImgValue] = useState('')
   const [questionImgValue, setQuestionImgValue] = useState('')
   const onChangeSelectValue = (e: SelectChangeEvent) => {
@@ -88,16 +88,16 @@ export const ModalChildrenCard: FC<PropsType> = ({closeHandler, dispatchHandler,
                       <div className={s.imgContainer}>
                         <div className={s.uploadImage}>
                           <span>Question:</span>
-                          <InputTypeFile question setQuestionImgValue={setQuestionImgValue}/>
+                          <InputTypeFile update={!!questionImg || !!questionImgValue} question setQuestionImgValue={setQuestionImgValue}/>
                         </div>
-                        <img src={questionImg} alt=""/>
+                        <img className={s.img} src={questionImgValue || questionImg} alt=""/>
                       </div>
                       <div className={s.imgContainer}>
                         <div className={s.uploadImage}>
                           <span>Answer:</span>
-                          <InputTypeFile setAnswerImgValue={setAnswerImgValue}/>
+                          <InputTypeFile update={!!answerImg || !!answerImgValue} setAnswerImgValue={setAnswerImgValue}/>
                         </div>
-                        <img src={answerImg} alt=""/>
+                        <img className={s.img} src={answerImgValue || answerImg} alt=""/>
                       </div>
                     </div>
                   }
