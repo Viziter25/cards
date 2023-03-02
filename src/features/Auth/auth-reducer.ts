@@ -5,7 +5,6 @@ import {getProfileAC} from "../Profile/profile-reducer";
 import {AxiosError} from "axios";
 import {errorUtil} from "../../common/utils/errorUtils";
 
-
 const initialState = {
   isLoggedIn: false
 }
@@ -19,7 +18,6 @@ const slice = createSlice({
     }
   }
 })
-
 
 export const authReducer = slice.reducer
 export const {setIsLoggedInAC} = slice.actions
