@@ -26,6 +26,7 @@ export const Packs = () => {
   const user_id = useAppSelector(state => state.packsPage.queryParams.user_id)
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
+
   const [searchInputValue, setSearchInputValue] = useState(packName)
 
   useEffect(() => {
@@ -50,22 +51,32 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <MiniHeader title={'Packs List'} buttonTitle={'Add new pack'} callback={onClickHandler} open={open}
-                  setOpen={setOpen}/>
-      {!packs.length ?<div><IsMyPack/> <div className={s.warn}>This list is empty, you can add new pack
-      </div></div>  : <>
-        <div className={s.filter}>
-          <div className={s.searchInput}>
-            <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
-                         setSearchInputValue={setSearchInputValue}/>
-          </div>
-          <IsMyPack/>
-          <SliderComponent/>
-          <RemoveFilters/>
+      <MiniHeader title={'Packs List'}
+                  buttonTitle={'Add new pack'}
+                  callback={onClickHandler}
+                  open={open}
+                  setOpen={setOpen}
+      />
+      {!packs.length
+        ?
+        <div><
+          IsMyPack/>
+          <div className={s.warn}>This list is empty, you can add new pack</div>
         </div>
-        <TablePacks/>
-        <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
-      </>
+        :
+        <>
+          <div className={s.filter}>
+            <div className={s.searchInput}>
+              <SearchInput searchHandler={searchHandler} searchInputValue={searchInputValue}
+                           setSearchInputValue={setSearchInputValue}/>
+            </div>
+            <IsMyPack/>
+            <SliderComponent/>
+            <RemoveFilters/>
+          </div>
+          <TablePacks/>
+          <Paginator onPagination={onPagination} pageCount={pageCount} page={page}/>
+        </>
       }
     </div>
 

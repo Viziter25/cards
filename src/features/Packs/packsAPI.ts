@@ -49,11 +49,13 @@ export type PackType = {
   created: string
   updated: string
   entityStatus: RequestStatusType
+  deckCover:string
 }
 
 export type PackUpdateType = {
   _id: string
   name?: string
+  deckCover?: string
 }
 
 export type UpdatePackResponseType = {
@@ -79,7 +81,7 @@ export type UpdatePackResponseType = {
 export type PackPostType = {
   name?: string
   deckCover?: string
-  private: boolean
+  private?: boolean
 }
 
 export type CreatePackResponseType = {

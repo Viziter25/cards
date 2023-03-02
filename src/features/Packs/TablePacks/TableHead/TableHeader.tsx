@@ -17,6 +17,9 @@ export const TableHeader = () => {
     <TableHead sx={{backgroundColor: '#EFEFEF'}}>
       <TableRow>
         <TableCell>
+          <SuperSort sort={sort} nameValue={'Cover'} value={'cover'} onChange={setSort}/>
+        </TableCell>
+        <TableCell>
           <SuperSort sort={sort} nameValue={'Name'} value={'name'} onChange={setSort}/>
         </TableCell>
         <TableCell align="center">

@@ -30,7 +30,9 @@ export const TablePacks = () => {
                          user_id={pack.user_id}
                          _id={pack._id}
                          name={pack.name}
-                         user_name={pack.user_name}/>
+                         user_name={pack.user_name}
+                         deckCover={pack.deckCover}
+                        />
             ))}
           </TableBody>
         </Table>

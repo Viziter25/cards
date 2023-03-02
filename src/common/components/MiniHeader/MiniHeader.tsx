@@ -8,6 +8,7 @@ import {createPackTC} from '../../../features/Packs/packs-reducer';
 import {ModalChildrenCard, ValuesPropsType} from '../Modal/ChildrenCard/ModalChildrenCard';
 import {useParams} from 'react-router-dom';
 import {createCardTC} from '../../../features/Packs/Cards/cards-reducer';
+import {PackPostType} from '../../../features/Packs/packsAPI';
 
 type MiniHeaderPropsType = {
   title: string
@@ -37,7 +38,8 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
     callback && callback()
   }
 
-  const dispatchHandlerPack = (values: any) => {
+  const dispatchHandlerPack = (values: PackPostType) => {
+    console.log(values)
     dispatch(createPackTC(values))
   }
 
@@ -54,7 +56,6 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
   return (
     <div className={s.miniHeader}>
       <span className={s.title}>{title}</span>
-
       {/*Modal*/}
 
       {buttonTitle === 'Add new pack'
@@ -63,7 +64,7 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
           <ModalChildrenPack closeHandler={() => setOpen(false)} dispatchHandler={dispatchHandlerPack}/>
         </ModalComponent>
         :
-        <ModalComponent title={'Add new card'} closeHandler={() => setOpen(false)} open={open}>
+        <ModalComponent title={'Add new card'} closeHandler={() => setOpen(false)} open={open} >
           <ModalChildrenCard closeHandler={() => setOpen(false)} dispatchHandler={dispatchHandlerCard}/>
         </ModalComponent>
       }

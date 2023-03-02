@@ -5,6 +5,12 @@
   .miniHeader {
     position: relative;
   }
+  .blockImg{
+    justify-content: start;
+    display: flex;
+    margin-top: 25px;
+    width: 150px;
+  }
   .filter {
     margin: 30px 0;
   }

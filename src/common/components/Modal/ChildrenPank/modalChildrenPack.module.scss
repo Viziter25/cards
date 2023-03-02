@@ -17,6 +17,9 @@
         width: 100%;
         word-wrap: break-word;
       }
+      .coverButton {
+        text-align: center;
+      }
 
       .input {
         margin-bottom: 30px;
@@ -45,7 +48,6 @@
       .buttonBlock {
         padding-top: 40px;
         display: flex;
-
         justify-content: center;
 
         .button {
