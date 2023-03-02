@@ -1,35 +1,74 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './Header.module.scss'
-import label from '../../common/image/imageHeader/label.svg'
-import defaultAvatar from '../../common/image/avatar.jpg'
-import {useAppSelector} from '../store'
-import {NavLink} from 'react-router-dom'
-import {PATH} from '../../common/constants/path'
-import {LinearProgress} from "@mui/material";
+import label from 'common/image/header/label.svg'
+import defaultAvatar from 'common/image/profile/avatar.jpg'
+import profileIcon from 'common/icons/profile/profile.svg'
+import logoutIcon from 'common/icons/profile/logout.svg'
+import { PATH } from 'common/constants/path'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { NavLink } from 'react-router-dom'
+import { LinearProgress } from "@mui/material"
+import { logOutTC } from 'features/Profile/profile-reducer'
 
 export const Header = () => {
 
-  const isLogin = useAppSelector(st => st.auth.isLoggedIn)
-  const userPhoto = useAppSelector(st => st.profile.avatar)
-  const userName = useAppSelector(st => st.profile.name)
-  const isLoading = useAppSelector(state => state.app.isLoading)
+  const dispatch = useAppDispatch()
+  const isLoading = useAppSelector(st => st.app.isLoading)
+  const isLoggedIn = useAppSelector(st => st.auth.isLoggedIn)
+  const profile = useAppSelector(st => st.profile)
+  const [ava, setAva] = useState(profile.avatar || defaultAvatar)
+  const [isOpenConsole, setIsOpenConsole] = useState(false)
+  const [isAvaBroken, setIsAvaBroken] = useState(false)
+
+  const editConsoleHandler = () => {
+    setIsOpenConsole(!isOpenConsole)
+  }
+  const closeConsoleHandler = () => {
+    setIsOpenConsole(false)
+  }
+  const logOutHandler = () => {
+    dispatch(logOutTC())
+    setIsOpenConsole(false)
+  }
+  const errorHandler = () => {
+    setIsAvaBroken(true)
+  }
+
+  useEffect(() => {
+    if (profile.avatar) {
+      setIsAvaBroken(false)
+      setAva(profile.avatar)
+    }
+  }, [profile.avatar])
 
   return (
     <header className={s.headerContainer}>
       <div className={s.header}>
         <div className={s.container}>
-          <img src={label} className={s.label} alt='label'/>
-          {isLogin &&
-              <div className={s.profileData}>
-                  <NavLink to={PATH.PROFILE} className={s.userName}>{userName}</NavLink>
-                  <NavLink to={PATH.PROFILE}>
-                      <img src={userPhoto ? userPhoto : defaultAvatar} className={s.userPhoto} alt='userPhoto'></img>
-                  </NavLink>
+          <img src={label} className={s.label} alt='label' />
+          {isLoggedIn &&
+            <div className={s.profileData}>
+              <div className={s.closedConsole}>
+                <span onClick={editConsoleHandler} className={s.userName}>{profile.name}</span>
+                <img onClick={editConsoleHandler} onError={errorHandler} src={isAvaBroken ? defaultAvatar : ava} className={s.userPhoto} alt='avatar'></img>
               </div>
+              {isOpenConsole &&
+                <div className={s.openedConsole}>
+                  <div className={s.profileLink}>
+                    <img src={profileIcon} alt="profileIcon" />
+                    <NavLink onClick={closeConsoleHandler} style={{ display: 'block', height: '16px', textDecoration: 'none', color: 'black' }} to={PATH.PROFILE}>Profile</NavLink>
+                  </div>
+                  <div className={s.logoutLink} onClick={() => { }}>
+                    <img src={logoutIcon} alt="logoutIcon" />
+                    <span onClick={logOutHandler}>Log out</span>
+                  </div>
+                </div>
+              }
+            </div>
           }
         </div>
       </div>
-      {isLoading === 'loading' && <LinearProgress style={{position: 'absolute', width: '100%'}}/>}
+      {isLoading === 'loading' && <LinearProgress style={{ position: 'absolute', width: '100%' }} />}
     </header>
   )
 }

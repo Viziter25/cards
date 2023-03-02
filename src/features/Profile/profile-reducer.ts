@@ -1,15 +1,13 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "./profileAPI"
 import { setIsLoggedInAC } from "../Auth/auth-reducer"
-import {errorUtil} from "../../common/utils/error utils";
-import {AxiosError} from "axios";
-import {setIsLoading} from "../../app/appReducer";
-
-export const initState = {} as ProfileType
+import { errorUtil } from "../../common/utils/error utils"
+import { AxiosError } from "axios"
+import { setIsLoading } from "../../app/appReducer"
 
 const slice = createSlice({
     name: 'PROFILE',
-    initialState: initState,
+    initialState: {} as ProfileType,
     reducers: {
         getProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
             return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
@@ -52,12 +50,3 @@ export const logOutTC = () => async (dispatch: Dispatch) => {
         errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
     }
 }
-/* export const getProfileTC = () => (dispatch: Dispatch) => {
-    profileAPI.getProfile()
-        .then(res => {
-            dispatch(getProfileAC({profile: res.data}))
-        })
-        .catch(err => {
-            alert(err)
-        })
-} */
