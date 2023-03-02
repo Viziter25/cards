@@ -1,15 +1,13 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "./profileAPI"
 import { setIsLoggedInAC } from "../Auth/auth-reducer"
-import {errorUtil} from "../../common/utils/errorUtils";
+import {errorUtil} from "common/utils/errorUtils";
 import {AxiosError} from "axios";
-import {setIsLoading} from "../../app/appReducer";
-
-export const initState = {} as ProfileType
+import {setIsLoading} from "app/appReducer";
 
 const slice = createSlice({
     name: 'PROFILE',
-    initialState: initState,
+    initialState: {} as ProfileType,
     reducers: {
         getProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
             return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
