@@ -3,7 +3,7 @@ import {authAPI, ForgotPasswordType, LoginType, NewPasswordType, RegistrationPar
 import {setIsInitialized, setIsLoading} from "../../app/appReducer";
 import {getProfileAC} from "../Profile/profile-reducer";
 import {AxiosError} from "axios";
-import {errorUtil} from "../../common/utils/error utils";
+import {errorUtil} from "../../common/utils/errorUtils";
 
 
 const initialState = {

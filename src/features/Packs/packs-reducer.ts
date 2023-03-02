@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {errorUtil} from '../../common/utils/error utils';
+import {errorUtil} from '../../common/utils/errorUtils';
 import {AxiosError} from 'axios';
 import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
 import {AppThunk} from '../../app/store';

@@ -2,7 +2,7 @@ import {cardsApi, CardsResponseType, CardType, PostCardType, UpdateCardType, Upd
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {setIsLoading} from "../../../app/appReducer";
 import {AppThunk} from '../../../app/store';
-import {errorUtil} from "../../../common/utils/error utils";
+import {errorUtil} from "../../../common/utils/errorUtils";
 import {AxiosError} from "axios";
 
 const initialState = {

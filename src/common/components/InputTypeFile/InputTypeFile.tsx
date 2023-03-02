@@ -1,12 +1,12 @@
 import React, {ChangeEvent, FC, useRef} from 'react';
-import {convertFileToBase64} from "../../utils/convertToBase64";
+import {convertFileToBase64} from "../../utils/convertToBase64Demo";
 import s from './inputTypeFile.module.scss'
 
 type InputTypeFilePropsType = {
   setQuestionImgValue?: (file: string) => void
   setAnswerImgValue?: (file: string) => void
   question?: boolean
-  update: boolean
+  update?: boolean
 }
 
 export const InputTypeFile: FC<InputTypeFilePropsType> = ({update ,setQuestionImgValue, setAnswerImgValue, question}) => {

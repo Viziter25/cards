@@ -1,7 +1,7 @@
 import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
 import { profileAPI, ProfileType } from "./profileAPI"
 import { setIsLoggedInAC } from "../Auth/auth-reducer"
-import {errorUtil} from "../../common/utils/error utils";
+import {errorUtil} from "../../common/utils/errorUtils";
 import {AxiosError} from "axios";
 import {setIsLoading} from "../../app/appReducer";
 
@@ -18,7 +18,7 @@ const slice = createSlice({
             draftState.name = action.payload.profile.name
             draftState.avatar = action.payload.profile.avatar
         },
-        logOutAC: (draftState, action: PayloadAction) => {
+        logOutAC: () => {
             return ({} as ProfileType)
         },
     }
