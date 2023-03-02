@@ -53,7 +53,6 @@ export const MiniHeader: FC<MiniHeaderPropsType> = ({
   return (
     <div className={s.miniHeader}>
       <span className={s.title}>{title}</span>
-
       {/*Modal*/}
 
       {buttonTitle === 'Add new pack'

@@ -11,6 +11,7 @@ import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
 import {Button} from '@mui/material'
 import {PackActions} from './PackActions/PackActions'
 import {SuperPagination} from 'common/components/SuperPagination/SuperPagination';
+import defaultImg from 'common/image/no_cover.jpg'
 
 
 export const Cards = () => {
@@ -18,6 +19,7 @@ export const Cards = () => {
   const {packId} = useParams()
 
   const dispatch = useAppDispatch()
+  const cards = useAppSelector(state => state.packsPage.packs.cardPacks)
   const packName = useAppSelector(state => state.cardsPage.cards.packName)
   const cardsTotalCount = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const cardQuestion = useAppSelector(state => state.cardsPage.queryParams.cardQuestion)
@@ -28,6 +30,12 @@ export const Cards = () => {
   const profileId = useAppSelector(state => state.profile._id)
   const cardsTotalCountCountPagination = useAppSelector(state => state.cardsPage.cards.cardsTotalCount)
   const isLoading = useAppSelector(state => state.app.isLoading)
+
+
+
+  const packImg = cards.find(el => el._id === packId)?.deckCover || defaultImg
+
+
 
   const [searchInputValue, setSearchInputValue] = useState(cardQuestion || '')
 
@@ -71,6 +79,7 @@ export const Cards = () => {
         {(profileId === packUserId) && packId && <PackActions packName={packName} packId={packId}/>}
 
       </div>
+      <div ><img className={s.blockImg} src={packImg } alt="deckCover"/></div>
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
         <div className={s.addCardContainer}>
           <h2 className={s.addCardsWarn}>This pack is empty. Click add new card to fill this pack</h2>
