@@ -32,11 +32,13 @@ export type GetPacksType = {
 
 export type GetPacksResponseType = {
   cardPacks: PackType[]
+  cardPacksTotalCount: number // количество колод
+  maxCardsCount: number // всего стр
+  minCardsCount: number
   page: number // На какой стр находишься
   pageCount: number// количество колод на странице
-  cardPacksTotalCount: number // количество колод
-  minCardsCount: number
-  maxCardsCount: number // всего стр
+  token: string
+  tokenDeathTime: number
 }
 
 export type PackType = {

@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './cards.module.scss'
-import {BackArrow} from "../../../common/components/BackArrow/BackArrow"
-import {PATH} from "../../../common/constants/path"
-import {useAppDispatch, useAppSelector} from "../../../app/store"
-import {getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion} from "./cards-reducer"
-import {MiniHeader} from "../../../common/components/MiniHeader/MiniHeader"
-import {useNavigate, useParams} from "react-router-dom"
-import {TableCards} from "./TableCards/TableCards"
-import {SearchInput} from "../../../common/components/SearchInput/SearchInput"
-import {Button} from '@mui/material'
-import {PackActions} from './PackActions/PackActions'
-import {SuperPagination} from 'common/components/SuperPagination/SuperPagination';
+import { BackArrow } from "../../../common/components/BackArrow/BackArrow"
+import { PATH } from "../../../common/constants/path"
+import { useAppDispatch, useAppSelector } from "../../../app/store"
+import { getCardsTC, setCurrentCardsPageAC, setPageCardsCountAC, setQuestion } from "./cards-reducer"
+import { MiniHeader } from "../../../common/components/MiniHeader/MiniHeader"
+import { useNavigate, useParams } from "react-router-dom"
+import { TableCards } from "./TableCards/TableCards"
+import { SearchInput } from "../../../common/components/SearchInput/SearchInput"
+import { Button } from '@mui/material'
+import { PackActions } from './PackActions/PackActions'
+import { SuperPagination } from 'common/components/SuperPagination/SuperPagination';
 
 
 export const Cards = () => {
 
-  const {packId} = useParams()
+  const { packId } = useParams()
 
   const dispatch = useAppDispatch()
   const packName = useAppSelector(state => state.cardsPage.cards.packName)
@@ -40,7 +40,7 @@ export const Cards = () => {
   const navigate = useNavigate()
 
   const searchHandler = (question: string) => {
-    dispatch(setQuestion({question: question}))
+    dispatch(setQuestion({ question: question }))
   }
 
   const [open, setOpen] = useState(false);
@@ -53,21 +53,21 @@ export const Cards = () => {
     dispatch(setPageCardsCountAC({ pageCount: newCount }))
   }
 
-  const isLearnOrAdd = (profileId !== packUserId) ? () => {navigate(`/learn/${packId}`)} : onClickHandler
+  const isLearnOrAdd = (profileId !== packUserId) ? () => { navigate(`/learn/${packId}`) } : onClickHandler
 
   return (
     <div className={s.cardsContainer}>
-      <BackArrow to={PATH.PACKS} title={'Back to Packs List'}/>
+      <BackArrow to={PATH.PACKS} title={'Back to Packs List'} />
       <div className={s.miniHeader}>
         <MiniHeader title={packName}
-                    buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'}
-                    callback={isLearnOrAdd}
-                    isButton={!cardsTotalCount}
-                    open={open}
-                    setOpen={setOpen}
+          buttonTitle={(profileId !== packUserId) ? 'Learn Pack' : 'Add new card'}
+          callback={isLearnOrAdd}
+          isButton={!cardsTotalCount}
+          open={open}
+          setOpen={setOpen}
         />
 
-        {(profileId === packUserId) && packId && <PackActions packName={packName} packId={packId}/>}
+        {(profileId === packUserId) && packId && <PackActions packName={packName} packId={packId} />}
 
       </div>
       {!cardsTotalCount && !cardQuestion && profileId === packUserId ?
@@ -80,10 +80,10 @@ export const Cards = () => {
           {!cardsTotalCount && !cardQuestion && isLoading !== 'loading' ? <div className={s.warn}>This pack is empty. Click "Back to Packs List" to fill this pack
           </div> : <div>
             <div className={s.filter}>
-              <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue}/>
+              <SearchInput searchHandler={searchHandler} setSearchInputValue={setSearchInputValue} searchInputValue={searchInputValue} />
             </div>
-            <TableCards/>
-            <SuperPagination page={page} itemsCountForPage={pageCount} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination}/>
+            <TableCards />
+            <SuperPagination page={page} itemsCountForPage={pageCount} totalCount={cardsTotalCountCountPagination || 1} onChange={onChangePagination} />
           </div>}
         </div>
       }

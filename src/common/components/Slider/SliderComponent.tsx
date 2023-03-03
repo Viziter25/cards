@@ -1,9 +1,9 @@
 import s from './SliderComponent.module.scss'
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider'
 import useDebounce from '../../../hooks/debounce'
-import {useAppDispatch, useAppSelector} from '../../../app/store'
-import {setSliderValuesAC} from 'features/Packs/packs-reducer'
+import { useAppDispatch, useAppSelector } from '../../../app/store'
+import { setSliderValuesAC } from 'features/Packs/packs-reducer'
 
 
 export const SliderComponent = React.memo(() => {
@@ -21,16 +21,12 @@ export const SliderComponent = React.memo(() => {
     setSliderValue([min, max])
   }, [min, max])
 
-  useEffect(() => {
-    setSliderValue([minCardsCount, maxCardsCount])
-  }, [minCardsCount, maxCardsCount])
-
   const changeSliderHandler = (event: Event, newValue: number | number[]) => {
     setSliderValue(newValue as number[])
   }
 
   useEffect(() => {
-      dispatch(setSliderValuesAC({ sliderValues: sliderDebounce }))
+    dispatch(setSliderValuesAC({ sliderValues: sliderDebounce }))
   }, [sliderDebounce, dispatch])
 
   return (

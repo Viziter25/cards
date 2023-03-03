@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './learnPage.module.scss'
-import {useAppDispatch, useAppSelector} from 'app/store'
-import {Navigate, useParams} from 'react-router-dom'
-import {PATH} from 'common/constants/path'
-import {BackArrow} from 'common/components/BackArrow/BackArrow'
-import {Button, Paper} from '@mui/material'
-import {CardType} from '../Cards/cardsAPI'
-import {getCardsTC, updateGradeTC} from '../Cards/cards-reducer'
+import { useAppDispatch, useAppSelector } from 'app/store'
+import { Navigate, useParams } from 'react-router-dom'
+import { PATH } from 'common/constants/path'
+import { BackArrow } from 'common/components/BackArrow/BackArrow'
+import { Button, Paper } from '@mui/material'
+import { CardType } from '../Cards/cardsAPI'
+import { getCardsTC, updateGradeTC } from '../Cards/cards-reducer'
 import SuperCheckbox from 'common/components/SuperCheckbox/SuperCheckbox'
 
 const getCard = (cards: CardType[]) => {
@@ -58,7 +58,7 @@ export const LearnPage = () => {
     const grade = checkedRate[0].id
     if (packId) {
       setIsAnswerClicked(false)
-      dispatch(updateGradeTC(packId, { card_id: card._id, grade: grade }))
+      dispatch(updateGradeTC({ packId, data: { card_id: card._id, grade: grade } }))
       setGrades(grades.map(el => ({ ...el, checked: false })))
       setCard(getCard(cards))
     }

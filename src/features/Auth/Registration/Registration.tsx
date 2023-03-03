@@ -4,14 +4,14 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import s from './registration.module.scss'
-import {PATH} from '../../../common/constants/path';
-import {NavLink, useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../../app/store';
-import {PasswordInput} from '../../../common/components/PasswordInput/PasswordInput';
+import { PATH } from '../../../common/constants/path';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../../app/store';
+import { PasswordInput } from '../../../common/components/PasswordInput/PasswordInput';
 import * as Yup from 'yup';
-import {registerTC} from '../auth-reducer';
+import { registerTC } from '../auth-reducer';
 
 
 
@@ -34,8 +34,8 @@ export const Registration = () => {
         .oneOf([Yup.ref('password'), null], 'Password and confirm password do not match')
     }),
 
-    onSubmit: values => {
-      dispatch(registerTC(values))
+    onSubmit: registerData => {
+      dispatch(registerTC({ registerData }))
         .then(res => {
           if (res) {
             navigate(PATH.LOGIN)
@@ -51,26 +51,26 @@ export const Registration = () => {
       <Grid item justifyContent={'center'}>
         <form onSubmit={formik.handleSubmit}>
           <FormControl className={s.muiFormControl}>
-              <h2 className={s.titleBlock}>Sing Up</h2>
+            <h2 className={s.titleBlock}>Sing Up</h2>
             <FormGroup className={s.textFieldBlock}>
               <TextField variant="standard"
-                         label="Email"
-                         margin="normal"
-                         {...formik.getFieldProps('email')}
+                label="Email"
+                margin="normal"
+                {...formik.getFieldProps('email')}
               />
               {formik.touched.email && formik.errors.email ?
-                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.email}</div> : null}
+                <div style={{ color: 'red', textAlign: 'start' }}>{formik.errors.email}</div> : null}
 
-              <PasswordInput name={'Password'} dataFormik={{...formik.getFieldProps('password')}}/>
+              <PasswordInput name={'Password'} dataFormik={{ ...formik.getFieldProps('password') }} />
               {formik.touched.password && formik.errors.password ?
-                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.password}</div> : null}
+                <div style={{ color: 'red', textAlign: 'start' }}>{formik.errors.password}</div> : null}
 
 
-              <PasswordInput name={'Confirm password'} dataFormik={{...formik.getFieldProps('confirmPassword')}}/>
+              <PasswordInput name={'Confirm password'} dataFormik={{ ...formik.getFieldProps('confirmPassword') }} />
               {formik.touched.confirmPassword && formik.errors.confirmPassword ?
-                <div style={{color: 'red', textAlign: 'start'}}>{formik.errors.confirmPassword}</div> : null}
+                <div style={{ color: 'red', textAlign: 'start' }}>{formik.errors.confirmPassword}</div> : null}
 
-              <Button sx={{ marginTop: '60px', borderRadius: '30px'}} type={'submit'} variant={'contained'} color={'primary'}>
+              <Button sx={{ marginTop: '60px', borderRadius: '30px' }} type={'submit'} variant={'contained'} color={'primary'}>
                 Sing Up
               </Button>
 

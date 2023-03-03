@@ -1,11 +1,11 @@
-import React, {ChangeEvent, memo, useEffect} from 'react'
+import React, { ChangeEvent, memo, useEffect } from 'react'
 
-import {Pagination} from '@mui/material'
+import { Pagination } from '@mui/material'
 import s from './SuperPagination.module.scss'
 import SuperSelect from '../SuperSelect/SuperSelect';
-import {useAppDispatch} from "../../../app/store";
-import {setPageCountAC} from "../../../features/Packs/packs-reducer";
-import {setPageCardsCountAC} from "../../../features/Packs/Cards/cards-reducer";
+import { useAppDispatch } from "../../../app/store";
+import { setPageCountAC } from "../../../features/Packs/packs-reducer";
+import { setPageCardsCountAC } from "../../../features/Packs/Cards/cards-reducer";
 
 export type SuperPaginationPropsType = {
   id?: string
@@ -33,8 +33,8 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = memo((
   }
 
   const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setPageCountAC({pageCount: +event.currentTarget.value}))
-    dispatch(setPageCardsCountAC({pageCount: +event.currentTarget.value}))
+    dispatch(setPageCountAC({ pageCount: +event.currentTarget.value }))
+    dispatch(setPageCardsCountAC({ pageCount: +event.currentTarget.value }))
   }
 
   return (

@@ -1,14 +1,13 @@
 import {AnyAction, combineReducers} from 'redux'
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {authReducer} from '../features/Auth/auth-reducer';
-import {configureStore} from "@reduxjs/toolkit";
-import {profileReducer} from "../features/Profile/profile-reducer";
-import {appReducer} from "./appReducer";
-import {setPacksReducer} from '../features/Packs/packs-reducer';
-import {cardsReducer} from "../features/Packs/Cards/cards-reducer";
-import {saveState} from "../common/utils/localStorage";
-
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux"
+import {configureStore} from "@reduxjs/toolkit"
+import {appReducer} from "app/appReducer"
+import {authReducer} from 'features/Auth/auth-reducer'
+import {profileReducer} from "features/Profile/profile-reducer"
+import {packsReducer} from 'features/Packs/packs-reducer'
+import {cardsReducer} from "features/Packs/Cards/cards-reducer"
+import {saveState} from "common/utils/localStorage"
 
 // объединяя reducer-ы с помощью combineReducers,
 // мы задаём структуру нашего единственного объекта-состояния
@@ -16,7 +15,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   profile: profileReducer,
   app: appReducer,
-  packsPage: setPacksReducer,
+  packsPage: packsReducer,
   cardsPage: cardsReducer
 })
 

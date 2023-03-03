@@ -1,13 +1,13 @@
 import React from 'react';
 import s from './passwordRecovery.module.scss'
-import {Button, TextField} from "@mui/material";
-import {NavLink, useNavigate} from "react-router-dom";
-import {PATH} from "../../../common/constants/path";
-import {useFormik} from "formik";
+import { Button, TextField } from "@mui/material";
+import { NavLink, useNavigate } from "react-router-dom";
+import { PATH } from "../../../common/constants/path";
+import { useFormik } from "formik";
 import * as Yup from "yup";
-import {ForgotPasswordType} from "../authAPI";
-import {useAppDispatch} from "../../../app/store";
-import {recPasswordTC} from "../auth-reducer";
+import { ForgotPasswordType } from "../authAPI";
+import { useAppDispatch } from "../../../app/store";
+import { recPasswordTC } from "../auth-reducer";
 
 export const PasswordRecovery = () => {
 
@@ -32,7 +32,7 @@ password recovery link:
 link</a>
 </div>`
       }
-      dispatch(recPasswordTC(forgotDate))
+      dispatch(recPasswordTC({ data: forgotDate }))
         .then(res => {
           if (res) {
             navigate(PATH.CHECK_EMAIL)

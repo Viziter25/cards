@@ -1,12 +1,12 @@
 import React from 'react';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import SuperSort from "../../../../common/components/SuperSort/SuperSort";
-import {useAppDispatch, useAppSelector} from "../../../../app/store";
-import {setSortCardsAC} from "../cards-reducer";
-import {Grades} from "../Grades/Grades";
-import {CardsActions} from "../CardsActions/CardsActions";
+import { useAppDispatch, useAppSelector } from "../../../../app/store";
+import { setSortCardsAC } from "../cards-reducer";
+import { Grades } from "../Grades/Grades";
+import { CardsActions } from "../CardsActions/CardsActions";
 import s from './tableCards.module.scss'
-import {date} from "../../../../common/utils/dateConvertor";
+import { date } from "../../../../common/utils/dateConvertor";
 
 export const TableCards = () => {
 
@@ -20,22 +20,22 @@ export const TableCards = () => {
   const dispatch = useAppDispatch()
 
   const setSort = (value: string) => {
-    dispatch(setSortCardsAC({sortBy: value}))
+    dispatch(setSortCardsAC({ sortBy: value }))
   }
 
   return (
     <div>
       <TableContainer component={Paper}>
-        <Table sx={{minWidth: 650}} aria-label="simple table">
-          <TableHead sx={{backgroundColor: '#EFEFEF'}}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
             <TableRow>
-              <TableCell align="center"><SuperSort sort={sort} nameValue={'Question'} value={'cardQuestion'} onChange={setSort}/></TableCell>
+              <TableCell align="center"><SuperSort sort={sort} nameValue={'Question'} value={'cardQuestion'} onChange={setSort} /></TableCell>
               <TableCell align="center"><SuperSort sort={sort} nameValue={'Answer'} value={'cardAnswer'}
-                                                   onChange={setSort}/></TableCell>
+                onChange={setSort} /></TableCell>
               <TableCell align="center"><SuperSort nameValue={'Last Updated'} sort={sort} value={'updated'}
-                                                   onChange={setSort}/></TableCell>
+                onChange={setSort} /></TableCell>
               <TableCell align="center"><SuperSort nameValue={'Grade'} sort={sort} value={'grade'}
-                                                   onChange={setSort}/></TableCell>
+                onChange={setSort} /></TableCell>
               {(profileId === packUserId) && <TableCell align="center"></TableCell>}
             </TableRow>
           </TableHead>
@@ -43,22 +43,22 @@ export const TableCards = () => {
             {cards.map((card) => (
               <TableRow
                 key={card._id}
-                sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.question}</TableCell>
-                <TableCell align="center" sx={{wordBreak: 'break-word'}}>{card.answer}</TableCell>
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell align="center" sx={{ wordBreak: 'break-word' }}>{card.question}</TableCell>
+                <TableCell align="center" sx={{ wordBreak: 'break-word' }}>{card.answer}</TableCell>
                 <TableCell align="center">{date(card.updated)}</TableCell>
-                <TableCell align="center"><Grades rating={card.grade}/></TableCell>
+                <TableCell align="center"><Grades rating={card.grade} /></TableCell>
                 {(profileId === packUserId) &&
-                    <TableCell align="center">
-                        <CardsActions packId={card.cardsPack_id} id={card._id} question={card.question} answer={card.answer} />
-                    </TableCell>
+                  <TableCell align="center">
+                    <CardsActions packId={card.cardsPack_id} id={card._id} question={card.question} answer={card.answer} />
+                  </TableCell>
                 }
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {!cardsTotalCount && cardQuestion && isLoading  !== 'loading' && <div className={s.warn}>Change query parameters</div>}
+      {!cardsTotalCount && cardQuestion && isLoading !== 'loading' && <div className={s.warn}>Change query parameters</div>}
     </div>
   );
 };

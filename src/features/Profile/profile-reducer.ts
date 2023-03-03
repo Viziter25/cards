@@ -1,52 +1,56 @@
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit"
-import { profileAPI, ProfileType } from "./profileAPI"
-import { setIsLoggedInAC } from "../Auth/auth-reducer"
-import { errorUtil } from "../../common/utils/error utils"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
-import { setIsLoading } from "../../app/appReducer"
+import { profileAPI, ProfileType } from "./profileAPI"
+import { authMeTC, loginTC } from "features/Auth/auth-reducer"
+import { errorUtil } from "common/utils/errorUtil"
+
+//async thunks
+export const updateProfileTC = createAsyncThunk("profile/updateProfile", async (params: {name: string, avatar: string}, thunkAPI) => {
+    try {
+        const res = await profileAPI.updateProfile(params.name, params.avatar)
+        return {isLoading: 'succeeded', profile: res.data.updatedUser}
+    } catch (e) {
+        errorUtil(e as Error | AxiosError<{error: string}>, thunkAPI.dispatch)
+    }
+})
+export const logOutTC = createAsyncThunk("profile/logOut", async (params, thunkAPI) => {
+    try {
+        await profileAPI.logOut()
+        return {isLoading: 'succeeded', isLoggedIn: false}
+    } catch (e) {
+        errorUtil(e as Error | AxiosError<{error: string}>, thunkAPI.dispatch)
+    }
+})
 
 const slice = createSlice({
-    name: 'PROFILE',
+    name: 'profile',
     initialState: {} as ProfileType,
-    reducers: {
-        getProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
-            return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
-        },
-        updateProfileAC: (draftState, action: PayloadAction<{profile: ProfileType}>) => {
-            draftState.name = action.payload.profile.name
-            draftState.avatar = action.payload.profile.avatar
-        },
-        logOutAC: (draftState, action: PayloadAction) => {
-            return ({} as ProfileType)
-        },
-    }
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+        .addCase(loginTC.fulfilled, (state, action) => {
+            if (action.payload) {
+                return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
+            }
+        })
+        .addCase(authMeTC.fulfilled, (state, action) => {
+            if (action.payload) {
+                return action.payload.profile.avatar ? {...action.payload.profile} : {...action.payload.profile, avatar: ''}
+            }
+        })
+        .addCase(updateProfileTC.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.name = action.payload.profile.name
+                state.avatar = action.payload.profile.avatar
+            }
+        })
+        .addCase(logOutTC.fulfilled, (state, action) => {
+            if (action.payload) {
+                return ({} as ProfileType)
+            }
+        })
+    },
 })
 
 //reducer
 export const profileReducer = slice.reducer
-
-//actions
-export const {getProfileAC, updateProfileAC, logOutAC} = slice.actions
-
-//thunks
-export const updateProfileTC = (name: string, avatar: string) => async (dispatch: Dispatch) => {
-    dispatch(setIsLoading({isLoading: 'loading'}))
-    try {
-        const res = await profileAPI.updateProfile(name, avatar)
-        dispatch(updateProfileAC({profile: res.data.updatedUser}))
-        dispatch(setIsLoading({isLoading: 'succeeded'}))
-    } catch (e) {
-        errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
-    }
-}
-export const logOutTC = () => async (dispatch: Dispatch) => {
-    dispatch(setIsLoading({isLoading: 'loading'}))
-    try {
-        await profileAPI.logOut()
-        dispatch(setIsLoggedInAC({isLoggedIn: false}))
-        dispatch(logOutAC())
-        dispatch(setIsLoading({isLoading: 'succeeded'}))
-    } catch (e) {
-        errorUtil(e as Error | AxiosError<{error: string}>, dispatch)
-    }
-}

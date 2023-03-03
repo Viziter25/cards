@@ -19,7 +19,7 @@ export const Profile = React.memo(() => {
   const isLoggedIn = useAppSelector(st => st.auth.isLoggedIn)
   const profile = useAppSelector(st => st.profile)
 
-  const [ava, setAva] = useState(profile.avatar || defaultAvatar)
+  const [avatar, setAva] = useState(profile.avatar || defaultAvatar)
   const [name, setName] = useState<string>(profile.name)
   const [inputError, setInputError] = useState<string>('')
   const [isAvaBroken, setIsAvaBroken] = useState(false)
@@ -49,9 +49,9 @@ export const Profile = React.memo(() => {
 
   const updateName = useCallback(() => {
     if (!inputError) {
-      dispatch(updateProfileTC(name, ava))
+      dispatch(updateProfileTC({ name, avatar }))
     }
-  }, [dispatch, inputError, name, ava])
+  }, [dispatch, inputError, name, avatar])
 
   const updateAvatar = useCallback((img: string) => {
     setIsAvaBroken(false)
@@ -68,8 +68,8 @@ export const Profile = React.memo(() => {
   }
 
   useEffect(() => {
-    dispatch(updateProfileTC(name, ava))
-  }, [dispatch, ava])
+    dispatch(updateProfileTC({ name, avatar }))
+  }, [dispatch, avatar])
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />
@@ -81,7 +81,7 @@ export const Profile = React.memo(() => {
       <Paper className={s.paper} elevation={3}>
         <h3 className={s.title}>personal information</h3>
         <div className={s.avatarContainer}>
-          <img onError={errorHandler} className={s.avatarImg} src={isAvaBroken ? defaultAvatar : ava} alt='avatar' />
+          <img onError={errorHandler} className={s.avatarImg} src={isAvaBroken ? defaultAvatar : avatar} alt='avatar' />
           <InputFile updateAvatar={updateAvatar}><img className={s.camera} src={camera} alt='camera' /></InputFile>
           {/* {avatarEditMode
             ?

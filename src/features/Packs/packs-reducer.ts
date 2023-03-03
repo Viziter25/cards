@@ -1,35 +1,66 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {errorUtil} from '../../common/utils/error utils';
-import {AxiosError} from 'axios';
-import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI';
-import {AppThunk} from '../../app/store';
-import {RequestStatusType, setIdDisabled, setIsLoading} from '../../app/appReducer';
-import {loadState} from "../../common/utils/localStorage";
-import {getCardsTC} from "./Cards/cards-reducer";
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {errorUtil} from 'common/utils/errorUtil'
+import {AxiosError} from 'axios'
+import {GetPacksResponseType, PackPostType, packsAPI, PacksQueryParamsType, PackType, PackUpdateType} from './packsAPI'
+import {AppRootStateType} from 'app/store'
+import {RequestStatusType, setIdDisabled} from 'app/appReducer'
+import {loadState} from "../../common/utils/localStorage"
+import {getCardsTC} from "./Cards/cards-reducer"
+
+//async thunks
+export const setPacksTC = createAsyncThunk("packs/setPacks", async (_, {getState, dispatch}) => {
+  const {max, min, packName, page, pageCount, sortPacks, user_id} = (getState() as AppRootStateType).packsPage.queryParams
+  try {
+    const res = await packsAPI.getPacks({max, min, packName, page, pageCount, sortPacks, user_id})
+    return {isLoading: 'succeeded', packs: res.data}
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
+  }
+})
+
+export const createPackTC = createAsyncThunk("packs/createPack", async (data: PackPostType, thunkAPI) => {
+  try {
+    await packsAPI.createPack(data)
+    thunkAPI.dispatch(setPacksTC())
+    return {isLoading: 'succeeded'}
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, thunkAPI.dispatch)
+  }
+})
+
+export const deletePackTC = createAsyncThunk("packs/deletePack", async (packId:string, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(setIdDisabled({idDisabled: packId}))
+    await packsAPI.deletePack(packId)
+    thunkAPI.dispatch(setPacksTC())
+    return {isLoading: 'succeeded', idDisabled: ''}
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, thunkAPI.dispatch)
+  }
+})
+
+export const updatePackTC =  createAsyncThunk("packs/updatePack", async (data:PackUpdateType, thunkAPI) => {
+  try {
+    await packsAPI.updatePack(data)
+    thunkAPI.dispatch(setPacksTC())
+    thunkAPI.dispatch(getCardsTC(data._id))
+    return {isLoading: 'succeeded'}
+  } catch (e) {
+    errorUtil(e as Error | AxiosError<{ error: string }>, thunkAPI.dispatch)
+  }
+})
 
 const initialState = {
   packs: {
     cardPacks: [] as  PackType[],
   } as GetPacksResponseType & {entityStatus: RequestStatusType},
-  queryParams: {
-    sortPacks: '',
-    page: 1,
-    pageCount: 10,
-    min: 0,
-    max: 78,
-    packName: '',
-    user_id: ''
-  }
+  queryParams: {} as PacksQueryParamsType
 }
 
 const slice = createSlice({
   name: 'packs',
   initialState: loadState() as typeof initialState || initialState,
   reducers: {
-    setPacksAC(state, action:PayloadAction<GetPacksResponseType>) {
-      state.packs = {...action.payload, entityStatus: 'idle'}
-
-    },
     setPackNameAC(state, action: PayloadAction<{ packName: string }>) {
       state.queryParams.packName = action.payload.packName
     },
@@ -49,75 +80,21 @@ const slice = createSlice({
     setPageCountAC(state, action: PayloadAction<{pageCount: number}>){
       state.queryParams.pageCount = action.payload.pageCount
     },
-    changeTodolistEntityStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
-      state.packs.entityStatus = action.payload.status
-    },
     removeFiltersAC(state, action: PayloadAction<{ emptyFilters: PacksQueryParamsType }>) {
       state.queryParams = action.payload.emptyFilters
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+    .addCase(setPacksTC.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.packs = {...action.payload.packs, entityStatus: 'idle'}
+      }
+    })
+  },
 })
 
-export const setPacksReducer = slice.reducer
+export const packsReducer = slice.reducer
 export const {
-  setPacksAC,
-  setPackNameAC,
-  setUserIdAC,
-  setSortPacksAC,
-  setSliderValuesAC,
-  setCurrentPageAC,
-  setPageCountAC,
-  changeTodolistEntityStatusAC,
-  removeFiltersAC
+  setPackNameAC, setUserIdAC, setSortPacksAC, setSliderValuesAC, setCurrentPageAC, setPageCountAC, removeFiltersAC
 } = slice.actions
-
-//thunks
-export const setPacksTC = ():AppThunk => async (dispatch, getState) => {
-  dispatch(setIsLoading({isLoading: 'loading'}))
-  const queryParams = getState().packsPage.queryParams
-  try {
-    const res = await packsAPI.getPacks(queryParams)
-    dispatch(setPacksAC(res.data))
-    dispatch(setIsLoading({isLoading: 'succeeded'}))
-  } catch (e) {
-    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
-  }
-}
-
-
-export const createPackTC = (data:PackPostType):AppThunk => async (dispatch) => {
-  dispatch(setIsLoading({isLoading: 'loading'}))
-  dispatch(changeTodolistEntityStatusAC({status: 'loading'}))
-  try {
-    await packsAPI.createPack(data)
-    dispatch(setIsLoading({isLoading: 'succeeded'}))
-    dispatch(setPacksTC())
-  } catch (e) {
-    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
-  }
-}
-
-
-export const deletePackTC = (data:string):AppThunk => async (dispatch) => {
-  dispatch(setIsLoading({isLoading: 'loading'}))
-  dispatch(setIdDisabled({idDisabled: data}))
-  try {
-    await packsAPI.deletePack(data)
-    dispatch(setIsLoading({isLoading: 'succeeded'}))
-    dispatch(setPacksTC())
-  } catch (e) {
-    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
-  }
-}
-
-export const updatePackTC = (data:PackUpdateType):AppThunk => async (dispatch) => {
-  dispatch(setIsLoading({isLoading: 'loading'}))
-  try {
-    await packsAPI.updatePack(data)
-    dispatch(setIsLoading({isLoading: 'succeeded'}))
-    dispatch(setPacksTC())
-    dispatch(getCardsTC(data._id))
-  } catch (e) {
-    errorUtil(e as Error | AxiosError<{ error: string }>, dispatch)
-  }
-}
