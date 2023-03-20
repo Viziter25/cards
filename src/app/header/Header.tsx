@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import s from './Header.module.scss'
-import label from 'common/image/header/label.svg'
 import defaultAvatar from 'common/image/profile/avatar.jpg'
 import profileIcon from 'common/icons/profile/profile.svg'
 import logoutIcon from 'common/icons/profile/logout.svg'
-import { PATH } from 'common/constants/path'
-import { useAppDispatch, useAppSelector } from 'app/store'
-import { NavLink } from 'react-router-dom'
-import { LinearProgress } from "@mui/material"
-import { logOutTC } from 'features/Profile/profile-reducer'
+import {PATH} from 'common/constants/path'
+import {useAppDispatch, useAppSelector} from 'app/store'
+import {NavLink} from 'react-router-dom'
+import {LinearProgress} from "@mui/material"
+import {logOutTC} from 'features/Profile/profile-reducer'
 
 export const Header = () => {
 
@@ -45,7 +44,7 @@ export const Header = () => {
     <header className={s.headerContainer}>
       <div className={s.header}>
         <div className={s.container}>
-          <img src={label} className={s.label} alt='label' />
+
           {isLoggedIn &&
             <div className={s.profileData}>
               <div className={s.closedConsole}>

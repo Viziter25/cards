@@ -12,7 +12,7 @@
          margin: 0 auto;
          width: 85%;
          display: flex;
-         justify-content: space-between;
+         justify-content: flex-end;
          .profileData {
             display: flex;
             flex-direction: column;
@@ -44,11 +44,11 @@
             .openedConsole {
                position: absolute;
                top: 120%;
-               right: 0%;
+               right: 0;
                width: 120px;
                background: #FFFFFF;
                border: 1px solid #CFCFCF;
-               box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
+               box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
                padding: 20px;
                display: flex;
                flex-direction: column;

@@ -1,4 +1,4 @@
-import {instance} from '../../../common/constants/instanceAPI';
+import {instance} from 'common/constants/instanceAPI';
 import {AxiosResponse} from 'axios';
 
 

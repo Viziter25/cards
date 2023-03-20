@@ -6,10 +6,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
 import s from './registration.module.scss'
-import {PATH} from '../../../common/constants/path';
+import {PATH} from 'common/constants/path';
 import {NavLink, useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../../app/store';
-import {PasswordInput} from '../../../common/components/PasswordInput/PasswordInput';
+import {useAppDispatch} from 'app/store';
+import {PasswordInput} from 'common/components/PasswordInput/PasswordInput';
 import * as Yup from 'yup';
 import {registerTC} from '../auth-reducer';
 

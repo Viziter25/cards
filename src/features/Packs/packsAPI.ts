@@ -1,7 +1,5 @@
-import {RequestStatusType} from '../../app/appReducer';
-import {instance} from '../../common/constants/instanceAPI';
-
-
+import {RequestStatusType} from 'app/appReducer';
+import {instance} from 'common/constants/instanceAPI';
 
 export const packsAPI = {
   getPacks(data: GetPacksType) {
